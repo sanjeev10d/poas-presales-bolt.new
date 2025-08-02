@@ -29,20 +29,20 @@ const menuItems = [
 
 const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
   return (
-    <div className="w-72 bg-slate-900 text-white flex flex-col">
-      <div className="p-6 border-b border-slate-700">
+    <div className="w-72 bg-white border-r border-gray-200 flex flex-col shadow-sm">
+      <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-            <Anchor className="w-6 h-6" />
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+            <Anchor className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold">POAS</h1>
-            <p className="text-slate-400 text-sm">Paradip Port Authority</p>
+            <h1 className="text-xl font-bold text-gray-900">POAS</h1>
+            <p className="text-gray-500 text-sm">Paradip Port Authority</p>
           </div>
         </div>
       </div>
       
-      <nav className="flex-1 p-4">
+      <nav className="flex-1 p-6">
         <ul className="space-y-2">
           {menuItems.map((item) => {
             const IconComponent = item.icon;
@@ -52,15 +52,15 @@ const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
               <li key={item.id}>
                 <button
                   onClick={() => setActiveModule(item.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-left group ${
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group ${
                     isActive
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                   }`}
                 >
                   <IconComponent className="w-5 h-5" />
                   <span className="flex-1 font-medium">{item.label}</span>
-                  {isActive && <ChevronRight className="w-4 h-4" />}
+                  {isActive && <ChevronRight className="w-4 h-4 text-white/80" />}
                 </button>
               </li>
             );
@@ -68,13 +68,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
         </ul>
       </nav>
       
-      <div className="p-4 border-t border-slate-700">
-        <div className="flex items-center space-x-3 px-4 py-3">
-          <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
-            <div className="w-2 h-2 bg-white rounded-full"></div>
+      <div className="p-6 border-t border-gray-200">
+        <div className="flex items-center space-x-3 px-4 py-3 bg-green-50 rounded-xl">
+          <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium">System Status</p>
+            <p className="text-sm font-medium text-gray-900">System Status</p>
             <p className="text-xs text-green-400">All Systems Operational</p>
           </div>
         </div>

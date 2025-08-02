@@ -4,7 +4,7 @@ import { TrendingUp, Ship, Truck, Train, Activity, AlertTriangle } from 'lucide-
 
 const DashboardOverview: React.FC = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Key Performance Indicators */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
@@ -41,67 +41,90 @@ const DashboardOverview: React.FC = () => {
         />
       </div>
 
-      {/* Live Operations Summary */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-4">Live Operations Status</h3>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span className="font-medium text-slate-900">Gate Operations</span>
-              </div>
-              <span className="text-sm text-slate-600">147 active vehicles</span>
+      {/* Bento Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Live Operations Status - Large Card */}
+        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-900">Live Operations Status</h3>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-green-600">LIVE</span>
             </div>
-            <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span className="font-medium text-slate-900">Weighment Operations</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Truck className="w-5 h-5 text-white" />
+                </div>
+                <span className="font-semibold text-gray-900">Gate Operations</span>
               </div>
-              <span className="text-sm text-slate-600">8 vehicles in queue</span>
+              <p className="text-2xl font-bold text-blue-600">147</p>
+              <p className="text-sm text-blue-700">active vehicles</p>
             </div>
-            <div className="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                <span className="font-medium text-slate-900">Berth Operations</span>
+            
+            <div className="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Activity className="w-5 h-5 text-white" />
+                </div>
+                <span className="font-semibold text-gray-900">Weighment Operations</span>
               </div>
-              <span className="text-sm text-slate-600">5 vessels docked</span>
+              <p className="text-2xl font-bold text-green-600">8</p>
+              <p className="text-sm text-green-700">vehicles in queue</p>
             </div>
-            <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-                <span className="font-medium text-slate-900">Yard Allocation</span>
+            
+            <div className="p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Ship className="w-5 h-5 text-white" />
+                </div>
+                <span className="font-semibold text-gray-900">Berth Operations</span>
               </div>
-              <span className="text-sm text-slate-600">78% utilization</span>
+              <p className="text-2xl font-bold text-purple-600">5</p>
+              <p className="text-sm text-purple-700">vessels docked</p>
+            </div>
+            
+            <div className="p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Activity className="w-5 h-5 text-white" />
+                </div>
+                <span className="font-semibold text-gray-900">Yard Allocation</span>
+              </div>
+              <p className="text-2xl font-bold text-orange-600">78%</p>
+              <p className="text-sm text-orange-700">utilization</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-4">Recent Alerts & Notifications</h3>
-          <div className="space-y-3">
-            <div className="flex items-start space-x-3 p-3 bg-red-50 rounded-lg border-l-4 border-red-500">
+        {/* Alerts Panel */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-bold text-gray-900 mb-6">Recent Alerts</h3>
+          <div className="space-y-4">
+            <div className="flex items-start space-x-3 p-4 bg-red-50 rounded-xl border border-red-200">
               <AlertTriangle className="w-5 h-5 text-red-500 mt-0.5" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-slate-900">Route Deviation Alert</p>
-                <p className="text-xs text-slate-600">Vehicle OR09AB2345 deviated from Route-17</p>
-                <p className="text-xs text-slate-500">2 minutes ago</p>
+                <p className="text-sm font-semibold text-gray-900">Route Deviation</p>
+                <p className="text-xs text-gray-600">Vehicle OR09AB2345 deviated</p>
+                <p className="text-xs text-gray-500">2 min ago</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+            <div className="flex items-start space-x-3 p-4 bg-yellow-50 rounded-xl border border-yellow-200">
               <AlertTriangle className="w-5 h-5 text-yellow-500 mt-0.5" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-slate-900">Weighbridge Queue Alert</p>
-                <p className="text-xs text-slate-600">WB-3 queue exceeding threshold</p>
-                <p className="text-xs text-slate-500">5 minutes ago</p>
+                <p className="text-sm font-semibold text-gray-900">Queue Alert</p>
+                <p className="text-xs text-gray-600">WB-3 exceeding threshold</p>
+                <p className="text-xs text-gray-500">5 min ago</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+            <div className="flex items-start space-x-3 p-4 bg-blue-50 rounded-xl border border-blue-200">
               <TrendingUp className="w-5 h-5 text-blue-500 mt-0.5" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-slate-900">Vessel Arrival</p>
-                <p className="text-xs text-slate-600">MV COASTAL approaching berth 7</p>
-                <p className="text-xs text-slate-500">8 minutes ago</p>
+                <p className="text-sm font-semibold text-gray-900">Vessel Arrival</p>
+                <p className="text-xs text-gray-600">MV COASTAL approaching</p>
+                <p className="text-xs text-gray-500">8 min ago</p>
               </div>
             </div>
           </div>
@@ -109,24 +132,32 @@ const DashboardOverview: React.FC = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-        <h3 className="text-lg font-semibold text-slate-900 mb-4">Quick Actions</h3>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+        <h3 className="text-xl font-bold text-gray-900 mb-6">Quick Actions</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <button className="p-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors text-center">
-            <Ship className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-            <span className="text-sm font-medium text-slate-900">Vessel Tracking</span>
+          <button className="p-6 border border-gray-200 rounded-xl hover:bg-blue-50 hover:border-blue-200 transition-all duration-200 text-center group">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
+              <Ship className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-sm font-semibold text-gray-900">Vessel Tracking</span>
           </button>
-          <button className="p-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors text-center">
-            <Truck className="w-8 h-8 text-green-500 mx-auto mb-2" />
-            <span className="text-sm font-medium text-slate-900">Vehicle Status</span>
+          <button className="p-6 border border-gray-200 rounded-xl hover:bg-green-50 hover:border-green-200 transition-all duration-200 text-center group">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
+              <Truck className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-sm font-semibold text-gray-900">Vehicle Status</span>
           </button>
-          <button className="p-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors text-center">
-            <Train className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-            <span className="text-sm font-medium text-slate-900">Rake Schedule</span>
+          <button className="p-6 border border-gray-200 rounded-xl hover:bg-purple-50 hover:border-purple-200 transition-all duration-200 text-center group">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
+              <Train className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-sm font-semibold text-gray-900">Rake Schedule</span>
           </button>
-          <button className="p-4 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors text-center">
-            <Activity className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-            <span className="text-sm font-medium text-slate-900">System Monitor</span>
+          <button className="p-6 border border-gray-200 rounded-xl hover:bg-orange-50 hover:border-orange-200 transition-all duration-200 text-center group">
+            <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
+              <Activity className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-sm font-semibold text-gray-900">System Monitor</span>
           </button>
         </div>
       </div>

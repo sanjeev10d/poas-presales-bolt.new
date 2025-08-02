@@ -37,11 +37,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-gray-50 flex">
       <Sidebar activeModule={activeModule} setActiveModule={setActiveModule} />
       <div className="flex-1 flex flex-col">
         <Header activeModule={activeModule} />
-        <main className="flex-1 p-6 overflow-auto">
+        <main className="flex-1 p-8 overflow-auto">
           {renderActiveModule()}
         </main>
       </div>
