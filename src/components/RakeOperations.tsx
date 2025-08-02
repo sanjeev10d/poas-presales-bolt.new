@@ -142,27 +142,13 @@ const RakeOperations: React.FC = () => {
       key: 'actions', 
       label: 'Actions',
       render: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => setSelectedRake(row)}
-            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
-          >
-            <Eye className="w-3 h-3" />
-            <span>View</span>
-          </button>
-          {row.status === 'In Progress' && (
-            <>
-              <button className="flex items-center space-x-1 px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs hover:bg-orange-200">
-                <Wrench className="w-3 h-3" />
-                <span>Inspect</span>
-              </button>
-              <button className="flex items-center space-x-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">
-                <RotateCcw className="w-3 h-3" />
-                <span>Reprocess</span>
-              </button>
-            </>
-          )}
-        </div>
+        <button
+          onClick={() => setSelectedRake(row)}
+          className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+        >
+          <Eye className="w-4 h-4" />
+          <span>View</span>
+        </button>
       )
     }
   ];
@@ -184,7 +170,7 @@ const RakeOperations: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('bobrn')}
-            className={`py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 ${
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${
               activeTab === 'bobrn'
                 ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
