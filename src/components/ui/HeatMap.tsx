@@ -32,47 +32,51 @@ const HeatMap: React.FC<HeatMapProps> = ({
 
   return (
     <div className={`${className}`}>
-      <div className="grid gap-2" style={{ gridTemplateColumns: `auto repeat(${xLabels.length}, 1fr)` }}>
-        {/* Header row */}
-        <div></div>
-        {xLabels.map(label => (
-          <div key={label} className="text-sm font-semibold text-gray-700 text-center p-2">
-            {label}
+      <div className="overflow-x-auto">
+        <div className="min-w-max">
+          {/* Header row */}
+          <div className="grid gap-1 mb-2" style={{ gridTemplateColumns: `120px repeat(${xLabels.length}, 80px)` }}>
+            <div></div>
+            {xLabels.map(label => (
+              <div key={label} className="text-xs font-semibold text-gray-700 text-center p-1 leading-tight">
+                {label}
+              </div>
+            ))}
           </div>
-        ))}
-        
-        {/* Data rows */}
-        {yLabels.map(yLabel => (
-          <React.Fragment key={yLabel}>
-            <div className="text-sm font-semibold text-gray-700 flex items-center pr-3">
-              {yLabel}
+          
+          {/* Data rows */}
+          {yLabels.map(yLabel => (
+            <div key={yLabel} className="grid gap-1 mb-1" style={{ gridTemplateColumns: `120px repeat(${xLabels.length}, 80px)` }}>
+              <div className="text-xs font-semibold text-gray-700 flex items-center pr-2 text-right">
+                {yLabel}
+              </div>
+              {xLabels.map(xLabel => {
+                const dataPoint = data.find(d => d.x === xLabel && d.y === yLabel);
+                const value = dataPoint?.value || 0;
+                
+                return (
+                  <div
+                    key={`${xLabel}-${yLabel}`}
+                    className={`h-12 rounded-lg flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                      interactive ? 'hover:scale-105 hover:shadow-lg cursor-pointer hover:z-10 relative' : ''
+                    } ${value > 0 ? 'shadow-sm' : ''}`}
+                    style={{ 
+                      backgroundColor: getColor(value),
+                      boxShadow: value > 0 ? `0 2px 4px ${getColor(value)}40` : 'none'
+                    }}
+                    title={dataPoint?.label || `${xLabel} - ${yLabel}: ${value}`}
+                  >
+                    {value > 0 && (
+                      <span className={`${value > maxValue * 0.5 ? 'text-white' : 'text-gray-800'} drop-shadow-sm`}>
+                        {value}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            {xLabels.map(xLabel => {
-              const dataPoint = data.find(d => d.x === xLabel && d.y === yLabel);
-              const value = dataPoint?.value || 0;
-              
-              return (
-                <div
-                  key={`${xLabel}-${yLabel}`}
-                  className={`aspect-square rounded-xl flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                    interactive ? 'hover:scale-110 hover:shadow-lg cursor-pointer hover:z-10 relative' : ''
-                  } ${value > 0 ? 'shadow-sm' : ''}`}
-                  style={{ 
-                    backgroundColor: getColor(value),
-                    boxShadow: value > 0 ? `0 2px 4px ${getColor(value)}40` : 'none'
-                  }}
-                  title={dataPoint?.label || `${xLabel} - ${yLabel}: ${value}`}
-                >
-                  {value > 0 && (
-                    <span className={`${value > maxValue * 0.5 ? 'text-white' : 'text-gray-800'} drop-shadow-sm`}>
-                      {value}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </React.Fragment>
-        ))}
+          ))}
+        </div>
       </div>
       
       {/* Legend */}
