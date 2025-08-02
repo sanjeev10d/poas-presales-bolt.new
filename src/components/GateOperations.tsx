@@ -138,7 +138,7 @@ const GateOperations: React.FC = () => {
               trend={{ value: 8, isPositive: true }}
               color="green"
             />
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <div className="flex items-center justify-between mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
                   <Truck className="w-6 h-6 text-white" />
@@ -154,7 +154,7 @@ const GateOperations: React.FC = () => {
                 <p className="text-xs text-gray-500">Vehicles currently present</p>
               </div>
               
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-4 gap-3">
                 <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-semibold text-blue-700">Terminal 1</span>
@@ -219,85 +219,97 @@ const GateOperations: React.FC = () => {
               color="blue"
             />
             <StatCard
+              title="Pedestrians Out"
+              value="198"
+              subtitle="Today's pedestrian exits"
+              icon={CheckCircle}
+              trend={{ value: 4, isPositive: true }}
+              color="green"
+            />
+            <StatCard
+              title="Non-Cargo In"
+              value="156"
+              subtitle="Today's non-cargo entries"
+              icon={Truck}
+              trend={{ value: 7, isPositive: true }}
+              color="purple"
+            />
+            <StatCard
               title="Non-Cargo Out"
               value="187"
               subtitle="Today's non-cargo exits"
-              icon={CheckCircle}
+              icon={XCircle}
               trend={{ value: 3, isPositive: true }}
-              color="green"
-            />
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-xs font-semibold text-green-600">LIVE</span>
-                </div>
-              </div>
-              
-              <div className="space-y-1 mb-4">
-                <p className="text-sm font-semibold text-gray-700">Terminal Distribution</p>
-                <p className="text-xs text-gray-500">Non-cargo vehicles present</p>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold text-blue-700">Terminal 1</span>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  </div>
-                  <p className="text-2xl font-bold text-blue-900">8</p>
-                  <p className="text-xs text-blue-600">Staff Vehicles</p>
-                </div>
-                
-                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold text-green-700">Terminal 2</span>
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  </div>
-                  <p className="text-2xl font-bold text-green-900">12</p>
-                  <p className="text-xs text-green-600">Service Vehicles</p>
-                </div>
-                
-                <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold text-orange-700">Terminal 3</span>
-                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  </div>
-                  <p className="text-2xl font-bold text-orange-900">6</p>
-                  <p className="text-xs text-orange-600">Maintenance</p>
-                </div>
-                
-                <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-4 border border-teal-200">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold text-teal-700">Terminal 4</span>
-                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-                  </div>
-                  <p className="text-2xl font-bold text-teal-900">4</p>
-                  <p className="text-xs text-teal-600">Visitors</p>
-                </div>
-              </div>
-              
-              <div className="mt-4 pt-3 border-t border-gray-200">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-gray-500">Total Active</span>
-                  <span className="font-bold text-gray-900">30 vehicles</span>
-                </div>
-              </div>
-            </div>
-            <StatCard
-              title="Avg TAT"
-              value="42m"
-              subtitle="Average turnaround time"
-              icon={Clock}
-              trend={{ value: 8, isPositive: true }}
-              color="teal"
+              color="orange"
             />
           </>
         )}
       </div>
+
+      {/* Terminal Distribution Card - Only show for non-cargo tab */}
+      {activeTab === 'non-cargo' && (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          <div className="flex items-center justify-between mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Users className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-xs font-semibold text-green-600">LIVE</span>
+            </div>
+          </div>
+          
+          <div className="space-y-1 mb-4">
+            <p className="text-sm font-semibold text-gray-700">Terminal Distribution</p>
+            <p className="text-xs text-gray-500">Non-cargo vehicles present</p>
+          </div>
+          
+          <div className="grid grid-cols-4 gap-3">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-semibold text-blue-700">Terminal 1</span>
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              </div>
+              <p className="text-2xl font-bold text-blue-900">8</p>
+              <p className="text-xs text-blue-600">Staff Vehicles</p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold text-green-700">Terminal 2</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              </div>
+              <p className="text-2xl font-bold text-green-900">12</p>
+              <p className="text-xs text-green-600">Service Vehicles</p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold text-orange-700">Terminal 3</span>
+                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+              </div>
+              <p className="text-2xl font-bold text-orange-900">6</p>
+              <p className="text-xs text-orange-600">Maintenance</p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-4 border border-teal-200">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold text-teal-700">Terminal 4</span>
+                <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+              </div>
+              <p className="text-2xl font-bold text-teal-900">4</p>
+              <p className="text-xs text-teal-600">Visitors</p>
+            </div>
+          </div>
+          
+          <div className="mt-4 pt-3 border-t border-gray-200">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-gray-500">Total Active</span>
+              <span className="font-bold text-gray-900">30 vehicles</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Data Table */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200">
@@ -320,8 +332,194 @@ const GateOperations: React.FC = () => {
           isOpen={!!selectedVehicle}
           onClose={() => setSelectedVehicle(null)}
           title={`Vehicle Details - ${selectedVehicle.vehicleNumber}`}
+          size="xl"
         >
-          <div className="grid grid-cols-2 gap-6">
+          <div className="space-y-6">
+            {/* Vehicle and Person Information */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">Vehicle Information</h4>
+                  <div className="space-y-2 text-sm">
+                    <p><span className="font-semibold text-gray-700">Number:</span> <span className="text-gray-900">{selectedVehicle.vehicleNumber}</span></p>
+                    <p><span className="font-semibold text-gray-700">Type:</span> <span className="text-gray-900">{selectedVehicle.cargoType || selectedVehicle.vehicleType}</span></p>
+                    <p><span className="font-semibold text-gray-700">Time In:</span> <span className="text-gray-900">{selectedVehicle.timeIn}</span></p>
+                    <p><span className="font-semibold text-gray-700">Time Out:</span> <span className="text-gray-900">{selectedVehicle.timeOut}</span></p>
+                    <p><span className="font-semibold text-gray-700">TAT:</span> <span className="text-gray-900">{selectedVehicle.turnaroundTime}</span></p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">
+                    {selectedVehicle.driver ? 'Driver' : 'Person'} Details
+                  </h4>
+                  <div className="space-y-2 text-sm">
+                    {selectedVehicle.driver && (
+                      <>
+                        <p><span className="font-semibold text-gray-700">Name:</span> <span className="text-gray-900">{selectedVehicle.driver.name}</span></p>
+                        <p><span className="font-semibold text-gray-700">License:</span> <span className="text-gray-900">{selectedVehicle.driver.license}</span></p>
+                        <p><span className="font-semibold text-gray-700">Contact:</span> <span className="text-gray-900">{selectedVehicle.driver.contact}</span></p>
+                      </>
+                    )}
+                    {selectedVehicle.person && (
+                      <>
+                        <p><span className="font-semibold text-gray-700">Name:</span> <span className="text-gray-900">{selectedVehicle.person.name}</span></p>
+                        <p><span className="font-semibold text-gray-700">ID:</span> <span className="text-gray-900">{selectedVehicle.person.id}</span></p>
+                        <p><span className="font-semibold text-gray-700">Department:</span> <span className="text-gray-900">{selectedVehicle.person.department}</span></p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Image Gallery in 4x4 Grid */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Vehicle Images</h4>
+              <div className="grid grid-cols-4 gap-4">
+                {/* Front View Images */}
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Front View 1</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle front view 1"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Front View 2</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle front view 2"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Side View 1</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle side view 1"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Side View 2</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle side view 2"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                
+                {/* Top View Images */}
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Top View 1</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle top view 1"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Top View 2</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle top view 2"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Rear View 1</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle rear view 1"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Rear View 2</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle rear view 2"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                
+                {/* Additional Views */}
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">License Plate</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="License plate"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Driver ID</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Driver identification"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Cargo View 1</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Cargo view 1"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Cargo View 2</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Cargo view 2"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                
+                {/* QR Code and Additional Documentation */}
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">QR Code</p>
+                  <div className="w-full h-24 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-black opacity-20 rounded"></div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Gate Entry</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Gate entry"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Gate Exit</p>
+                  <img 
+                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Gate exit"
+                    className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-gray-600">Documentation</p>
+                  <div className="w-full h-24 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center">
+                    <div className="text-xs text-gray-500">PDF</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
+    </div>
+  );
+};
+
+export default GateOperations;
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold text-gray-900 mb-3">Vehicle Information</h4>
