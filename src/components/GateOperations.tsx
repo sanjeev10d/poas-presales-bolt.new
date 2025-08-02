@@ -138,13 +138,64 @@ const GateOperations: React.FC = () => {
               trend={{ value: 8, isPositive: true }}
               color="green"
             />
-            <StatCard
-              title="Terminal 1"
-              value="45"
-              subtitle="Vehicles currently present"
-              icon={Truck}
-              color="purple"
-            />
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
+                  <Truck className="w-6 h-6 text-purple-500" />
+                </div>
+                <div className="text-xs text-slate-500 font-medium">LIVE</div>
+              </div>
+              
+              <div className="space-y-1 mb-4">
+                <p className="text-sm font-medium text-slate-600">Terminal Distribution</p>
+                <p className="text-xs text-slate-500">Vehicles currently present</p>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 border border-blue-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-blue-700">Terminal 1</span>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  </div>
+                  <p className="text-lg font-bold text-blue-900">45</p>
+                  <p className="text-xs text-blue-600">Coal & Iron Ore</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 border border-green-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-green-700">Terminal 2</span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  </div>
+                  <p className="text-lg font-bold text-green-900">32</p>
+                  <p className="text-xs text-green-600">Fertilizer</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-3 border border-orange-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-orange-700">Terminal 3</span>
+                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  </div>
+                  <p className="text-lg font-bold text-orange-900">28</p>
+                  <p className="text-xs text-orange-600">Containers</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg p-3 border border-teal-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-teal-700">Terminal 4</span>
+                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                  </div>
+                  <p className="text-lg font-bold text-teal-900">19</p>
+                  <p className="text-xs text-teal-600">General Cargo</p>
+                </div>
+              </div>
+              
+              <div className="mt-4 pt-3 border-t border-slate-200">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Total Active</span>
+                  <span className="font-semibold text-slate-900">124 vehicles</span>
+                </div>
+              </div>
+            </div>
             <StatCard
               title="Avg TAT"
               value="2h 32m"
@@ -172,13 +223,64 @@ const GateOperations: React.FC = () => {
               trend={{ value: 3, isPositive: true }}
               color="green"
             />
-            <StatCard
-              title="Terminal 2"
-              value="23"
-              subtitle="Non-cargo vehicles present"
-              icon={Users}
-              color="purple"
-            />
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
+                  <Users className="w-6 h-6 text-purple-500" />
+                </div>
+                <div className="text-xs text-slate-500 font-medium">LIVE</div>
+              </div>
+              
+              <div className="space-y-1 mb-4">
+                <p className="text-sm font-medium text-slate-600">Terminal Distribution</p>
+                <p className="text-xs text-slate-500">Non-cargo vehicles present</p>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 border border-blue-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-blue-700">Terminal 1</span>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  </div>
+                  <p className="text-lg font-bold text-blue-900">8</p>
+                  <p className="text-xs text-blue-600">Staff Vehicles</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 border border-green-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-green-700">Terminal 2</span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  </div>
+                  <p className="text-lg font-bold text-green-900">12</p>
+                  <p className="text-xs text-green-600">Service Vehicles</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-3 border border-orange-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-orange-700">Terminal 3</span>
+                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  </div>
+                  <p className="text-lg font-bold text-orange-900">6</p>
+                  <p className="text-xs text-orange-600">Maintenance</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg p-3 border border-teal-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-teal-700">Terminal 4</span>
+                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                  </div>
+                  <p className="text-lg font-bold text-teal-900">4</p>
+                  <p className="text-xs text-teal-600">Visitors</p>
+                </div>
+              </div>
+              
+              <div className="mt-4 pt-3 border-t border-slate-200">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Total Active</span>
+                  <span className="font-semibold text-slate-900">30 vehicles</span>
+                </div>
+              </div>
+            </div>
             <StatCard
               title="Avg TAT"
               value="42m"
