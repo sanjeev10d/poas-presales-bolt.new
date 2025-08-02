@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 sm:px-8 py-4 shadow-lg z-[1000] w-full">
-      <div className="flex items-center justify-between flex-wrap gap-4">
+      <div className="flex items-center justify-between gap-2 sm:gap-4">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -39,12 +39,12 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
           </div>
         </div>
         
-        <div className="md:hidden">
+        <div className="md:hidden flex-1 text-center">
           <h2 className="text-lg font-semibold text-gray-900">{getModuleTitle(activeModule)}</h2>
         </div>
         
-        <div className="flex items-center space-x-2 sm:space-x-4">
-          <div className="flex items-center space-x-2 text-sm text-gray-500 mt-2">
+        <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+          <div className="hidden lg:flex items-center space-x-2 text-sm text-gray-500">
             <Clock className="w-4 h-4" />
             <span>{new Date().toLocaleString('en-IN', { 
               timeZone: 'Asia/Kolkata',
@@ -53,25 +53,32 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
             })}</span>
           </div>
           
-          <div className="relative">
+          {/* Full search bar for larger screens */}
+          <div className="hidden lg:block relative">
             <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               placeholder="Search operations..."
-              className="pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent w-48 sm:w-64 lg:w-80 bg-gray-50 focus:bg-white transition-colors"
+              className="pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent w-80 bg-gray-50 focus:bg-white transition-colors"
             />
           </div>
+          
+          {/* Search button for smaller screens */}
+          <button className="lg:hidden p-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors">
+            <Search className="w-5 h-5" />
+          </button>
           
           <button className="relative p-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors">
             <Bell className="w-5 h-5" />
             <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
           </button>
           
-          <div className="hidden sm:flex items-center space-x-3 pl-4 border-l border-gray-200">
+          {/* Profile section with responsive behavior */}
+          <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
               <User className="w-5 h-5 text-white" />
             </div>
-            <div className="text-sm">
+            <div className="hidden xl:block text-sm">
               <p className="font-semibold text-gray-900">Port Controller</p>
               <p className="text-gray-500">ICCC Operations</p>
             </div>
