@@ -271,6 +271,21 @@ const DashboardOverview: React.FC = () => {
           
           <div className="space-y-2">
             {cargoDistributionData.map((item, index) => (
+              <div key={index} className="flex items-center justify-between text-sm">
+                <div className="flex items-center space-x-2">
+                  <div 
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index] }}
+                  ></div>
+                  <span className="text-gray-700">{item.label}</span>
+                </div>
+                <span className="font-semibold text-gray-900">{item.value}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Hourly Traffic Analysis */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
@@ -320,20 +335,6 @@ const DashboardOverview: React.FC = () => {
                   animate: true
                 }}
               />
-            ))}
-          </div>
-        </div>
-      </div>
-              <div key={index} className="flex items-center justify-between text-sm">
-                <div className="flex items-center space-x-2">
-                  <div 
-                    className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index] }}
-                  ></div>
-                  <span className="text-gray-700">{item.label}</span>
-                </div>
-                <span className="font-semibold text-gray-900">{item.value}%</span>
-              </div>
             ))}
           </div>
         </div>
