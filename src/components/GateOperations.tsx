@@ -252,22 +252,116 @@ const RakeOperations: React.FC = () => {
               value="1"
               subtitle="Requires attention"
               icon={AlertTriangle}
-                  <p className="text-sm font-medium text-gray-700">Overhead View</p>
+              color="red"
             />
-                    src="https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
-                    alt="Vehicle overhead view"
-                    className="w-full h-32 object-cover rounded-lg border border-gray-200 shadow-sm"
+            <StatCard
+              title="Avg WTR"
+              value="6h 15m"
               subtitle="Wagon turnaround time"
               icon={Clock}
               trend={{ value: 5, isPositive: false }}
-                  <p className="text-sm font-medium text-gray-700">Number Plate</p>
+              color="orange"
             />
+          </>
+        )}
+      </div>
+
+      {/* Data Table */}
+      <DataTable
+        columns={columns}
+        data={activeTab === 'regular' ? rakeData : bobrnRakeData}
+        title={activeTab === 'regular' ? 'Regular Rake Operations' : 'BOBRN Rake Operations'}
+      />
+
+      {/* Modal for Rake Details */}
+      {selectedRake && (
+        <Modal
+          isOpen={!!selectedRake}
+          onClose={() => setSelectedRake(null)}
+          title={`Rake Details - ${selectedRake.rakeRefNo}`}
+        >
+          <div className="space-y-6">
+            {/* Basic Information */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Rake Reference No.</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedRake.rakeRefNo}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Railway PN Number</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedRake.railwayPNNumber}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Wagon Count</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedRake.wagonCount}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Cargo Type</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedRake.cargoType}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Source Terminal</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedRake.sourceTerminal}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Status</label>
+                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                  selectedRake.status === 'Completed' 
+                    ? 'bg-green-100 text-green-800' 
+                    : 'bg-yellow-100 text-yellow-800'
+                }`}>
+                  {selectedRake.status}
+                </span>
+              </div>
+            </div>
+
+            {/* Timeline */}
+            <div>
+              <h4 className="text-lg font-medium text-gray-900 mb-4">Operation Timeline</h4>
+              <div className="space-y-3">
+                {selectedRake.timeline.map((item: any, index: number) => (
+                  <div key={index} className="flex items-center space-x-3">
+                    <div className={`w-3 h-3 rounded-full ${
+                      item.status === 'completed' ? 'bg-green-500' :
+                      item.status === 'in-progress' ? 'bg-yellow-500' : 'bg-gray-300'
+                    }`} />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">{item.stage}</p>
+                      <p className="text-xs text-gray-500">{item.time}</p>
+                    </div>
+                    <div className={`px-2 py-1 rounded text-xs font-medium ${
+                      item.status === 'completed' ? 'bg-green-100 text-green-800' :
+                      item.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'
+                    }`}>
+                      {item.status === 'completed' ? 'Completed' :
+                       item.status === 'in-progress' ? 'In Progress' : 'Pending'}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Images Section */}
+            <div>
+              <h4 className="text-lg font-medium text-gray-900 mb-4">Visual Documentation</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-gray-700">Overhead View</p>
+                  <img
+                    src="https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
+                    alt="Vehicle overhead view"
+                    className="w-full h-32 object-cover rounded-lg border border-gray-200 shadow-sm"
+                  />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-700">Number Plate</p>
+                  <img
                     src="https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop"
                     alt="Vehicle number plate"
                     className="w-full h-32 object-cover rounded-lg border border-gray-200 shadow-sm"
                   />
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </Modal>
