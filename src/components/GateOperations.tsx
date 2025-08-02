@@ -2,141 +2,155 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { Truck, Users, Clock, Eye, CheckCircle, XCircle, Building } from 'lucide-react';
+import { Train, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 
-const GateOperations: React.FC = () => {
-  const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<'cargo' | 'non-cargo'>('cargo');
+const RakeOperations: React.FC = () => {
+  const [selectedRake, setSelectedRake] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState('regular');
 
-  const cargoVehicleData = [
+  const rakeData = [
     {
       id: 1,
-      vehicleNumber: 'OR09AB2345',
+      rakeRefNo: 'RK-2024-001',
+      wagonCount: 58,
+      timeIn: '08:30 AM',
+      timeOut: '02:15 PM',
+      loadedWagons: 58,
+      emptyWagons: 0,
+      wtr: '5h 45m',
+      alerts: 'None',
+      sourceTerminal: 'Jharsuguda',
+      status: 'Completed',
       cargoType: 'Coal',
-      timeIn: '09:15 AM',
-      timeOut: '11:30 AM',
-      turnaroundTime: '2h 15m',
-      verificationType: 'ANPR',
-      status: 'Completed',
-      driverName: 'Ram Kumar',
-      driverLicense: 'DL12345',
-      driverContact: '9876543210',
-      vehicleWeight: '35.2 MT',
+      railwayPNNumber: 'RPN-2024-001',
+      operatorName: 'Suresh Kumar',
       destination: 'Terminal 1',
-      gateNumber: 'Gate-A1',
-      securityClearance: 'Verified',
-      images: { 
-        front: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        overhead: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        numberPlate: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
-      }
+      totalWeight: '3480 MT',
+      timeline: [
+        { stage: 'Station Arrival', time: '08:15 AM', status: 'completed' },
+        { stage: 'Station Departure', time: '08:30 AM', status: 'completed' },
+        { stage: 'Top Point Arrival', time: '08:45 AM', status: 'completed' },
+        { stage: 'Hopper Placement', time: '08:55 AM', status: 'completed' },
+        { stage: 'Unloading Complete', time: '01:30 PM', status: 'completed' },
+        { stage: 'Rake Dispatch (Railway PN)', time: '02:00 PM', status: 'completed' },
+        { stage: 'PRP Top Point Arrival', time: '02:10 PM', status: 'completed' },
+        { stage: 'Station Arrival', time: '02:15 PM', status: 'completed' },
+        { stage: 'Station Departure', time: '02:15 PM', status: 'completed' }
+      ]
     },
     {
       id: 2,
-      vehicleNumber: 'OD25AK9901',
-      cargoType: 'Fertilizer',
-      timeIn: '10:20 AM',
+      rakeRefNo: 'RK-2024-002',
+      wagonCount: 60,
+      timeIn: '10:15 AM',
       timeOut: '—',
-      turnaroundTime: '3h 42m (ongoing)',
-      verificationType: 'QR Code',
+      loadedWagons: 55,
+      emptyWagons: 5,
+      wtr: '6h 12m (ongoing)',
+      alerts: 'Load Discrepancy',
+      sourceTerminal: 'Talcher',
       status: 'In Progress',
-      driverName: 'Suresh Patel',
-      driverLicense: 'DL67890',
-      driverContact: '9876543211',
-      vehicleWeight: '42.3 MT',
+      cargoType: 'Coal',
+      railwayPNNumber: 'RPN-2024-002',
+      operatorName: 'Rajesh Patel',
       destination: 'Terminal 2',
-      gateNumber: 'Gate-B2',
-      securityClearance: 'Pending',
-      images: { 
-        front: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        overhead: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        numberPlate: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
-      }
-    },
-    {
-      id: 3,
-      vehicleNumber: 'WB12CD5678',
-      cargoType: 'Iron Ore',
-      timeIn: '08:45 AM',
-      timeOut: '12:30 PM',
-      turnaroundTime: '3h 45m',
-      verificationType: 'RFID',
-      status: 'Completed',
-      driverName: 'Amit Singh',
-      driverLicense: 'DL11223',
-      driverContact: '9876543212',
-      vehicleWeight: '38.7 MT',
-      destination: 'Terminal 3',
-      gateNumber: 'Gate-C1',
-      securityClearance: 'Verified',
-      images: { 
-        front: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        overhead: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        numberPlate: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
-      }
+      totalWeight: '3300 MT',
+      timeline: [
+        { stage: 'Station Arrival', time: '10:00 AM', status: 'completed' },
+        { stage: 'Station Departure', time: '10:15 AM', status: 'completed' },
+        { stage: 'Top Point Arrival', time: '10:30 AM', status: 'completed' },
+        { stage: 'Hopper Placement', time: '10:40 AM', status: 'completed' },
+        { stage: 'Unloading Complete', time: '—', status: 'in-progress' },
+        { stage: 'Rake Dispatch (Railway PN)', time: '—', status: 'pending' },
+        { stage: 'PRP Top Point Arrival', time: '—', status: 'pending' },
+        { stage: 'Station Arrival', time: '—', status: 'pending' },
+        { stage: 'Station Departure', time: '—', status: 'pending' }
+      ]
     }
   ];
 
-  const nonCargoVehicleData = [
+  const bobrnRakeData = [
     {
       id: 1,
-      vehicleNumber: 'OR05JK8870',
-      vehicleType: 'Car',
-      timeIn: '08:45 AM',
-      timeOut: '09:15 AM',
-      turnaroundTime: '30m',
-      personName: 'Priya Sharma',
-      personId: 'EMP001',
-      department: 'Operations',
-      purpose: 'Official Visit',
-      gateNumber: 'Gate-P1',
-      securityClearance: 'Verified',
-      images: { 
-        front: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        overhead: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        numberPlate: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
-      }
+      rakeRefNo: 'BOBRN-2024-001',
+      wagonCount: 45,
+      timeIn: '07:45 AM',
+      timeOut: '01:45 PM',
+      loadedWagons: 45,
+      emptyWagons: 0,
+      wtr: '6h 00m',
+      alerts: 'None',
+      sourceTerminal: 'Barbil',
+      status: 'Completed',
+      cargoType: 'Iron Ore',
+      railwayPNNumber: 'BOBRN-PN-2024-001',
+      operatorName: 'Amit Singh',
+      destination: 'Terminal 3',
+      totalWeight: '2700 MT',
+      timeline: [
+        { stage: 'Station Arrival', time: '07:30 AM', status: 'completed' },
+        { stage: 'Station Departure', time: '07:45 AM', status: 'completed' },
+        { stage: 'Top Point Arrival', time: '08:00 AM', status: 'completed' },
+        { stage: 'Hopper Placement', time: '08:15 AM', status: 'completed' },
+        { stage: 'Unloading Complete', time: '01:00 PM', status: 'completed' },
+        { stage: 'Rake Dispatch (Railway PN)', time: '01:15 PM', status: 'completed' },
+        { stage: 'PRP Top Point Arrival', time: '01:30 PM', status: 'completed' },
+        { stage: 'Station Arrival', time: '01:40 PM', status: 'completed' },
+        { stage: 'Station Departure', time: '01:45 PM', status: 'completed' }
+      ]
     },
     {
       id: 2,
-      vehicleNumber: 'KA09MN3456',
-      vehicleType: 'Motorcycle',
-      timeIn: '07:30 AM',
+      rakeRefNo: 'BOBRN-2024-002',
+      wagonCount: 52,
+      timeIn: '09:30 AM',
       timeOut: '—',
-      turnaroundTime: '5h 15m (ongoing)',
-      personName: 'Rajesh Kumar',
-      personId: 'CON002',
-      department: 'Maintenance',
-      purpose: 'Equipment Service',
-      gateNumber: 'Gate-P2',
-      securityClearance: 'Verified',
-      images: { 
-        front: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        overhead: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-        numberPlate: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
-      }
+      loadedWagons: 48,
+      emptyWagons: 4,
+      wtr: '4h 15m (ongoing)',
+      alerts: 'Delayed Unloading',
+      sourceTerminal: 'Rourkela',
+      status: 'In Progress',
+      cargoType: 'Iron Ore',
+      railwayPNNumber: 'BOBRN-PN-2024-002',
+      operatorName: 'Priya Sharma',
+      destination: 'Terminal 4',
+      totalWeight: '2880 MT',
+      timeline: [
+        { stage: 'Station Arrival', time: '09:15 AM', status: 'completed' },
+        { stage: 'Station Departure', time: '09:30 AM', status: 'completed' },
+        { stage: 'Top Point Arrival', time: '09:45 AM', status: 'completed' },
+        { stage: 'Hopper Placement', time: '10:00 AM', status: 'completed' },
+        { stage: 'Unloading Complete', time: '—', status: 'in-progress' },
+        { stage: 'Rake Dispatch (Railway PN)', time: '—', status: 'pending' },
+        { stage: 'PRP Top Point Arrival', time: '—', status: 'pending' },
+        { stage: 'Station Arrival', time: '—', status: 'pending' },
+        { stage: 'Station Departure', time: '—', status: 'pending' }
+      ]
     }
   ];
 
-  const cargoColumns = [
-    { key: 'vehicleNumber', label: 'Vehicle Number' },
+  const columns = [
+    { key: 'rakeRefNo', label: 'Rake Ref No.' },
+    { key: 'wagonCount', label: 'Wagon Count' },
     { key: 'cargoType', label: 'Cargo Type' },
-    { key: 'driverName', label: 'Driver Name' },
-    { key: 'timeIn', label: 'Time In' },
-    { key: 'timeOut', label: 'Time Out' },
-    { key: 'turnaroundTime', label: 'Turnaround Time' },
-    { key: 'vehicleWeight', label: 'Weight' },
+    { key: 'sourceTerminal', label: 'Source Terminal' },
     { key: 'destination', label: 'Destination' },
-    { key: 'gateNumber', label: 'Gate' },
-    { key: 'verificationType', label: 'Verification' },
+    { key: 'operatorName', label: 'Operator' },
+    { key: 'timeIn', label: 'In Time' },
+    { key: 'timeOut', label: 'Out Time' },
+    { key: 'loadedWagons', label: 'Loaded Wagons' },
+    { key: 'emptyWagons', label: 'Empty Wagons' },
+    { key: 'totalWeight', label: 'Total Weight' },
+    { key: 'wtr', label: 'WTR' },
     { 
-      key: 'securityClearance', 
-      label: 'Security',
+      key: 'alerts', 
+      label: 'Alerts',
       render: (row: any) => (
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          row.securityClearance === 'Verified' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+          row.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
         }`}>
-          {row.securityClearance}
+          {row.alerts}
         </span>
       )
     },
@@ -145,384 +159,247 @@ const GateOperations: React.FC = () => {
       label: 'Actions',
       render: (row: any) => (
         <button
-          onClick={() => setSelectedVehicle(row)}
+          onClick={() => setSelectedRake(row)}
           className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
-          <Eye className="w-4 h-4" />
           <span>View</span>
         </button>
       )
     }
   ];
-
-  const nonCargoColumns = [
-    { key: 'vehicleNumber', label: 'Vehicle Number' },
-    { key: 'vehicleType', label: 'Vehicle Type' },
-    { key: 'personName', label: 'Person Name' },
-    { key: 'personId', label: 'ID' },
-    { key: 'department', label: 'Department' },
-    { key: 'purpose', label: 'Purpose' },
-    { key: 'timeIn', label: 'Time In' },
-    { key: 'timeOut', label: 'Time Out' },
-    { key: 'turnaroundTime', label: 'Duration' },
-    { key: 'gateNumber', label: 'Gate' },
-    { 
-      key: 'securityClearance', 
-      label: 'Security',
-      render: (row: any) => (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          row.securityClearance === 'Verified' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-        }`}>
-          {row.securityClearance}
-        </span>
-      )
-    },
-    { 
-      key: 'actions', 
-      label: 'Actions',
-      render: (row: any) => (
-        <button
-          onClick={() => setSelectedVehicle(row)}
-          className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
-        >
-          <Eye className="w-4 h-4" />
-          <span>View</span>
-        </button>
-      )
-    }
-  ];
-
-  // Calculate dynamic values
-  const cargoVehiclesInside = cargoVehicleData.filter(v => v.status === 'In Progress').length;
-  const totalCargoIn = cargoVehicleData.length + 86; // Adding to existing data
-  const totalCargoOut = cargoVehicleData.filter(v => v.status === 'Completed').length + 74;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Tab Navigation */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-2">
         <nav className="flex space-x-2">
           <button
-            onClick={() => setActiveTab('cargo')}
+            onClick={() => setActiveTab('regular')}
             className={`flex-1 py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 ${
-              activeTab === 'cargo'
+              activeTab === 'regular'
                 ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
             }`}
           >
-            Cargo Vehicle Movement
+            Regular Rakes
           </button>
           <button
-            onClick={() => setActiveTab('non-cargo')}
+            onClick={() => setActiveTab('bobrn')}
             className={`flex-1 py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 ${
-              activeTab === 'non-cargo'
+              activeTab === 'bobrn'
                 ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
             }`}
           >
-            Pedestrian & Non-Cargo Movement
+            BOBRN Rakes
           </button>
         </nav>
       </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {activeTab === 'cargo' ? (
+        {activeTab === 'regular' ? (
           <>
             <StatCard
-              title="Vehicles In"
-              value={totalCargoIn.toString()}
-              subtitle="Today's inbound cargo vehicles"
-              icon={Truck}
-              trend={{ value: 12, isPositive: true }}
+              title="Active Rakes"
+              value="3"
+              subtitle="Currently in progress"
+              icon={Train}
               color="blue"
             />
             <StatCard
-              title="Vehicles Out"
-              value={totalCargoOut.toString()}
-              subtitle="Today's outbound vehicles"
+              title="Completed Rakes"
+              value="12"
+              subtitle="Dispatched today"
               icon={CheckCircle}
-              trend={{ value: 8, isPositive: true }}
+              trend={{ value: 15, isPositive: true }}
               color="green"
             />
             <StatCard
-              title="Vehicles Inside"
-              value={cargoVehiclesInside.toString()}
-              subtitle="Currently inside port"
-              icon={Building}
-              color="purple"
+              title="Exception Alerts"
+              value="2"
+              subtitle="Requires attention"
+              icon={AlertTriangle}
+              color="red"
             />
             <StatCard
-              title="Avg TAT"
-              value="2h 32m"
-              subtitle="Average turnaround time"
+              title="Avg WTR"
+              value="5h 42m"
+              subtitle="Wagon turnaround time"
               icon={Clock}
-              trend={{ value: 15, isPositive: false }}
+              trend={{ value: 8, isPositive: false }}
               color="orange"
             />
           </>
         ) : (
           <>
             <StatCard
-              title="Pedestrians In"
-              value="234"
-              subtitle="Today's pedestrian entries"
-              icon={Users}
-              trend={{ value: 5, isPositive: true }}
+              title="Active BOBRN Rakes"
+              value="1"
+              subtitle="Currently in progress"
+              icon={Train}
               color="blue"
             />
             <StatCard
-              title="Pedestrians Out"
-              value="198"
-              subtitle="Today's pedestrian exits"
+              title="Completed BOBRN"
+              value="8"
+              subtitle="Dispatched today"
               icon={CheckCircle}
-              trend={{ value: 4, isPositive: true }}
+              trend={{ value: 12, isPositive: true }}
               color="green"
             />
             <StatCard
-              title="Non-Cargo In"
-              value="156"
-              subtitle="Today's non-cargo entries"
-              icon={Truck}
-              trend={{ value: 7, isPositive: true }}
-              color="purple"
+              title="Exception Alerts"
+              value="1"
+              subtitle="Requires attention"
+              icon={AlertTriangle}
+              color="red"
             />
             <StatCard
-              title="Non-Cargo Out"
-              value="187"
-              subtitle="Today's non-cargo exits"
-              icon={XCircle}
-              trend={{ value: 3, isPositive: true }}
+              title="Avg WTR"
+              value="6h 15m"
+              subtitle="Wagon turnaround time"
+              icon={Clock}
+              trend={{ value: 5, isPositive: false }}
               color="orange"
             />
           </>
         )}
       </div>
 
-      {/* Terminal Distribution Card - Full Width */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300">
-        <div className="flex items-center justify-between mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-            {activeTab === 'cargo' ? <Truck className="w-6 h-6 text-white" /> : <Users className="w-6 h-6 text-white" />}
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-xs font-semibold text-green-600">LIVE</span>
-          </div>
-        </div>
-        
-        <div className="space-y-1 mb-4">
-          <p className="text-sm font-semibold text-gray-700">Terminal Distribution</p>
-          <p className="text-xs text-gray-500">
-            {activeTab === 'cargo' ? 'Vehicles currently present' : 'Non-cargo vehicles present'}
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-blue-700">Terminal 1</span>
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-            </div>
-            <p className="text-2xl font-bold text-blue-900">{activeTab === 'cargo' ? '45' : '8'}</p>
-            <p className="text-xs text-blue-600">{activeTab === 'cargo' ? 'Coal & Iron Ore' : 'Staff Vehicles'}</p>
-          </div>
-          
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-green-700">Terminal 2</span>
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            </div>
-            <p className="text-2xl font-bold text-green-900">{activeTab === 'cargo' ? '32' : '12'}</p>
-            <p className="text-xs text-green-600">{activeTab === 'cargo' ? 'Fertilizer' : 'Service Vehicles'}</p>
-          </div>
-          
-          <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-orange-700">Terminal 3</span>
-              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-            </div>
-            <p className="text-2xl font-bold text-orange-900">{activeTab === 'cargo' ? '28' : '6'}</p>
-            <p className="text-xs text-orange-600">{activeTab === 'cargo' ? 'Containers' : 'Maintenance'}</p>
-          </div>
-          
-          <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-4 border border-teal-200">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-teal-700">Terminal 4</span>
-              <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-            </div>
-            <p className="text-2xl font-bold text-teal-900">{activeTab === 'cargo' ? '19' : '4'}</p>
-            <p className="text-xs text-teal-600">{activeTab === 'cargo' ? 'General Cargo' : 'Visitors'}</p>
-          </div>
-        </div>
-        
-        <div className="mt-4 pt-3 border-t border-gray-200">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-gray-500">Total Active</span>
-            <span className="font-bold text-gray-900">{activeTab === 'cargo' ? '124 vehicles' : '30 vehicles'}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Data Table */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200">
-        <div className="p-8 border-b border-gray-200">
-          <h3 className="text-xl font-bold text-gray-900">
-            {activeTab === 'cargo' ? 'Cargo Vehicle' : 'Pedestrian & Non-Cargo'} Audit Trail
+      {/* Rake Audit Logs */}
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200">
+        <div className="p-6 border-b border-slate-200">
+          <h3 className="text-lg font-semibold text-gray-900">
+            {activeTab === 'regular' ? 'Regular Rake' : 'BOBRN Rake'} Operations Audit Logs
           </h3>
         </div>
-        <div className="p-8">
-          <DataTable
-            data={activeTab === 'cargo' ? cargoVehicleData : nonCargoVehicleData}
-            columns={activeTab === 'cargo' ? cargoColumns : nonCargoColumns}
-          />
+        <div className="p-6">
+          <DataTable data={activeTab === 'regular' ? rakeData : bobrnRakeData} columns={columns} />
         </div>
       </div>
 
       {/* Detail Modal */}
-      {selectedVehicle && (
+      {selectedRake && (
         <Modal
-          isOpen={!!selectedVehicle}
-          onClose={() => setSelectedVehicle(null)}
-          title={`${activeTab === 'cargo' ? 'Vehicle' : 'Entry'} Details - ${selectedVehicle.vehicleNumber || selectedVehicle.personName}`}
+          isOpen={!!selectedRake}
+          onClose={() => setSelectedRake(null)}
+          title={`Rake Details - ${selectedRake.rakeRefNo}`}
           size="xl"
         >
           <div className="space-y-6">
-            {/* Vehicle and Person Information */}
+            {/* Rake Information Cards */}
             <div className="grid grid-cols-2 gap-6">
               <div className="bg-gray-50 rounded-xl p-6">
-                <h4 className="font-semibold text-gray-900 mb-4">
-                  {activeTab === 'cargo' ? 'Vehicle Information' : 'Entry Information'}
-                </h4>
+                <h4 className="font-semibold text-gray-900 mb-4">Rake Information</h4>
                 <div className="space-y-3 text-sm">
-                  {activeTab === 'cargo' ? (
-                    <>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Vehicle Number:</span>
-                        <span className="text-gray-900">{selectedVehicle.vehicleNumber}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Cargo Type:</span>
-                        <span className="text-gray-900">{selectedVehicle.cargoType}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Weight:</span>
-                        <span className="text-gray-900">{selectedVehicle.vehicleWeight}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Destination:</span>
-                        <span className="text-gray-900">{selectedVehicle.destination}</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Vehicle Number:</span>
-                        <span className="text-gray-900">{selectedVehicle.vehicleNumber}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Vehicle Type:</span>
-                        <span className="text-gray-900">{selectedVehicle.vehicleType}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Purpose:</span>
-                        <span className="text-gray-900">{selectedVehicle.purpose}</span>
-                      </div>
-                    </>
-                  )}
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Gate:</span>
-                    <span className="text-gray-900">{selectedVehicle.gateNumber}</span>
+                    <span className="font-medium text-gray-600">Reference No:</span>
+                    <span className="text-gray-900">{selectedRake.rakeRefNo}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Time In:</span>
-                    <span className="text-gray-900">{selectedVehicle.timeIn}</span>
+                    <span className="font-medium text-gray-600">Source Station:</span>
+                    <span className="text-gray-900">{selectedRake.sourceTerminal}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Time Out:</span>
-                    <span className="text-gray-900">{selectedVehicle.timeOut}</span>
+                    <span className="font-medium text-gray-600">Destination:</span>
+                    <span className="text-gray-900">{selectedRake.destination}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Cargo Type:</span>
+                    <span className="text-gray-900">{selectedRake.cargoType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Total Wagons:</span>
+                    <span className="text-gray-900">{selectedRake.wagonCount}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Total Weight:</span>
+                    <span className="text-gray-900">{selectedRake.totalWeight}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Railway PN Number:</span>
+                    <span className="text-gray-900">{selectedRake.railwayPNNumber}</span>
                   </div>
                 </div>
               </div>
               
               <div className="bg-gray-50 rounded-xl p-6">
-                <h4 className="font-semibold text-gray-900 mb-4">
-                  {activeTab === 'cargo' ? 'Driver Details' : 'Person Details'}
-                </h4>
+                <h4 className="font-semibold text-gray-900 mb-4">Operation Details</h4>
                 <div className="space-y-3 text-sm">
-                  {activeTab === 'cargo' ? (
-                    <>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Name:</span>
-                        <span className="text-gray-900">{selectedVehicle.driverName}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">License:</span>
-                        <span className="text-gray-900">{selectedVehicle.driverLicense}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Contact:</span>
-                        <span className="text-gray-900">{selectedVehicle.driverContact}</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Name:</span>
-                        <span className="text-gray-900">{selectedVehicle.personName}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">ID:</span>
-                        <span className="text-gray-900">{selectedVehicle.personId}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-600">Department:</span>
-                        <span className="text-gray-900">{selectedVehicle.department}</span>
-                      </div>
-                    </>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Operator:</span>
+                    <span className="text-gray-900">{selectedRake.operatorName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Port Entry Time:</span>
+                    <span className="text-gray-900">{selectedRake.timeIn}</span>
+                  </div>
+                  {selectedRake.timeOut !== '—' && (
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-600">Port Exit Time:</span>
+                      <span className="text-gray-900">{selectedRake.timeOut}</span>
+                    </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Security:</span>
+                    <span className="font-medium text-gray-600">Loaded Wagons:</span>
+                    <span className="text-gray-900">{selectedRake.loadedWagons}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Empty Wagons:</span>
+                    <span className="text-gray-900">{selectedRake.emptyWagons}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">WTR Time:</span>
+                    <span className="text-gray-900">{selectedRake.wtr}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Status:</span>
                     <span className={`px-2 py-1 rounded text-xs ${
-                      selectedVehicle.securityClearance === 'Verified' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                      selectedRake.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
                     }`}>
-                      {selectedVehicle.securityClearance}
+                      {selectedRake.status}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Alerts:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      selectedRake.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`}>
+                      {selectedRake.alerts}
                     </span>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Image Gallery - 3 Images Only */}
+            {/* Operation Timeline */}
             <div className="bg-gray-50 rounded-xl p-6">
-              <h4 className="font-semibold text-gray-900 mb-4">Captured Images</h4>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="bg-white rounded-lg p-3 border border-gray-200">
-                  <p className="text-xs font-medium text-gray-600 mb-2">Front View</p>
-                  <img 
-                    src={selectedVehicle.images.front}
-                    alt="Front view"
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                </div>
-                <div className="bg-white rounded-lg p-3 border border-gray-200">
-                  <p className="text-xs font-medium text-gray-600 mb-2">Overhead View</p>
-                  <img 
-                    src={selectedVehicle.images.overhead}
-                    alt="Overhead view"
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                </div>
-                {selectedVehicle.vehicleNumber && (
-                  <div className="bg-white rounded-lg p-3 border border-gray-200">
-                    <p className="text-xs font-medium text-gray-600 mb-2">Number Plate</p>
-                    <img 
-                      src={selectedVehicle.images.numberPlate}
-                      alt="Number plate"
-                      className="w-full h-32 object-cover rounded-lg"
-                    />
+              <h4 className="font-semibold text-gray-900 mb-4">Complete Operation Timeline</h4>
+              <div className="space-y-3">
+                {selectedRake.timeline.map((stage: any, index: number) => (
+                  <div key={index} className="flex items-center space-x-4 p-3 bg-white rounded-lg border border-gray-200">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
+                      stage.status === 'completed' ? 'bg-green-500' :
+                      stage.status === 'in-progress' ? 'bg-blue-500' :
+                      'bg-gray-300'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">{stage.stage}</p>
+                      <p className="text-xs text-gray-600">{stage.time}</p>
+                    </div>
+                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      stage.status === 'completed' ? 'bg-green-100 text-green-800' :
+                      stage.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>
+                      {stage.status === 'completed' ? 'Completed' :
+                       stage.status === 'in-progress' ? 'In Progress' : 'Pending'}
+                    </div>
                   </div>
-                )}
+                ))}
               </div>
             </div>
           </div>
@@ -532,4 +409,4 @@ const GateOperations: React.FC = () => {
   );
 };
 
-export default GateOperations;
+export default RakeOperations;
