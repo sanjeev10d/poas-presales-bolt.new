@@ -6,9 +6,8 @@ import { Ship, Clock, AlertTriangle, CheckCircle, Eye, Anchor } from 'lucide-rea
 
 const BerthOperations: React.FC = () => {
   const [selectedVessel, setSelectedVessel] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState('cargo');
 
-  const cargoVesselData = [
+  const vesselData = [
     {
       id: 1,
       vesselName: 'MV Ocean Pioneer',
@@ -73,11 +72,8 @@ const BerthOperations: React.FC = () => {
         { stage: 'Vessel Departure', time: '—', status: 'pending' }
       ]
     }
-  ];
-
-  const tankerVesselData = [
     {
-      id: 1,
+      id: 3,
       vesselName: 'MT Liquid Gold',
       imoNumber: 'IMO9456789',
       captain: {
@@ -158,113 +154,48 @@ const BerthOperations: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Tab Navigation */}
-      <div className="border-b border-slate-200">
-        <nav className="-mb-px flex space-x-8">
-          <button
-            onClick={() => setActiveTab('cargo')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm ${
-              activeTab === 'cargo'
-                ? 'border-blue-500 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            }`}
-          >
-            Cargo Vessels
-          </button>
-          <button
-            onClick={() => setActiveTab('tanker')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm ${
-              activeTab === 'tanker'
-                ? 'border-blue-500 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            }`}
-          >
-            Tanker Vessels
-          </button>
-        </nav>
-      </div>
-
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {activeTab === 'cargo' ? (
-          <>
-            <StatCard
-              title="Active Vessels"
-              value="2"
-              subtitle="Currently at berth"
-              icon={Ship}
-              color="blue"
-            />
-            <StatCard
-              title="Completed Operations"
-              value="8"
-              subtitle="Vessels departed today"
-              icon={CheckCircle}
-              trend={{ value: 12, isPositive: true }}
-              color="green"
-            />
-            <StatCard
-              title="Berth Utilization"
-              value="88%"
-              subtitle="Average utilization"
-              icon={Anchor}
-              trend={{ value: 5, isPositive: true }}
-              color="purple"
-            />
-            <StatCard
-              title="Avg Turnaround"
-              value="14h 30m"
-              subtitle="Average vessel time"
-              icon={Clock}
-              trend={{ value: 8, isPositive: false }}
-              color="orange"
-            />
-          </>
-        ) : (
-          <>
-            <StatCard
-              title="Active Tankers"
-              value="0"
-              subtitle="Currently at berth"
-              icon={Ship}
-              color="blue"
-            />
-            <StatCard
-              title="Completed Operations"
-              value="3"
-              subtitle="Tankers departed today"
-              icon={CheckCircle}
-              trend={{ value: 8, isPositive: true }}
-              color="green"
-            />
-            <StatCard
-              title="Berth Utilization"
-              value="78%"
-              subtitle="Tanker berth utilization"
-              icon={Anchor}
-              color="purple"
-            />
-            <StatCard
-              title="Avg Turnaround"
-              value="10h 45m"
-              subtitle="Average tanker time"
-              icon={Clock}
-              trend={{ value: 12, isPositive: false }}
-              color="orange"
-            />
-          </>
-        )}
+        <StatCard
+          title="Active Vessels"
+          value="2"
+          subtitle="Currently at berth"
+          icon={Ship}
+          color="blue"
+        />
+        <StatCard
+          title="Completed Operations"
+          value="11"
+          subtitle="Vessels departed today"
+          icon={CheckCircle}
+          trend={{ value: 12, isPositive: true }}
+          color="green"
+        />
+        <StatCard
+          title="Berth Utilization"
+          value="83%"
+          subtitle="Average utilization"
+          icon={Anchor}
+          trend={{ value: 5, isPositive: true }}
+          color="purple"
+        />
+        <StatCard
+          title="Avg Turnaround"
+          value="12h 45m"
+          subtitle="Average vessel time"
+          icon={Clock}
+          trend={{ value: 8, isPositive: false }}
+          color="orange"
+        />
       </div>
 
       {/* Berth Operations Table */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-gray-900">
-            {activeTab === 'cargo' ? 'Cargo Vessel' : 'Tanker Vessel'} Operations
-          </h3>
+          <h3 className="text-lg font-semibold text-gray-900">Vessel Operations</h3>
         </div>
         <div className="p-6">
-          <DataTable data={activeTab === 'cargo' ? cargoVesselData : tankerVesselData} columns={columns} />
+          <DataTable data={vesselData} columns={columns} />
         </div>
       </div>
 
