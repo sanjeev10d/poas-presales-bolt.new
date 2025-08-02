@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import StatCard from './components/ui/StatCard';
-import DataTable from './components/ui/DataTable';
-import Modal from './components/ui/Modal';
+import StatCard from './ui/StatCard';
+import DataTable from './ui/DataTable';
+import Modal from './ui/Modal';
 import { Train, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const RakeOperations: React.FC = () => {
