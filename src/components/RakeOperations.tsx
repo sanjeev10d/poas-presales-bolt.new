@@ -21,13 +21,17 @@ const RakeOperations: React.FC = () => {
       sourceTerminal: 'Jharsuguda',
       status: 'Completed',
       cargoType: 'Coal',
+      railwayPNNumber: 'RPN-2024-001',
       timeline: [
-        { stage: 'Rake In', time: '08:30 AM', status: 'completed' },
+        { stage: 'Station Arrival', time: '08:15 AM', status: 'completed' },
+        { stage: 'Station Departure', time: '08:30 AM', status: 'completed' },
         { stage: 'Top Point Arrival', time: '08:45 AM', status: 'completed' },
-        { stage: 'Unloading Start', time: '09:00 AM', status: 'completed' },
+        { stage: 'Hopper Placement', time: '08:55 AM', status: 'completed' },
         { stage: 'Unloading Complete', time: '01:30 PM', status: 'completed' },
-        { stage: 'Rake Out Request', time: '02:00 PM', status: 'completed' },
-        { stage: 'Dispatched', time: '02:15 PM', status: 'completed' }
+        { stage: 'Rake Dispatch (Railway PN)', time: '02:00 PM', status: 'completed' },
+        { stage: 'PRP Top Point Arrival', time: '02:10 PM', status: 'completed' },
+        { stage: 'Station Arrival', time: '02:15 PM', status: 'completed' },
+        { stage: 'Station Departure', time: '02:15 PM', status: 'completed' }
       ]
     },
     {
@@ -43,13 +47,17 @@ const RakeOperations: React.FC = () => {
       sourceTerminal: 'Talcher',
       status: 'In Progress',
       cargoType: 'Coal',
+      railwayPNNumber: 'RPN-2024-002',
       timeline: [
-        { stage: 'Rake In', time: '10:15 AM', status: 'completed' },
+        { stage: 'Station Arrival', time: '10:00 AM', status: 'completed' },
+        { stage: 'Station Departure', time: '10:15 AM', status: 'completed' },
         { stage: 'Top Point Arrival', time: '10:30 AM', status: 'completed' },
-        { stage: 'Unloading Start', time: '10:45 AM', status: 'completed' },
+        { stage: 'Hopper Placement', time: '10:40 AM', status: 'completed' },
         { stage: 'Unloading Complete', time: '—', status: 'in-progress' },
-        { stage: 'Rake Out Request', time: '—', status: 'pending' },
-        { stage: 'Dispatched', time: '—', status: 'pending' }
+        { stage: 'Rake Dispatch (Railway PN)', time: '—', status: 'pending' },
+        { stage: 'PRP Top Point Arrival', time: '—', status: 'pending' },
+        { stage: 'Station Arrival', time: '—', status: 'pending' },
+        { stage: 'Station Departure', time: '—', status: 'pending' }
       ]
     }
   ];
@@ -166,9 +174,10 @@ const RakeOperations: React.FC = () => {
                   <p><span className="font-medium">Source Station:</span> {selectedRake.sourceTerminal}</p>
                   <p><span className="font-medium">Cargo Type:</span> {selectedRake.cargoType}</p>
                   <p><span className="font-medium">Total Wagons:</span> {selectedRake.wagonCount}</p>
-                  <p><span className="font-medium">Arrival Time:</span> {selectedRake.timeIn}</p>
+                  <p><span className="font-medium">Railway PN Number:</span> {selectedRake.railwayPNNumber}</p>
+                  <p><span className="font-medium">Port Entry Time:</span> {selectedRake.timeIn}</p>
                   {selectedRake.timeOut !== '—' && (
-                    <p><span className="font-medium">Dispatch Time:</span> {selectedRake.timeOut}</p>
+                    <p><span className="font-medium">Port Exit Time:</span> {selectedRake.timeOut}</p>
                   )}
                 </div>
               </div>
