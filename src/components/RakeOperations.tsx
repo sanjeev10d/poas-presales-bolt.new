@@ -232,8 +232,8 @@ const RakeOperations: React.FC = () => {
               {selectedRake.timeline.map((stage: any, index: number) => (
                 <div key={index} className={`flex items-center space-x-3 p-3 rounded-lg border ${
                   stage.status === 'completed' ? 'bg-green-50 border-green-200' :
-                    stage.status === 'in-progress' ? 'bg-blue-50 border-blue-200' :
-                    'bg-slate-50 border-slate-200'
+                  stage.status === 'in-progress' ? 'bg-blue-50 border-blue-200' :
+                  'bg-slate-50 border-slate-200'
                 }`}>
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                     stage.status === 'completed' ? 'bg-green-500 text-white' :
