@@ -44,14 +44,14 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
         </div>
         
         <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
-          <div className="hidden lg:flex items-center space-x-2 text-sm text-gray-500">
+          {/* <div className="hidden lg:flex items-center space-x-2 text-sm text-gray-500">
             <Clock className="w-4 h-4" />
             <span>{new Date().toLocaleString('en-IN', { 
               timeZone: 'Asia/Kolkata',
               dateStyle: 'full',
               timeStyle: 'short'
             })}</span>
-          </div>
+          </div> */}
           
           {/* Full search bar for larger screens */}
           <div className="hidden lg:block relative">
