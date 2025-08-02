@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 sm:px-8 py-4 shadow-lg z-50">
+    <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 sm:px-8 py-4 shadow-lg z-[1000] w-full">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-3">

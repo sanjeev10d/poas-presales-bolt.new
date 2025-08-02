@@ -29,7 +29,7 @@ const menuItems = [
 
 const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
   return (
-    <div className="fixed left-0 top-20 w-64 lg:w-72 h-[calc(100vh-5rem)] bg-white border-r border-gray-200 flex flex-col shadow-sm z-40">
+    <div className="fixed left-0 top-20 w-64 lg:w-72 h-[calc(100vh-5rem)] bg-white border-r border-gray-200 flex flex-col shadow-sm z-10">
       
       <nav className="flex-1 p-6 overflow-y-auto pt-6">
         <ul className="space-y-2">

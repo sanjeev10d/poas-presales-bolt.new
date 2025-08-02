@@ -44,9 +44,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-20">
       <Header activeModule={activeModule} />
-      <div className="flex pt-20">
+      <div className="flex">
         <div className="w-64 lg:w-72 flex-shrink-0">
           <Sidebar activeModule={activeModule} setActiveModule={setActiveModule} />
         </div>
@@ -55,20 +55,6 @@ function App() {
             {renderActiveModule()}
           </main>
         </div>
-      </div>
-      <ToastContainer toasts={toasts} onClose={removeToast} />
-    </div>
-  );
-};
-
-export default App;
-        <Sidebar activeModule={activeModule} setActiveModule={setActiveModule} />
-      </div>
-      <div className="flex-1 flex flex-col min-w-0 ml-0">
-        <Header activeModule={activeModule} />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto overflow-x-hidden">
-          {renderActiveModule()}
-        </main>
       </div>
       <ToastContainer toasts={toasts} onClose={removeToast} />
     </div>
