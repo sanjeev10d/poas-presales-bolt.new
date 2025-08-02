@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
-import SyncfusionChart, { PortOperationsCharts, ChartContainer } from './ui/EnhancedCharts';
+import Chart from './ui/Chart';
 import HeatMap from './ui/HeatMap';
 import { useToast } from '../hooks/useToast';
 import { calculateVehicleStats, calculateAverageTurnaroundTime } from '../utils/dataCalculations';
@@ -199,27 +199,59 @@ const DashboardOverview: React.FC = () => {
       {/* Advanced Visualizations Grid */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Operational Trends Chart */}
-        <ChartContainer className="xl:col-span-2" title="Vehicle Traffic Trends" subtitle="Daily vehicle movements over the past week">
-          <div className="flex items-center justify-between mb-4">
+        <div className="xl:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">Vehicle Traffic Trends</h3>
+              <p className="text-sm text-gray-500">Daily vehicle movements over the past week</p>
+            </div>
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="text-xs font-semibold text-green-600">LIVE</span>
             </div>
           </div>
           
-          <PortOperationsCharts.VehicleTrafficChart data={operationalTrendsData} />
+          <Chart
+            type="area"
+            data={operationalTrendsData}
+            config={{
+              colors: ['#3B82F6', '#10B981'],
+              height: 300,
+              showGrid: true,
+              showLabels: true,
+              animate: true
+            }}
+            className="mb-4"
+          />
           
-          <div className="flex items-center justify-between text-xs text-gray-500 mt-4">
+          <div className="flex items-center justify-between text-xs text-gray-500">
             <span>Peak: Thursday (3,100 vehicles)</span>
             <span>Average: 2,565 vehicles/day</span>
           </div>
-        </ChartContainer>
+        </div>
 
         {/* Cargo Distribution */}
-        <ChartContainer title="Cargo Distribution" subtitle="By cargo type">
-          <PortOperationsCharts.CargoDistributionChart data={cargoDistributionData} />
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">Cargo Distribution</h3>
+              <p className="text-sm text-gray-500">By cargo type</p>
+            </div>
+            <PieChart className="w-5 h-5 text-gray-400" />
+          </div>
           
-          <div className="space-y-2 mt-4">
+          <Chart
+            type="donut"
+            data={cargoDistributionData}
+            config={{
+              colors: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'],
+              height: 200,
+              animate: true
+            }}
+            className="mb-4"
+          />
+          
+          <div className="space-y-2">
             {cargoDistributionData.map((item, index) => (
               <div key={index} className="flex items-center justify-between text-sm">
                 <div className="flex items-center space-x-2">
@@ -233,7 +265,7 @@ const DashboardOverview: React.FC = () => {
               </div>
             ))}
           </div>
-        </ChartContainer>
+        </div>
       </div>
 
       {/* Terminal Utilization Heatmap */}
@@ -261,29 +293,26 @@ const DashboardOverview: React.FC = () => {
       </div>
 
       {/* Performance Metrics */}
-      <ChartContainer title="Overall Performance Score" subtitle="Composite efficiency rating based on all operations">
-        <div className="flex items-center space-x-2 text-sm mb-4">
-          <TrendingUp className="w-4 h-4 text-green-600" />
-          <span className="text-green-600 font-semibold">+5% from last week</span>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h3 className="text-lg font-bold text-gray-900">Overall Performance Score</h3>
+            <p className="text-sm text-gray-500">Composite efficiency rating based on all operations</p>
+          </div>
+          <div className="flex items-center space-x-2 text-sm">
+            <TrendingUp className="w-4 h-4 text-green-600" />
+            <span className="text-green-600 font-semibold">+5% from last week</span>
+          </div>
         </div>
         
-        <SyncfusionChart
-          type="area"
-          data={[
-            { period: 'Week 1', value: 82 },
-            { period: 'Week 2', value: 85 },
-            { period: 'Week 3', value: 83 },
-            { period: 'Week 4', value: 87 }
-          ]}
+        <Chart
+          type="progress"
+          data={performanceMetricsData}
           config={{
             colors: ['#10B981'],
-            height: 200,
-            showGrid: true,
-            showTooltip: true,
-            enableAnimation: true,
-            xField: 'period',
-            yField: 'value'
+            animate: true
           }}
+          className="mb-4"
         />
         
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
@@ -304,7 +333,7 @@ const DashboardOverview: React.FC = () => {
             <div className="text-xs text-orange-700">Active Alerts</div>
           </div>
         </div>
-      </ChartContainer>
+      </div>
 
       {/* Navigation Cards */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
