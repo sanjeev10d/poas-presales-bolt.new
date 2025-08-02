@@ -232,8 +232,8 @@ const GateOperations: React.FC = () => {
         { key: 'driverLicense', label: 'Driver License', type: 'text' as const, required: true, placeholder: 'License number' },
         { key: 'driverContact', label: 'Driver Contact', type: 'text' as const, required: true, placeholder: 'Phone number' },
         { key: 'vehicleWeight', label: 'Vehicle Weight (MT)', type: 'number' as const, required: true, placeholder: '35.2' },
-        { key: 'timeIn', label: 'Entry Time', type: 'datetime-local' as const, required: true },
-        { key: 'timeOut', label: 'Exit Time', type: 'datetime-local' as const, required: false },
+        { key: 'timeIn', label: 'Entry Time', type: 'datetime-local' as const, required: true, placeholder: 'Select entry date and time' },
+        { key: 'timeOut', label: 'Exit Time', type: 'datetime-local' as const, required: false, placeholder: 'Select exit date and time (optional)' },
         { key: 'destination', label: 'Destination', type: 'select' as const, required: true, options: ['Gate 1', 'Gate 2', 'Gate 3', 'Gate 4'] },
         { key: 'gateNumber', label: 'Gate Number', type: 'select' as const, required: true, options: ['Gate-A1', 'Gate-B2', 'Gate-C1', 'Gate-D1'] },
         { key: 'verificationType', label: 'Verification Type', type: 'select' as const, required: true, options: ['ANPR', 'QR Code', 'RFID', 'Manual'] },
@@ -247,8 +247,8 @@ const GateOperations: React.FC = () => {
         { key: 'personId', label: 'Person ID', type: 'text' as const, required: true, placeholder: 'Employee/Contractor ID' },
         { key: 'department', label: 'Department', type: 'select' as const, required: true, options: ['Operations', 'Maintenance', 'Security', 'Administration', 'Contractor'] },
         { key: 'purpose', label: 'Purpose of Visit', type: 'text' as const, required: true, placeholder: 'Reason for entry' },
-        { key: 'timeIn', label: 'Entry Time', type: 'datetime-local' as const, required: true },
-        { key: 'timeOut', label: 'Exit Time', type: 'datetime-local' as const, required: false },
+        { key: 'timeIn', label: 'Entry Time', type: 'datetime-local' as const, required: true, placeholder: 'Select entry date and time' },
+        { key: 'timeOut', label: 'Exit Time', type: 'datetime-local' as const, required: false, placeholder: 'Select exit date and time (optional)' },
         { key: 'gateNumber', label: 'Gate Number', type: 'select' as const, required: true, options: ['Gate-P1', 'Gate-P2', 'Gate-P3'] },
         { key: 'securityClearance', label: 'Security Clearance', type: 'select' as const, required: true, options: ['Verified', 'Pending', 'Rejected'] }
       ];

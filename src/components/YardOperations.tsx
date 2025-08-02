@@ -111,11 +111,11 @@ const YardOperations: React.FC = () => {
     { key: 'occupiedSpace', label: 'Occupied Space (m²)', type: 'number' as const, required: true, placeholder: '2150' },
     { key: 'assignedVehicle', label: 'Assigned Vehicle', type: 'text' as const, required: true, placeholder: 'e.g., Rake #232' },
     { key: 'operatorName', label: 'Operator Name', type: 'text' as const, required: true, placeholder: 'Operator full name' },
-    { key: 'allocationTime', label: 'Allocation Time', type: 'datetime-local' as const, required: true },
+    { key: 'allocationTime', label: 'Allocation Time', type: 'datetime-local' as const, required: true, placeholder: 'Select allocation time' },
     { key: 'stackHeight', label: 'Stack Height (m)', type: 'number' as const, required: true, placeholder: '8.5' },
     { key: 'moistureLevel', label: 'Moisture Level (%)', type: 'number' as const, required: false, placeholder: '12' },
     { key: 'temperatureReading', label: 'Temperature (°C)', type: 'number' as const, required: false, placeholder: '28' },
-    { key: 'lastInspection', label: 'Last Inspection Time', type: 'datetime-local' as const, required: true },
+    { key: 'lastInspection', label: 'Last Inspection Time', type: 'datetime-local' as const, required: true, placeholder: 'Select last inspection time' },
     { key: 'status', label: 'Status', type: 'select' as const, required: true, options: ['Active', 'Overstacked', 'Under Maintenance', 'Available'] }
   ];
 
