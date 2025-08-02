@@ -362,7 +362,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-lg font-bold text-gray-900">Terminal Utilization Heatmap</h3>
+            <h3 className="text-lg font-bold text-gray-900">PPP Terminal Utilization Heatmap</h3>
             <p className="text-sm text-gray-500">Vehicle traffic across terminals and time periods</p>
           </div>
           <div className="flex items-center space-x-2">
