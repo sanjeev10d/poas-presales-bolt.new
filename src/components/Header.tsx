@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, Search, User, Clock } from 'lucide-react';
+import { Bell, Search, User, Clock, Anchor } from 'lucide-react';
 
 interface HeaderProps {
   activeModule: string;
@@ -21,10 +21,29 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-6 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 sm:px-8 py-4 shadow-lg z-50">
       <div className="flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">{getModuleTitle(activeModule)}</h1>
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Anchor className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">POAS</h1>
+              <p className="text-gray-500 text-xs hidden sm:block">Paradip Port Authority</p>
+            </div>
+          </div>
+          <div className="hidden md:block h-8 w-px bg-gray-300"></div>
+          <div className="hidden md:block">
+            <h2 className="text-lg font-semibold text-gray-900">{getModuleTitle(activeModule)}</h2>
+          </div>
+        </div>
+        
+        <div className="md:hidden">
+          <h2 className="text-lg font-semibold text-gray-900">{getModuleTitle(activeModule)}</h2>
+        </div>
+        
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <div className="flex items-center space-x-2 text-sm text-gray-500 mt-2">
             <Clock className="w-4 h-4" />
             <span>{new Date().toLocaleString('en-IN', { 
@@ -33,9 +52,7 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
               timeStyle: 'short'
             })}</span>
           </div>
-        </div>
-        
-        <div className="flex items-center space-x-2 sm:space-x-4">
+          
           <div className="relative">
             <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
