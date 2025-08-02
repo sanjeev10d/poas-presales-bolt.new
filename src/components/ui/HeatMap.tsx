@@ -9,12 +9,14 @@ interface HeatMapProps {
   }>;
   colorScale?: string[];
   className?: string;
+  interactive?: boolean;
 }
 
 const HeatMap: React.FC<HeatMapProps> = ({ 
   data, 
   colorScale = ['#f3f4f6', '#ddd6fe', '#a78bfa', '#8b5cf6', '#7c3aed'],
-  className = '' 
+  className = '',
+  interactive = true
 }) => {
   const maxValue = Math.max(...data.map(d => d.value));
   const minValue = Math.min(...data.map(d => d.value));
@@ -30,11 +32,11 @@ const HeatMap: React.FC<HeatMapProps> = ({
 
   return (
     <div className={`${className}`}>
-      <div className="grid gap-1" style={{ gridTemplateColumns: `auto repeat(${xLabels.length}, 1fr)` }}>
+      <div className="grid gap-2" style={{ gridTemplateColumns: `auto repeat(${xLabels.length}, 1fr)` }}>
         {/* Header row */}
         <div></div>
         {xLabels.map(label => (
-          <div key={label} className="text-xs font-medium text-gray-600 text-center p-2">
+          <div key={label} className="text-sm font-semibold text-gray-700 text-center p-2">
             {label}
           </div>
         ))}
@@ -42,7 +44,7 @@ const HeatMap: React.FC<HeatMapProps> = ({
         {/* Data rows */}
         {yLabels.map(yLabel => (
           <React.Fragment key={yLabel}>
-            <div className="text-xs font-medium text-gray-600 flex items-center pr-2">
+            <div className="text-sm font-semibold text-gray-700 flex items-center pr-3">
               {yLabel}
             </div>
             {xLabels.map(xLabel => {
@@ -52,12 +54,17 @@ const HeatMap: React.FC<HeatMapProps> = ({
               return (
                 <div
                   key={`${xLabel}-${yLabel}`}
-                  className="aspect-square rounded-lg flex items-center justify-center text-xs font-medium transition-all duration-200 hover:scale-110 cursor-pointer"
-                  style={{ backgroundColor: getColor(value) }}
+                  className={`aspect-square rounded-xl flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                    interactive ? 'hover:scale-110 hover:shadow-lg cursor-pointer hover:z-10 relative' : ''
+                  } ${value > 0 ? 'shadow-sm' : ''}`}
+                  style={{ 
+                    backgroundColor: getColor(value),
+                    boxShadow: value > 0 ? `0 2px 4px ${getColor(value)}40` : 'none'
+                  }}
                   title={dataPoint?.label || `${xLabel} - ${yLabel}: ${value}`}
                 >
                   {value > 0 && (
-                    <span className={value > maxValue * 0.5 ? 'text-white' : 'text-gray-700'}>
+                    <span className={`${value > maxValue * 0.5 ? 'text-white' : 'text-gray-800'} drop-shadow-sm`}>
                       {value}
                     </span>
                   )}
@@ -69,18 +76,24 @@ const HeatMap: React.FC<HeatMapProps> = ({
       </div>
       
       {/* Legend */}
-      <div className="flex items-center justify-center mt-4 space-x-2">
-        <span className="text-xs text-gray-500">Low</span>
-        <div className="flex space-x-1">
+      <div className="flex items-center justify-center mt-6 space-x-3">
+        <span className="text-sm font-medium text-gray-600">Low</span>
+        <div className="flex space-x-1 px-2">
           {colorScale.map((color, i) => (
             <div
               key={i}
-              className="w-4 h-4 rounded"
+              className="w-6 h-4 rounded shadow-sm"
               style={{ backgroundColor: color }}
             />
           ))}
         </div>
-        <span className="text-xs text-gray-500">High</span>
+        <span className="text-sm font-medium text-gray-600">High</span>
+      </div>
+      
+      <div className="text-center mt-2">
+        <span className="text-xs text-gray-500">
+          Range: {minValue} - {maxValue} | Click cells for detailed view
+        </span>
       </div>
     </div>
   );
