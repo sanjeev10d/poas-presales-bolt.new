@@ -72,6 +72,7 @@ const BerthOperations: React.FC = () => {
         { stage: 'Vessel Departure', time: '—', status: 'pending' }
       ]
     }
+    ,
     {
       id: 3,
       vesselName: 'MT Liquid Gold',
