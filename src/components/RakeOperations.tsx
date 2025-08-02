@@ -288,6 +288,75 @@ const RakeOperations: React.FC = () => {
           size="xl"
         >
           <div className="space-y-6">
+            {/* OCR Train Identification */}
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
+                <Train className="w-5 h-5 mr-2 text-blue-600" />
+                OCR Train Identification System
+              </h4>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <p className="text-sm font-medium text-gray-600 mb-3">Live Train Detection</p>
+                  <div className="relative">
+                    <img 
+                      src="https://images.pexels.com/photos/258510/pexels-photo-258510.jpeg?auto=compress&cs=tinysrgb&w=600&h=300&fit=crop"
+                      alt="Train with OCR detection"
+                      className="w-full h-48 object-cover rounded-lg"
+                    />
+                    {/* OCR Detection Overlay */}
+                    <div className="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                      DETECTED: {selectedRake.rakeRefNo}
+                    </div>
+                    {/* Detection Zone Highlight */}
+                    <div className="absolute bottom-6 left-6 right-6 h-12 border-2 border-green-400 bg-green-400 bg-opacity-20 rounded flex items-center justify-center">
+                      <span className="text-green-800 text-xs font-bold bg-green-100 px-2 py-1 rounded">
+                        OCR DETECTION ZONE
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex items-center justify-between text-xs">
+                    <span className="text-gray-500">Confidence: 98.7%</span>
+                    <span className="text-green-600 font-medium">✓ VERIFIED</span>
+                  </div>
+                </div>
+                
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <p className="text-sm font-medium text-gray-600 mb-3">Train Number Close-up</p>
+                  <div className="relative">
+                    <img 
+                      src="https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=600&h=300&fit=crop"
+                      alt="Train number close-up"
+                      className="w-full h-48 object-cover rounded-lg"
+                    />
+                    {/* Number Highlight Box */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-yellow-400 bg-opacity-30 border-2 border-yellow-500 rounded-lg px-8 py-4">
+                        <span className="text-2xl font-bold text-gray-900 bg-white px-3 py-1 rounded shadow-lg">
+                          {selectedRake.rakeRefNo}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-3 text-center">
+                    <span className="text-xs text-gray-500">Auto-captured at {selectedRake.timeIn}</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* OCR System Status */}
+              <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-medium text-green-800">OCR System Active</span>
+                  </div>
+                  <div className="text-xs text-green-600">
+                    Last scan: {selectedRake.timeIn} | Accuracy: 98.7%
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Rake Information Cards */}
             <div className="grid grid-cols-2 gap-6">
               <div className="bg-gray-50 rounded-xl p-6">
