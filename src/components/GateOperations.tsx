@@ -356,25 +356,22 @@ const RakeOperations: React.FC = () => {
                   stage.status === 'in-progress' ? 'bg-blue-50 border-blue-200' :
                   'bg-slate-50 border-slate-200'
                 }`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
+                  <div className={\`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                     stage.status === 'completed' ? 'bg-green-500 text-white' :
                     stage.status === 'in-progress' ? 'bg-blue-500 text-white' :
                     'bg-slate-300 text-slate-600'
                   }`}>
                     {index + 1}
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-slate-900">{stage.stage}</p>
+                  <div className="text-center">
+                    <p className="text-xs font-medium text-slate-900">{stage.stage}</p>
                     <p className="text-xs text-slate-600">{stage.time}</p>
                   </div>
-                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    stage.status === 'completed' ? 'bg-green-100 text-green-800' :
-                    stage.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
-                    'bg-slate-100 text-slate-600'
-                  }`}>
-                    {stage.status === 'completed' ? 'Completed' :
-                     stage.status === 'in-progress' ? 'In Progress' : 'Pending'}
-                  </div>
+                  {index < selectedRake.timeline.length - 1 && (
+                    <div className={\`w-8 h-0.5 ${
+                      stage.status === 'completed' ? 'bg-green-500' : 'bg-slate-300'
+                    }`} />
+                  )}
                 </div>
               ))}
             </div>
