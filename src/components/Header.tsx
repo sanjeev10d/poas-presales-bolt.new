@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 sm:px-8 py-6 shadow-lg z-50">
+    <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-6 shadow-sm">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">{getModuleTitle(activeModule)}</h1>
