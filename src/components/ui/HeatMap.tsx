@@ -64,7 +64,7 @@ const HeatMap: React.FC<HeatMapProps> = ({
                   title={dataPoint?.label || `${xLabel} - ${yLabel}: ${value}`}
                 >
                   {value > 0 && (
-                    <span className={`${value > maxValue * 0.6 ? 'text-white font-bold' : 'text-gray-900 font-bold'} drop-shadow-sm`}>
+                    <span className={`${value > maxValue * 0.5 ? 'text-white' : 'text-gray-800'} drop-shadow-sm`}>
                       {value}
                     </span>
                   )}
