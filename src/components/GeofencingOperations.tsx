@@ -308,44 +308,6 @@ const RakeOperations: React.FC = () => {
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Cargo Type:</span>
                     <span className="text-gray-900">{selectedRake.cargoType}</span>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                  <div className="flex justify-between">
-                <div key={index} className="flex items-center space-x-3 p-3 rounded-lg border ${
-                  stage.status === 'completed' ? 'bg-green-50 border-green-200' :
-          <div className="space-y-6">
-            {/* Vehicle and Route Information */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                  <MapPin className="w-5 h-5 mr-2 text-blue-600" />
-                  Vehicle & Route Details
-                </h4>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Vehicle Number:</span>
-                    <span className="text-gray-900 font-semibold">{selectedVehicle.vehicleNumber}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Assigned Route:</span>
-                    <span className="text-gray-900">{selectedVehicle.assignedRoute}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Last Location:</span>
-                    <span className="text-gray-900">{selectedVehicle.lastKnownLocation}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Timestamp:</span>
-                    <span className="text-gray-900">{selectedVehicle.timestamp}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Route Efficiency:</span>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      selectedVehicle.routeEfficiency >= 80 ? 'bg-green-100 text-green-800' :
-                      selectedVehicle.routeEfficiency >= 60 ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {selectedVehicle.routeEfficiency}%
-                    </span>
                   </div>
                 </div>
               </div>
@@ -385,101 +347,11 @@ const RakeOperations: React.FC = () => {
                       selectedRake.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
                     }`}>
                       {selectedRake.status}
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                  <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
-                  Driver Details
-                </h4>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Driver Name:</span>
-                    <span className="text-gray-900">{selectedVehicle.driver.name}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Driver ID:</span>
-                    <span className="text-gray-900">{selectedVehicle.driver.id}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Compliance Score:</span>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      selectedVehicle.driver.complianceScore >= 80 ? 'bg-green-100 text-green-800' :
-                      selectedVehicle.driver.complianceScore >= 60 ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {selectedVehicle.driver.complianceScore}%
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-            
-            {/* Route Map Playback */}
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <Route className="w-5 h-5 mr-2 text-purple-600" />
-                Interactive Route Map Playback
-              </h4>
-              <div className="w-full h-64 bg-white rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-lg font-medium text-gray-700 mb-2">Route Visualization</p>
-                  <p className="text-sm text-gray-600 mb-3">
-                    Interactive map showing vehicle movement and route compliance
-                  </p>
-                  <div className="flex items-center justify-center space-x-4 text-xs">
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span>Assigned Route</span>
-                    </div>
-            {/* Route Deviation Analytics */}
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <AlertTriangle className="w-5 h-5 mr-2 text-orange-600" />
-                Route Deviation Analytics
-              </h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-xs font-medium text-gray-600 mb-1">Planned Distance</p>
-                  <p className="text-lg font-bold text-gray-900">{selectedVehicle.routeDetails.plannedDistance}</p>
-                </div>
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-xs font-medium text-gray-600 mb-1">Actual Distance</p>
-                  <p className="text-lg font-bold text-gray-900">{selectedVehicle.routeDetails.actualDistance}</p>
-                </div>
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-xs font-medium text-gray-600 mb-1">Deviation Points</p>
-                  <p className="text-lg font-bold text-red-600">{selectedVehicle.routeDetails.deviationPoints}</p>
-                </div>
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-xs font-medium text-gray-600 mb-1">Time Outside Corridor</p>
-                  <p className="text-lg font-bold text-orange-600">{selectedVehicle.routeDetails.timeOutsideCorridor}</p>
-                    </div>
-                  </div>
-            </div>
-                      <p className="text-xs text-gray-600">{stage.time}</p>
-            {/* Violation Summary */}
-            {(selectedVehicle.deviationFlag || selectedVehicle.restrictedAreaEntry) && (
-              <div className="bg-red-50 rounded-xl p-6 border border-red-200">
-                <h4 className="font-semibold text-red-900 mb-4 flex items-center">
-                  <AlertTriangle className="w-5 h-5 mr-2 text-red-600" />
-                  Violation Summary
-                </h4>
-                <div className="space-y-2 text-sm text-red-800">
-                  {selectedVehicle.deviationFlag && (
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                      <span>Route deviation detected - exceeded corridor boundaries</span>
-                    </div>
-                  )}
-                  {selectedVehicle.restrictedAreaEntry && (
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                      <span>Unauthorized entry into restricted zone</span>
-                    </div>
-                  )}
-              </div>
-              </div>
-            )}
           </div>
         </Modal>
       )}
