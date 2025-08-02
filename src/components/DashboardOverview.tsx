@@ -69,6 +69,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
     [0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0]
+  ];
 
   // Additional chart data for enhanced visualizations
   const hourlyTrafficData = [
@@ -347,15 +348,6 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
           </div>
         </div>
         
-        <HeatMap
-          data={terminalUtilizationData}
-          colorScale={['#f3f4f6', '#dbeafe', '#93c5fd', '#3b82f6', '#1d4ed8']}
-          className="mb-4"
-        />
-        
-        <div className="text-xs text-gray-500 text-center">
-          Higher intensity indicates greater utilization. Click on cells for detailed breakdown.
-        </div>
       </div>
 
 
