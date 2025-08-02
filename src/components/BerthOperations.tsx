@@ -334,7 +334,7 @@ const BerthOperations: React.FC = () => {
           
           {/* OCR Identification Images */}
           <div className="bg-gray-50 rounded-xl p-6">
-            <h4 className="font-semibold text-gray-900 mb-4">OCR System Identification</h4>
+            <h4 className="font-semibold text-gray-900 mx-4">OCR System Identification</h4>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white rounded-lg p-4 border border-gray-200">
                 <div className="flex items-center justify-between mb-3">
