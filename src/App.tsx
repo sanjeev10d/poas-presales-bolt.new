@@ -23,7 +23,7 @@ function App() {
   const renderActiveModule = () => {
     switch (activeModule) {
       case 'overview':
-        return <DashboardOverview />;
+        return <DashboardOverview setActiveModule={setActiveModule} />;
       case 'gate':
         return <GateOperations />;
       case 'weighment':

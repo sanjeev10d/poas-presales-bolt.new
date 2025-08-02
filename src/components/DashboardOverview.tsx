@@ -23,7 +23,11 @@ import {
   TrendingDown
 } from 'lucide-react';
 
-const DashboardOverview: React.FC = () => {
+interface DashboardOverviewProps {
+  setActiveModule?: (module: string) => void;
+}
+
+const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule }) => {
   const { showSuccess, showInfo } = useToast();
   const [timeRange, setTimeRange] = useState('7d');
   const [isRefreshing, setIsRefreshing] = useState(false);
