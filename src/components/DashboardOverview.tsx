@@ -111,9 +111,6 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
     { label: 'Trailers', value: 94 }
   ];
 
-  const xLabels = ['Terminal A', 'Terminal B', 'Terminal C', 'Terminal D', 'Terminal E', 'Terminal F'];
-  const yLabels = ['06:00-10:00', '10:00-14:00', '14:00-18:00', '18:00-22:00'];
-
   const handleQuickAction = (action: string, module: string) => {
     if (setActiveModule) {
       setActiveModule(module);
@@ -376,18 +373,10 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
         
         <div className="mb-4">
           <HeatMap
-            xLabels={xLabels}
-            yLabels={yLabels}
             data={terminalUtilizationData}
-            cellStyle={(background, value, min, max) => ({
-              background: `rgba(59, 130, 246, ${(value - min) / (max - min) * 0.8 + 0.1})`,
-              fontSize: '11px',
-              color: value > (max - min) * 0.6 + min ? '#fff' : '#1f2937',
-              border: '1px solid #e5e7eb',
-              borderRadius: '4px'
-            })}
-            cellRender={value => value && `${value}`}
-            title={(value) => `${value} vehicles/hour`}
+            colorScale={['#dbeafe', '#bfdbfe', '#93c5fd', '#60a5fa', '#3b82f6', '#2563eb']}
+            className="w-full"
+            interactive={true}
           />
         </div>
         
