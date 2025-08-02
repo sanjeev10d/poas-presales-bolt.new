@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useToast } from './hooks/useToast';
+import { useBackgroundAlerts } from './hooks/useBackgroundAlerts';
+import ToastContainer from './components/ui/ToastContainer';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import DashboardOverview from './components/DashboardOverview';
@@ -12,6 +15,10 @@ import GeofencingOperations from './components/GeofencingOperations';
 
 function App() {
   const [activeModule, setActiveModule] = useState('overview');
+  const { toasts, removeToast } = useToast();
+  
+  // Enable background alerts
+  useBackgroundAlerts(true);
 
   const renderActiveModule = () => {
     switch (activeModule) {
@@ -45,6 +52,7 @@ function App() {
           {renderActiveModule()}
         </main>
       </div>
+      <ToastContainer toasts={toasts} onClose={removeToast} />
     </div>
   );
 }

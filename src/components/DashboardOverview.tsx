@@ -1,8 +1,28 @@
 import React from 'react';
 import StatCard from './ui/StatCard';
+import { useToast } from '../hooks/useToast';
+import { calculateVehicleStats, calculateAverageTurnaroundTime } from '../utils/dataCalculations';
 import { TrendingUp, Ship, Truck, Train, Activity, AlertTriangle } from 'lucide-react';
 
 const DashboardOverview: React.FC = () => {
+  const { showSuccess, showInfo } = useToast();
+  
+  // Sample data for calculations (in real app, this would come from context/state)
+  const sampleVehicleData = [
+    { status: 'Completed', turnaroundTime: '2h 15m' },
+    { status: 'In Progress', turnaroundTime: '3h 42m' },
+    { status: 'Completed', turnaroundTime: '3h 45m' },
+    { status: 'Completed', turnaroundTime: '2h 30m' },
+    { status: 'Completed', turnaroundTime: '1h 45m' }
+  ];
+  
+  const vehicleStats = calculateVehicleStats(sampleVehicleData);
+  const avgTurnaround = calculateAverageTurnaroundTime(sampleVehicleData);
+  
+  const handleQuickAction = (action: string) => {
+    showInfo('Quick Action', `${action} module accessed successfully`);
+  };
+
   return (
     <div className="space-y-8">
       {/* Key Performance Indicators */}
@@ -17,7 +37,7 @@ const DashboardOverview: React.FC = () => {
         />
         <StatCard
           title="Active Vehicles"
-          value="147"
+          value={vehicleStats.total.toString()}
           subtitle="89 cargo, 58 non-cargo"
           icon={Truck}
           trend={{ value: 8, isPositive: true }}
@@ -33,7 +53,7 @@ const DashboardOverview: React.FC = () => {
         />
         <StatCard
           title="System Health"
-          value="98.5%"
+          value={`${vehicleStats.completionRate}%`}
           subtitle="All systems operational"
           icon={Activity}
           trend={{ value: 2, isPositive: true }}
@@ -135,25 +155,37 @@ const DashboardOverview: React.FC = () => {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
         <h3 className="text-xl font-bold text-gray-900 mb-6">Quick Actions</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <button className="p-6 border border-gray-200 rounded-xl hover:bg-blue-50 hover:border-blue-200 transition-all duration-200 text-center group">
+          <button 
+            onClick={() => handleQuickAction('Vessel Tracking')}
+            className="p-6 border border-gray-200 rounded-xl hover:bg-blue-50 hover:border-blue-200 transition-all duration-200 text-center group"
+          >
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
               <Ship className="w-6 h-6 text-white" />
             </div>
             <span className="text-sm font-semibold text-gray-900">Vessel Tracking</span>
           </button>
-          <button className="p-6 border border-gray-200 rounded-xl hover:bg-green-50 hover:border-green-200 transition-all duration-200 text-center group">
+          <button 
+            onClick={() => handleQuickAction('Vehicle Status')}
+            className="p-6 border border-gray-200 rounded-xl hover:bg-green-50 hover:border-green-200 transition-all duration-200 text-center group"
+          >
             <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
               <Truck className="w-6 h-6 text-white" />
             </div>
             <span className="text-sm font-semibold text-gray-900">Vehicle Status</span>
           </button>
-          <button className="p-6 border border-gray-200 rounded-xl hover:bg-purple-50 hover:border-purple-200 transition-all duration-200 text-center group">
+          <button 
+            onClick={() => handleQuickAction('Rake Schedule')}
+            className="p-6 border border-gray-200 rounded-xl hover:bg-purple-50 hover:border-purple-200 transition-all duration-200 text-center group"
+          >
             <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
               <Train className="w-6 h-6 text-white" />
             </div>
             <span className="text-sm font-semibold text-gray-900">Rake Schedule</span>
           </button>
-          <button className="p-6 border border-gray-200 rounded-xl hover:bg-orange-50 hover:border-orange-200 transition-all duration-200 text-center group">
+          <button 
+            onClick={() => handleQuickAction('System Monitor')}
+            className="p-6 border border-gray-200 rounded-xl hover:bg-orange-50 hover:border-orange-200 transition-all duration-200 text-center group"
+          >
             <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
               <Activity className="w-6 h-6 text-white" />
             </div>
