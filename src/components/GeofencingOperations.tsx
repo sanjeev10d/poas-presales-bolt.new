@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { Train, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Train, Clock, AlertTriangle, CheckCircle, Play } from 'lucide-react';
 
 const RakeOperations: React.FC = () => {
   const [selectedRake, setSelectedRake] = useState<any>(null);
@@ -154,15 +154,16 @@ const RakeOperations: React.FC = () => {
         </span>
       )
     },
-    { 
-      key: 'actions', 
+    {
+      key: 'actions',
       label: 'Actions',
       render: (row: any) => (
         <button
           onClick={() => setSelectedRake(row)}
-          className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+          className="inline-flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
-          <span>View</span>
+          <Play className="w-4 h-4" />
+          <span>Replay</span>
         </button>
       )
     }
@@ -309,6 +310,18 @@ const RakeOperations: React.FC = () => {
                     <span className="font-medium text-gray-600">Cargo Type:</span>
                     <span className="text-gray-900">{selectedRake.cargoType}</span>
                   </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Total Wagons:</span>
+                    <span className="text-gray-900">{selectedRake.wagonCount}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Total Weight:</span>
+                    <span className="text-gray-900">{selectedRake.totalWeight}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Railway PN Number:</span>
+                    <span className="text-gray-900">{selectedRake.railwayPNNumber}</span>
+                  </div>
                 </div>
               </div>
               
@@ -349,7 +362,49 @@ const RakeOperations: React.FC = () => {
                       {selectedRake.status}
                     </span>
                   </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Alerts:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      selectedRake.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`}>
+                      {selectedRake.alerts}
+                    </span>
+                  </div>
                 </div>
+              </div>
+            </div>
+            
+            {/* Operation Timeline */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="font-semibold text-gray-900 mb-4">Complete Operation Timeline</h4>
+              <div className="space-y-3">
+                {selectedRake.timeline.map((stage: any, index: number) => (
+                  <div key={index} className={`flex items-center space-x-4 p-3 bg-white rounded-lg border border-gray-200 ${
+                    stage.status === 'completed' ? 'bg-green-50 border-green-200' :
+                    stage.status === 'in-progress' ? 'bg-blue-50 border-blue-200' :
+                    'bg-gray-50 border-gray-200'
+                  }`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
+                      stage.status === 'completed' ? 'bg-green-500' :
+                      stage.status === 'in-progress' ? 'bg-blue-500' :
+                      'bg-gray-300'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">{stage.stage}</p>
+                      <p className="text-xs text-gray-600">{stage.time}</p>
+                    </div>
+                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      stage.status === 'completed' ? 'bg-green-100 text-green-800' :
+                      stage.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>
+                      {stage.status === 'completed' ? 'Completed' :
+                       stage.status === 'in-progress' ? 'In Progress' : 'Pending'}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
