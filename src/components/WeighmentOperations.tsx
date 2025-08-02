@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { Scale, AlertTriangle, CheckCircle, Clock, Eye, RefreshCw, Flag } from 'lucide-react';
+import { Scale, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 
 const WeighmentOperations: React.FC = () => {
   const [selectedRecord, setSelectedRecord] = useState<any>(null);
@@ -17,11 +17,18 @@ const WeighmentOperations: React.FC = () => {
       netWeight: '22.7 MT',
       deviationAlert: false,
       thresholdViolation: false,
-      syncStatus: 'Synced',
       logStatus: 'Success',
       challanGenerated: true,
       timestamp: '10:15 AM',
-      driver: { name: 'Ram Kumar', license: 'DL12345' }
+      driverName: 'Ram Kumar',
+      driverLicense: 'DL12345',
+      cargoType: 'Coal',
+      destination: 'Terminal 1',
+      operatorName: 'Rajesh Kumar',
+      images: {
+        vehicle: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
+        numberPlate: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
+      }
     },
     {
       id: 2,
@@ -32,11 +39,40 @@ const WeighmentOperations: React.FC = () => {
       netWeight: '30.5 MT',
       deviationAlert: true,
       thresholdViolation: true,
-      syncStatus: 'Retried',
       logStatus: 'On Hold',
       challanGenerated: false,
       timestamp: '10:45 AM',
-      driver: { name: 'Suresh Patel', license: 'DL67890' }
+      driverName: 'Suresh Patel',
+      driverLicense: 'DL67890',
+      cargoType: 'Fertilizer',
+      destination: 'Terminal 2',
+      operatorName: 'Priya Sharma',
+      images: {
+        vehicle: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
+        numberPlate: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
+      }
+    },
+    {
+      id: 3,
+      vehicleNumber: 'WB12CD5678',
+      weighbridge: 'WB-3',
+      tareWeight: '13.2 MT',
+      grossWeight: '38.7 MT',
+      netWeight: '25.5 MT',
+      deviationAlert: false,
+      thresholdViolation: false,
+      logStatus: 'Success',
+      challanGenerated: true,
+      timestamp: '11:20 AM',
+      driverName: 'Amit Singh',
+      driverLicense: 'DL11223',
+      cargoType: 'Iron Ore',
+      destination: 'Terminal 3',
+      operatorName: 'Sunita Devi',
+      images: {
+        vehicle: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
+        numberPlate: 'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
+      }
     }
   ];
 
@@ -55,15 +91,28 @@ const WeighmentOperations: React.FC = () => {
       status: 'Available',
       operator: 'Priya Sharma',
       queue: []
+    },
+    {
+      id: 'WB-3',
+      status: 'In Use',
+      operator: 'Sunita Devi',
+      queue: [
+        { vehicleNumber: 'KA09MN3456', waitTime: '5m', status: 'Waiting' }
+      ]
     }
   ];
 
   const columns = [
     { key: 'vehicleNumber', label: 'Vehicle Number' },
     { key: 'weighbridge', label: 'Weighbridge' },
+    { key: 'driverName', label: 'Driver Name' },
+    { key: 'cargoType', label: 'Cargo Type' },
     { key: 'tareWeight', label: 'Tare Weight' },
     { key: 'grossWeight', label: 'Gross Weight' },
     { key: 'netWeight', label: 'Net Weight' },
+    { key: 'destination', label: 'Destination' },
+    { key: 'operatorName', label: 'Operator' },
+    { key: 'timestamp', label: 'Time' },
     { 
       key: 'deviationAlert', 
       label: 'Deviation',
@@ -76,41 +125,15 @@ const WeighmentOperations: React.FC = () => {
       )
     },
     { 
-      key: 'syncStatus', 
-      label: 'Sync Status',
-      render: (row: any) => (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          row.syncStatus === 'Synced' ? 'bg-green-100 text-green-800' : 
-          row.syncStatus === 'Retried' ? 'bg-yellow-100 text-yellow-800' : 
-          'bg-red-100 text-red-800'
-        }`}>
-          {row.syncStatus}
-        </span>
-      )
-    },
-    { 
       key: 'actions', 
       label: 'Actions',
       render: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => setSelectedRecord(row)}
-            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
-          >
-            <Eye className="w-3 h-3" />
-            <span>View</span>
-          </button>
-          {row.syncStatus !== 'Synced' && (
-            <button className="flex items-center space-x-1 px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs hover:bg-orange-200">
-              <RefreshCw className="w-3 h-3" />
-              <span>Retry</span>
-            </button>
-          )}
-          <button className="flex items-center space-x-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">
-            <Flag className="w-3 h-3" />
-            <span>Flag</span>
-          </button>
-        </div>
+        <button
+          onClick={() => setSelectedRecord(row)}
+          className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+        >
+          <span>View</span>
+        </button>
       )
     }
   ];
@@ -136,9 +159,9 @@ const WeighmentOperations: React.FC = () => {
           color="orange"
         />
         <StatCard
-          title="Sync Success"
+          title="Success Rate"
           value="94.2%"
-          subtitle="Data synchronization rate"
+          subtitle="Successful weighments"
           icon={CheckCircle}
           trend={{ value: 2, isPositive: true }}
           color="green"
@@ -207,56 +230,95 @@ const WeighmentOperations: React.FC = () => {
           isOpen={!!selectedRecord}
           onClose={() => setSelectedRecord(null)}
           title={`Weighment Details - ${selectedRecord.vehicleNumber}`}
+          size="xl"
         >
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Vehicle Details</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Number:</span> {selectedRecord.vehicleNumber}</p>
-                  <p><span className="font-medium">Assigned Weighbridge:</span> {selectedRecord.weighbridge}</p>
-                  <p><span className="font-medium">Timestamp:</span> {selectedRecord.timestamp}</p>
+          <div className="space-y-6">
+            {/* Vehicle and Driver Information */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Vehicle Details</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Vehicle Number:</span>
+                    <span className="text-gray-900">{selectedRecord.vehicleNumber}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Cargo Type:</span>
+                    <span className="text-gray-900">{selectedRecord.cargoType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Destination:</span>
+                    <span className="text-gray-900">{selectedRecord.destination}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Weighbridge:</span>
+                    <span className="text-gray-900">{selectedRecord.weighbridge}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Operator:</span>
+                    <span className="text-gray-900">{selectedRecord.operatorName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Timestamp:</span>
+                    <span className="text-gray-900">{selectedRecord.timestamp}</span>
+                  </div>
                 </div>
               </div>
               
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Vehicle Image</h4>
-                <img 
-                  src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop"
-                  alt="Vehicle at weighbridge"
-                  className="w-full h-40 object-cover rounded-lg"
-                />
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Weighment Details</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Tare Weight:</span>
+                    <span className="text-gray-900">{selectedRecord.tareWeight}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Gross Weight:</span>
+                    <span className="text-gray-900">{selectedRecord.grossWeight}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Net Weight:</span>
+                    <span className="text-gray-900 font-semibold">{selectedRecord.netWeight}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Driver Name:</span>
+                    <span className="text-gray-900">{selectedRecord.driverName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Driver License:</span>
+                    <span className="text-gray-900">{selectedRecord.driverLicense}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Challan Generated:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      selectedRecord.challanGenerated ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`}>
+                      {selectedRecord.challanGenerated ? 'Yes' : 'No'}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
             
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Driver Details</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Name:</span> {selectedRecord.driver.name}</p>
-                  <p><span className="font-medium">License:</span> {selectedRecord.driver.license}</p>
+            {/* Images Section */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="font-semibold text-gray-900 mb-4">Captured Images</h4>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <p className="text-sm font-medium text-gray-600 mb-3">Vehicle Image</p>
+                  <img 
+                    src={selectedRecord.images.vehicle}
+                    alt="Vehicle at weighbridge"
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
                 </div>
-              </div>
-              
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Weighment Details</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Tare Weight:</span> {selectedRecord.tareWeight}</p>
-                  <p><span className="font-medium">Gross Weight:</span> {selectedRecord.grossWeight}</p>
-                  <p><span className="font-medium">Net Weight:</span> {selectedRecord.netWeight}</p>
-                  <p><span className="font-medium">Sync Status:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
-                      selectedRecord.syncStatus === 'Synced' ? 'bg-green-100 text-green-800' : 
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {selectedRecord.syncStatus}
-                    </span>
-                  </p>
-                  <p><span className="font-medium">Challan Generated:</span> 
-                    <span className={`ml-2 ${selectedRecord.challanGenerated ? 'text-green-600' : 'text-red-600'}`}>
-                      {selectedRecord.challanGenerated ? 'Yes' : 'No'}
-                    </span>
-                  </p>
+                <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <p className="text-sm font-medium text-gray-600 mb-3">Number Plate</p>
+                  <img 
+                    src={selectedRecord.images.numberPlate}
+                    alt="Number plate"
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
                 </div>
               </div>
             </div>
