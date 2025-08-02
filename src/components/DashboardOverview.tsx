@@ -65,15 +65,33 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
 
   // Realistic port terminal utilization data (vehicles per hour)
   const terminalUtilizationData = [
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0]
-  ];
-
-  const xLabels = ['Terminal A', 'Terminal B', 'Terminal C', 'Terminal D', 'Terminal E', 'Terminal F'];
-  const yLabels = ['06:00-12:00', '12:00-18:00', '18:00-00:00', '00:00-06:00'];
-
+    { x: 'Terminal A', y: '06:00-10:00', value: 245 },
+    { x: 'Terminal B', y: '06:00-10:00', value: 312 },
+    { x: 'Terminal C', y: '06:00-10:00', value: 189 },
+    { x: 'Terminal D', y: '06:00-10:00', value: 276 },
+    { x: 'Terminal E', y: '06:00-10:00', value: 267 },
+    { x: 'Terminal F', y: '06:00-10:00', value: 198 },
+    
+    { x: 'Terminal A', y: '10:00-14:00', value: 198 },
+    { x: 'Terminal B', y: '10:00-14:00', value: 267 },
+    { x: 'Terminal C', y: '10:00-14:00', value: 234 },
+    { x: 'Terminal D', y: '10:00-14:00', value: 189 },
+    { x: 'Terminal E', y: '10:00-14:00', value: 312 },
+    { x: 'Terminal F', y: '10:00-14:00', value: 245 },
+    
+    { x: 'Terminal A', y: '14:00-18:00', value: 312 },
+    { x: 'Terminal B', y: '14:00-18:00', value: 189 },
+    { x: 'Terminal C', y: '14:00-18:00', value: 276 },
+    { x: 'Terminal D', y: '14:00-18:00', value: 245 },
+    { x: 'Terminal E', y: '14:00-18:00', value: 198 },
+    { x: 'Terminal F', y: '14:00-18:00', value: 289 },
+    
+    { x: 'Terminal A', y: '18:00-22:00', value: 167 },
+    { x: 'Terminal B', y: '18:00-22:00', value: 234 },
+    { x: 'Terminal C', y: '18:00-22:00', value: 198 },
+    { x: 'Terminal D', y: '18:00-22:00', value: 312 },
+    { x: 'Terminal E', y: '18:00-22:00', value: 276 },
+    { x: 'Terminal F', y: '18:00-22:00', value: 167 }
   // Additional chart data for enhanced visualizations
   const hourlyTrafficData = [
     { label: '00:00', value: 45 },
@@ -353,18 +371,10 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
         
         <div className="mb-4">
           <HeatMap
-            xLabels={xLabels}
-            yLabels={yLabels}
             data={terminalUtilizationData}
-            cellStyle={(background, value, min, max) => ({
-              background: `rgba(59, 130, 246, ${(value - min) / (max - min) * 0.8 + 0.1})`,
-              fontSize: '11px',
-              color: value > (max - min) * 0.6 + min ? '#fff' : '#1f2937',
-              border: '1px solid #e5e7eb',
-              borderRadius: '4px'
-            })}
-            cellRender={value => value && `${value}`}
-            title={(value) => `${value} vehicles/hour`}
+            colorScale={['#dbeafe', '#bfdbfe', '#93c5fd', '#60a5fa', '#3b82f6', '#2563eb']}
+            className="w-full"
+            interactive={true}
           />
         </div>
         
