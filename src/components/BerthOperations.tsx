@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
+import ManualEntryModal from './ui/ManualEntryModal';
 import { useToast } from '../hooks/useToast';
 import { calculateBerthUtilization, calculateAverageTurnaroundTime } from '../utils/dataCalculations';
-import { Ship, Clock, AlertTriangle, CheckCircle, Eye, Anchor } from 'lucide-react';
+import { Ship, Clock, AlertTriangle, CheckCircle, Eye, Anchor, Plus } from 'lucide-react';
 
 const BerthOperations: React.FC = () => {
   const [selectedVessel, setSelectedVessel] = useState<any>(null);
+  const [showManualEntry, setShowManualEntry] = useState(false);
   const { showSuccess, showInfo } = useToast();
 
   const vesselData = [
@@ -121,6 +123,40 @@ const BerthOperations: React.FC = () => {
     showInfo('Vessel Details', `Viewing details for ${vessel.vesselName}`);
   };
 
+  const handleManualEntry = (data: any) => {
+    console.log('Manual berth entry created:', data);
+    
+    const newEntry = {
+      id: Date.now(),
+      ...data,
+      status: 'Manual Entry',
+      entryType: 'manual',
+      timeline: [
+        { stage: 'Manual Entry Created', time: new Date().toLocaleTimeString(), status: 'completed' }
+      ]
+    };
+    
+    showSuccess('Manual Entry Created', `Berth operation record for ${data.vesselName} has been created successfully`);
+  };
+
+  const berthFields = [
+    { key: 'vesselName', label: 'Vessel Name', type: 'text' as const, required: true, placeholder: 'e.g., MV Ocean Pioneer' },
+    { key: 'imoNumber', label: 'IMO Number', type: 'text' as const, required: true, placeholder: 'e.g., IMO9234567' },
+    { key: 'captainName', label: 'Captain Name', type: 'text' as const, required: true, placeholder: 'Captain full name' },
+    { key: 'captainLicense', label: 'Captain License', type: 'text' as const, required: true, placeholder: 'e.g., ML-2024-001' },
+    { key: 'crewCount', label: 'Crew Count', type: 'number' as const, required: true, placeholder: '24' },
+    { key: 'nationality', label: 'Captain Nationality', type: 'text' as const, required: true, placeholder: 'e.g., British' },
+    { key: 'flag', label: 'Vessel Flag', type: 'text' as const, required: true, placeholder: 'e.g., Panama' },
+    { key: 'length', label: 'Vessel Length (m)', type: 'number' as const, required: true, placeholder: '225' },
+    { key: 'draft', label: 'Draft (m)', type: 'number' as const, required: true, placeholder: '12.5' },
+    { key: 'cargoQuantity', label: 'Cargo Quantity (MT)', type: 'number' as const, required: true, placeholder: '45000' },
+    { key: 'cargoType', label: 'Cargo Type', type: 'select' as const, required: true, options: ['Coal', 'Iron Ore', 'Crude Oil', 'Fertilizer', 'Containers'] },
+    { key: 'berthNumber', label: 'Berth Number', type: 'select' as const, required: true, options: ['B-01', 'B-02', 'B-03', 'T-01', 'T-02'] },
+    { key: 'arrivalTime', label: 'Arrival Time', type: 'datetime-local' as const, required: true },
+    { key: 'departureTime', label: 'Expected Departure', type: 'datetime-local' as const, required: false },
+    { key: 'status', label: 'Current Status', type: 'select' as const, required: true, options: ['Loading', 'Unloading', 'Completed', 'Waiting'] }
+  ];
+
   const columns = [
     { key: 'vesselName', label: 'Vessel Name' },
     { key: 'imoNumber', label: 'IMO Number' },
@@ -207,7 +243,16 @@ const BerthOperations: React.FC = () => {
       {/* Berth Operations Table */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-gray-900">Vessel Operations</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900">Vessel Operations</h3>
+            <button
+              onClick={() => setShowManualEntry(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg hover:from-orange-600 hover:to-red-700 transition-colors shadow-lg"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Manual Entry</span>
+            </button>
+          </div>
         </div>
         <div className="p-6">
           <DataTable data={vesselData} columns={columns} />
@@ -407,6 +452,16 @@ const BerthOperations: React.FC = () => {
           </div>
         </Modal>
       )}
+
+      {/* Manual Entry Modal */}
+      <ManualEntryModal
+        isOpen={showManualEntry}
+        onClose={() => setShowManualEntry(false)}
+        title="Add Vessel Operation Record"
+        fields={berthFields}
+        onSubmit={handleManualEntry}
+        moduleType="berth_operations"
+      />
     </div>
   );
 };

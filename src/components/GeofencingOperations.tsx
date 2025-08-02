@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
+import ManualEntryModal from './ui/ManualEntryModal';
 import { useToast } from '../hooks/useToast';
 import { calculateRouteCompliance } from '../utils/dataCalculations';
-import { MapPin, Route, AlertTriangle, CheckCircle, Play, Clock, User, Navigation } from 'lucide-react';
+import { MapPin, Route, AlertTriangle, CheckCircle, Play, Clock, User, Navigation, Plus } from 'lucide-react';
 
 const GeofencingOperations: React.FC = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
+  const [showManualEntry, setShowManualEntry] = useState(false);
   const { showSuccess, showInfo } = useToast();
 
   const geofencingData = [
@@ -214,6 +216,39 @@ const GeofencingOperations: React.FC = () => {
     showInfo('Route Replay', `Starting route replay for ${vehicle.vehicleNumber}`);
   };
 
+  const handleManualEntry = (data: any) => {
+    console.log('Manual geofencing entry created:', data);
+    
+    const newEntry = {
+      id: Date.now(),
+      ...data,
+      status: 'Manual Entry',
+      entryType: 'manual',
+      routeEfficiency: Math.floor(Math.random() * 40) + 60 // Random efficiency between 60-100%
+    };
+    
+    showSuccess('Manual Entry Created', `Geofencing record for ${data.vehicleNumber} has been created successfully`);
+  };
+
+  const geofencingFields = [
+    { key: 'vehicleNumber', label: 'Vehicle Number', type: 'text' as const, required: true, placeholder: 'e.g., OR09AB2345' },
+    { key: 'assignedRoute', label: 'Assigned Route', type: 'text' as const, required: true, placeholder: 'e.g., Gate → WB-3' },
+    { key: 'driverName', label: 'Driver Name', type: 'text' as const, required: true, placeholder: 'Driver full name' },
+    { key: 'driverId', label: 'Driver ID', type: 'text' as const, required: true, placeholder: 'e.g., DRV001' },
+    { key: 'driverLicense', label: 'Driver License', type: 'text' as const, required: true, placeholder: 'License number' },
+    { key: 'driverContact', label: 'Driver Contact', type: 'text' as const, required: true, placeholder: 'Phone number' },
+    { key: 'driverExperience', label: 'Driver Experience', type: 'text' as const, required: false, placeholder: 'e.g., 8 years' },
+    { key: 'lastKnownLocation', label: 'Last Known Location', type: 'text' as const, required: true, placeholder: 'e.g., Near Yard-2' },
+    { key: 'currentSpeed', label: 'Current Speed (km/h)', type: 'number' as const, required: false, placeholder: '15' },
+    { key: 'estimatedArrival', label: 'Estimated Arrival', type: 'datetime-local' as const, required: false },
+    { key: 'totalDistance', label: 'Total Distance (km)', type: 'number' as const, required: true, placeholder: '3.2' },
+    { key: 'completedDistance', label: 'Completed Distance (km)', type: 'number' as const, required: true, placeholder: '2.1' },
+    { key: 'fuelConsumption', label: 'Fuel Consumption (L/100km)', type: 'number' as const, required: false, placeholder: '12.5' },
+    { key: 'deviationFlag', label: 'Route Deviation', type: 'select' as const, required: true, options: ['No', 'Yes'] },
+    { key: 'restrictedAreaEntry', label: 'Restricted Area Entry', type: 'select' as const, required: true, options: ['No', 'Yes'] },
+    { key: 'timestamp', label: 'Record Time', type: 'datetime-local' as const, required: true }
+  ];
+
   const recentAlerts = [
     {
       type: 'Route Deviation',
@@ -303,7 +338,16 @@ const GeofencingOperations: React.FC = () => {
       {/* Geofencing Audit Logs */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-900">Route Compliance & Geofencing Audit</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-slate-900">Route Compliance & Geofencing Audit</h3>
+            <button
+              onClick={() => setShowManualEntry(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg hover:from-orange-600 hover:to-red-700 transition-colors shadow-lg"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Manual Entry</span>
+            </button>
+          </div>
         </div>
         <div className="p-6">
           <DataTable data={geofencingData} columns={columns} />
@@ -562,6 +606,16 @@ const GeofencingOperations: React.FC = () => {
           )}
         </Modal>
       )}
+
+      {/* Manual Entry Modal */}
+      <ManualEntryModal
+        isOpen={showManualEntry}
+        onClose={() => setShowManualEntry(false)}
+        title="Add Geofencing Record"
+        fields={geofencingFields}
+        onSubmit={handleManualEntry}
+        moduleType="geofencing_operations"
+      />
     </div>
   );
 };

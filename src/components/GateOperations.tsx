@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
+import ManualEntryModal from './ui/ManualEntryModal';
 import { useToast } from '../hooks/useToast';
 import { calculateVehicleStats, calculateAverageTurnaroundTime } from '../utils/dataCalculations';
-import { Truck, Users, Clock, Eye, CheckCircle, XCircle, Building } from 'lucide-react';
+import { Truck, Users, Clock, Eye, CheckCircle, XCircle, Building, Plus } from 'lucide-react';
 
 const GateOperations: React.FC = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'cargo' | 'non-cargo'>('cargo');
+  const [showManualEntry, setShowManualEntry] = useState(false);
   const { showSuccess, showInfo } = useToast();
 
   const cargoVehicleData = [
@@ -205,6 +207,54 @@ const GateOperations: React.FC = () => {
     showInfo('Vehicle Details', `Viewing details for ${vehicle.vehicleNumber || vehicle.personName}`);
   };
 
+  const handleManualEntry = (data: any) => {
+    // In a real application, this would make an API call to save the manual entry
+    console.log('Manual audit entry created:', data);
+    
+    // Add the new entry to the appropriate data array
+    const newEntry = {
+      id: Date.now(),
+      ...data,
+      status: 'Manual Entry',
+      entryType: 'manual'
+    };
+    
+    // Here you would typically update your state or refetch data
+    showSuccess('Manual Entry Created', `Audit log entry for ${data.vehicleNumber} has been created successfully`);
+  };
+
+  const getManualEntryFields = () => {
+    if (activeTab === 'cargo') {
+      return [
+        { key: 'vehicleNumber', label: 'Vehicle Number', type: 'text' as const, required: true, placeholder: 'e.g., OR09AB2345' },
+        { key: 'cargoType', label: 'Cargo Type', type: 'select' as const, required: true, options: ['Coal', 'Iron Ore', 'Fertilizer', 'Limestone', 'Containers'] },
+        { key: 'driverName', label: 'Driver Name', type: 'text' as const, required: true, placeholder: 'Full name of driver' },
+        { key: 'driverLicense', label: 'Driver License', type: 'text' as const, required: true, placeholder: 'License number' },
+        { key: 'driverContact', label: 'Driver Contact', type: 'text' as const, required: true, placeholder: 'Phone number' },
+        { key: 'vehicleWeight', label: 'Vehicle Weight (MT)', type: 'number' as const, required: true, placeholder: '35.2' },
+        { key: 'timeIn', label: 'Entry Time', type: 'datetime-local' as const, required: true },
+        { key: 'timeOut', label: 'Exit Time', type: 'datetime-local' as const, required: false },
+        { key: 'destination', label: 'Destination', type: 'select' as const, required: true, options: ['Gate 1', 'Gate 2', 'Gate 3', 'Gate 4'] },
+        { key: 'gateNumber', label: 'Gate Number', type: 'select' as const, required: true, options: ['Gate-A1', 'Gate-B2', 'Gate-C1', 'Gate-D1'] },
+        { key: 'verificationType', label: 'Verification Type', type: 'select' as const, required: true, options: ['ANPR', 'QR Code', 'RFID', 'Manual'] },
+        { key: 'securityClearance', label: 'Security Clearance', type: 'select' as const, required: true, options: ['Verified', 'Pending', 'Rejected'] }
+      ];
+    } else {
+      return [
+        { key: 'vehicleNumber', label: 'Vehicle Number', type: 'text' as const, required: true, placeholder: 'e.g., OR05JK8870' },
+        { key: 'vehicleType', label: 'Vehicle Type', type: 'select' as const, required: true, options: ['Car', 'Motorcycle', 'Van', 'Bus'] },
+        { key: 'personName', label: 'Person Name', type: 'text' as const, required: true, placeholder: 'Full name' },
+        { key: 'personId', label: 'Person ID', type: 'text' as const, required: true, placeholder: 'Employee/Contractor ID' },
+        { key: 'department', label: 'Department', type: 'select' as const, required: true, options: ['Operations', 'Maintenance', 'Security', 'Administration', 'Contractor'] },
+        { key: 'purpose', label: 'Purpose of Visit', type: 'text' as const, required: true, placeholder: 'Reason for entry' },
+        { key: 'timeIn', label: 'Entry Time', type: 'datetime-local' as const, required: true },
+        { key: 'timeOut', label: 'Exit Time', type: 'datetime-local' as const, required: false },
+        { key: 'gateNumber', label: 'Gate Number', type: 'select' as const, required: true, options: ['Gate-P1', 'Gate-P2', 'Gate-P3'] },
+        { key: 'securityClearance', label: 'Security Clearance', type: 'select' as const, required: true, options: ['Verified', 'Pending', 'Rejected'] }
+      ];
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Tab Navigation */}
@@ -375,9 +425,18 @@ const GateOperations: React.FC = () => {
       {/* Data Table */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200">
         <div className="p-8 border-b border-gray-200">
-          <h3 className="text-xl font-bold text-gray-900">
-            {activeTab === 'cargo' ? 'Cargo Vehicle' : 'Pedestrian & Non-Cargo'} Audit Trail
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl font-bold text-gray-900">
+              {activeTab === 'cargo' ? 'Cargo Vehicle' : 'Pedestrian & Non-Cargo'} Audit Trail
+            </h3>
+            <button
+              onClick={() => setShowManualEntry(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg hover:from-orange-600 hover:to-red-700 transition-colors shadow-lg"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Manual Entry</span>
+            </button>
+          </div>
         </div>
         <div className="p-8">
           <DataTable
@@ -536,6 +595,16 @@ const GateOperations: React.FC = () => {
           </div>
         </Modal>
       )}
+
+      {/* Manual Entry Modal */}
+      <ManualEntryModal
+        isOpen={showManualEntry}
+        onClose={() => setShowManualEntry(false)}
+        title={`Add ${activeTab === 'cargo' ? 'Cargo Vehicle' : 'Non-Cargo'} Entry`}
+        fields={getManualEntryFields()}
+        onSubmit={handleManualEntry}
+        moduleType="gate_operations"
+      />
     </div>
   );
 };

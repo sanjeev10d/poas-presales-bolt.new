@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
+import ManualEntryModal from './ui/ManualEntryModal';
 import { useToast } from '../hooks/useToast';
 import { calculateWeightStats, calculateAverageTurnaroundTime } from '../utils/dataCalculations';
-import { Scale, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+import { Scale, AlertTriangle, CheckCircle, Clock, Plus } from 'lucide-react';
 
 const WeighmentOperations: React.FC = () => {
   const [selectedRecord, setSelectedRecord] = useState<any>(null);
+  const [showManualEntry, setShowManualEntry] = useState(false);
   const { showSuccess, showInfo } = useToast();
 
   const weighmentData = [
@@ -113,6 +115,36 @@ const WeighmentOperations: React.FC = () => {
     setSelectedRecord(record);
     showInfo('Weighment Details', `Viewing details for ${record.vehicleNumber}`);
   };
+
+  const handleManualEntry = (data: any) => {
+    console.log('Manual weighment entry created:', data);
+    
+    const newEntry = {
+      id: Date.now(),
+      ...data,
+      status: 'Manual Entry',
+      entryType: 'manual',
+      netWeight: (parseFloat(data.grossWeight) - parseFloat(data.tareWeight)).toFixed(1) + ' MT'
+    };
+    
+    showSuccess('Manual Entry Created', `Weighment record for ${data.vehicleNumber} has been created successfully`);
+  };
+
+  const weighmentFields = [
+    { key: 'vehicleNumber', label: 'Vehicle Number', type: 'text' as const, required: true, placeholder: 'e.g., OR09AB2345' },
+    { key: 'weighbridge', label: 'Weighbridge', type: 'select' as const, required: true, options: ['WB-1', 'WB-2', 'WB-3', 'WB-4'] },
+    { key: 'driverName', label: 'Driver Name', type: 'text' as const, required: true, placeholder: 'Full name of driver' },
+    { key: 'driverLicense', label: 'Driver License', type: 'text' as const, required: true, placeholder: 'License number' },
+    { key: 'cargoType', label: 'Cargo Type', type: 'select' as const, required: true, options: ['Coal', 'Iron Ore', 'Fertilizer', 'Limestone', 'Containers'] },
+    { key: 'tareWeight', label: 'Tare Weight (MT)', type: 'number' as const, required: true, placeholder: '12.5' },
+    { key: 'grossWeight', label: 'Gross Weight (MT)', type: 'number' as const, required: true, placeholder: '35.2' },
+    { key: 'destination', label: 'Destination', type: 'select' as const, required: true, options: ['Terminal 1', 'Terminal 2', 'Terminal 3', 'Terminal 4'] },
+    { key: 'operatorName', label: 'Weighbridge Operator', type: 'text' as const, required: true, placeholder: 'Operator name' },
+    { key: 'timestamp', label: 'Weighment Time', type: 'datetime-local' as const, required: true },
+    { key: 'deviationAlert', label: 'Deviation Alert', type: 'select' as const, required: true, options: ['No', 'Yes'] },
+    { key: 'thresholdViolation', label: 'Threshold Violation', type: 'select' as const, required: true, options: ['No', 'Yes'] },
+    { key: 'challanGenerated', label: 'Challan Generated', type: 'select' as const, required: true, options: ['Yes', 'No'] }
+  ];
 
   const columns = [
     { key: 'vehicleNumber', label: 'Vehicle Number' },
@@ -232,7 +264,16 @@ const WeighmentOperations: React.FC = () => {
       {/* Weighment Audit Logs */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-900">Weighment Audit Logs</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-slate-900">Weighment Audit Logs</h3>
+            <button
+              onClick={() => setShowManualEntry(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg hover:from-orange-600 hover:to-red-700 transition-colors shadow-lg"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Manual Entry</span>
+            </button>
+          </div>
         </div>
         <div className="p-6">
           <DataTable data={weighmentData} columns={columns} />
@@ -340,6 +381,16 @@ const WeighmentOperations: React.FC = () => {
           </div>
         </Modal>
       )}
+
+      {/* Manual Entry Modal */}
+      <ManualEntryModal
+        isOpen={showManualEntry}
+        onClose={() => setShowManualEntry(false)}
+        title="Add Weighment Record"
+        fields={weighmentFields}
+        onSubmit={handleManualEntry}
+        moduleType="weighment_operations"
+      />
     </div>
   );
 };

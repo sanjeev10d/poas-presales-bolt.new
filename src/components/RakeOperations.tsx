@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { Train, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
+import ManualEntryModal from './ui/ManualEntryModal';
+import { useToast } from '../hooks/useToast';
+import { Train, Clock, AlertTriangle, CheckCircle, Plus } from 'lucide-react';
 
 const RakeOperations: React.FC = () => {
   const [selectedRake, setSelectedRake] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('regular');
+  const [showManualEntry, setShowManualEntry] = useState(false);
+  const { showSuccess, showInfo } = useToast();
 
   const rakeData = [
     {
@@ -129,6 +133,51 @@ const RakeOperations: React.FC = () => {
       ]
     }
   ];
+
+  const handleManualEntry = (data: any) => {
+    console.log('Manual rake entry created:', data);
+    
+    const newEntry = {
+      id: Date.now(),
+      ...data,
+      status: 'Manual Entry',
+      entryType: 'manual',
+      timeline: [
+        { stage: 'Manual Entry Created', time: new Date().toLocaleTimeString(), status: 'completed' }
+      ]
+    };
+    
+    showSuccess('Manual Entry Created', `Rake operation record for ${data.rakeRefNo} has been created successfully`);
+  };
+
+  const getRakeFields = () => {
+    const commonFields = [
+      { key: 'rakeRefNo', label: 'Rake Reference No.', type: 'text' as const, required: true, placeholder: 'e.g., RK-2024-001' },
+      { key: 'wagonCount', label: 'Wagon Count', type: 'number' as const, required: true, placeholder: '58' },
+      { key: 'cargoType', label: 'Cargo Type', type: 'select' as const, required: true, options: ['Coal', 'Iron Ore', 'Fertilizer', 'Limestone'] },
+      { key: 'sourceTerminal', label: 'Source Terminal', type: 'text' as const, required: true, placeholder: 'e.g., Jharsuguda' },
+      { key: 'destination', label: 'Destination', type: 'select' as const, required: true, options: ['Terminal 1', 'Terminal 2', 'Terminal 3', 'Terminal 4'] },
+      { key: 'operatorName', label: 'Operator Name', type: 'text' as const, required: true, placeholder: 'Operator full name' },
+      { key: 'timeIn', label: 'Port Entry Time', type: 'datetime-local' as const, required: true },
+      { key: 'timeOut', label: 'Port Exit Time', type: 'datetime-local' as const, required: false },
+      { key: 'loadedWagons', label: 'Loaded Wagons', type: 'number' as const, required: true, placeholder: '58' },
+      { key: 'emptyWagons', label: 'Empty Wagons', type: 'number' as const, required: true, placeholder: '0' },
+      { key: 'totalWeight', label: 'Total Weight (MT)', type: 'number' as const, required: true, placeholder: '3480' },
+      { key: 'alerts', label: 'Alerts/Issues', type: 'select' as const, required: true, options: ['None', 'Load Discrepancy', 'Delayed Unloading', 'Track Issues', 'Equipment Failure'] }
+    ];
+
+    if (activeTab === 'bobrn') {
+      return [
+        ...commonFields,
+        { key: 'railwayPNNumber', label: 'BOBRN Railway PN Number', type: 'text' as const, required: true, placeholder: 'e.g., BOBRN-PN-2024-001' }
+      ];
+    }
+
+    return [
+      ...commonFields,
+      { key: 'railwayPNNumber', label: 'Railway PN Number', type: 'text' as const, required: true, placeholder: 'e.g., RPN-2024-001' }
+    ];
+  };
 
   const columns = [
     { key: 'rakeRefNo', label: 'Rake Ref No.' },
@@ -270,9 +319,18 @@ const RakeOperations: React.FC = () => {
       {/* Rake Audit Logs */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-gray-900">
-            {activeTab === 'regular' ? 'Regular Rake' : 'BOBRN Rake'} Operations Audit Logs
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900">
+              {activeTab === 'regular' ? 'Regular Rake' : 'BOBRN Rake'} Operations Audit Logs
+            </h3>
+            <button
+              onClick={() => setShowManualEntry(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg hover:from-orange-600 hover:to-red-700 transition-colors shadow-lg"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Manual Entry</span>
+            </button>
+          </div>
         </div>
         <div className="p-6">
           <DataTable data={activeTab === 'regular' ? rakeData : bobrnRakeData} columns={columns} />
@@ -449,6 +507,16 @@ const RakeOperations: React.FC = () => {
           </div>
         </Modal>
       )}
+
+      {/* Manual Entry Modal */}
+      <ManualEntryModal
+        isOpen={showManualEntry}
+        onClose={() => setShowManualEntry(false)}
+        title={`Add ${activeTab === 'regular' ? 'Regular' : 'BOBRN'} Rake Record`}
+        fields={getRakeFields()}
+        onSubmit={handleManualEntry}
+        moduleType={`${activeTab}_rake_operations`}
+      />
     </div>
   );
 };

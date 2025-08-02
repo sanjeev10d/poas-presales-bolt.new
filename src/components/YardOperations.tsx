@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { Warehouse, PieChart, Clock, AlertTriangle, Eye } from 'lucide-react';
+import ManualEntryModal from './ui/ManualEntryModal';
+import { useToast } from '../hooks/useToast';
+import { Warehouse, PieChart, Clock, AlertTriangle, Eye, Plus } from 'lucide-react';
 
 const YardOperations: React.FC = () => {
   const [selectedAllocation, setSelectedAllocation] = useState<any>(null);
+  const [showManualEntry, setShowManualEntry] = useState(false);
+  const { showSuccess, showInfo } = useToast();
 
   const allocationData = [
     {
@@ -83,6 +87,36 @@ const YardOperations: React.FC = () => {
     { type: 'Iron Ore', percentage: 28, color: 'bg-orange-500' },
     { type: 'Fertilizer', percentage: 15, color: 'bg-green-500' },
     { type: 'Limestone', percentage: 5, color: 'bg-blue-500' }
+  ];
+
+  const handleManualEntry = (data: any) => {
+    console.log('Manual yard allocation entry created:', data);
+    
+    const newEntry = {
+      id: Date.now(),
+      ...data,
+      status: 'Manual Entry',
+      entryType: 'manual',
+      utilization: Math.round((parseFloat(data.occupiedSpace) / parseFloat(data.allocatedSpace)) * 100)
+    };
+    
+    showSuccess('Manual Entry Created', `Yard allocation record for ${data.allocationId} has been created successfully`);
+  };
+
+  const yardFields = [
+    { key: 'allocationId', label: 'Allocation ID', type: 'text' as const, required: true, placeholder: 'e.g., AL-Y001' },
+    { key: 'yardNumber', label: 'Yard Number', type: 'select' as const, required: true, options: ['YD-1', 'YD-2', 'YD-3', 'YD-4', 'YD-5', 'YD-6', 'YD-7'] },
+    { key: 'cargoType', label: 'Cargo Type', type: 'select' as const, required: true, options: ['Coal', 'Iron Ore', 'Fertilizer', 'Limestone', 'Containers'] },
+    { key: 'allocatedSpace', label: 'Allocated Space (m²)', type: 'number' as const, required: true, placeholder: '3000' },
+    { key: 'occupiedSpace', label: 'Occupied Space (m²)', type: 'number' as const, required: true, placeholder: '2150' },
+    { key: 'assignedVehicle', label: 'Assigned Vehicle', type: 'text' as const, required: true, placeholder: 'e.g., Rake #232' },
+    { key: 'operatorName', label: 'Operator Name', type: 'text' as const, required: true, placeholder: 'Operator full name' },
+    { key: 'allocationTime', label: 'Allocation Time', type: 'datetime-local' as const, required: true },
+    { key: 'stackHeight', label: 'Stack Height (m)', type: 'number' as const, required: true, placeholder: '8.5' },
+    { key: 'moistureLevel', label: 'Moisture Level (%)', type: 'number' as const, required: false, placeholder: '12' },
+    { key: 'temperatureReading', label: 'Temperature (°C)', type: 'number' as const, required: false, placeholder: '28' },
+    { key: 'lastInspection', label: 'Last Inspection Time', type: 'datetime-local' as const, required: true },
+    { key: 'status', label: 'Status', type: 'select' as const, required: true, options: ['Active', 'Overstacked', 'Under Maintenance', 'Available'] }
   ];
 
   const columns = [
@@ -212,7 +246,16 @@ const YardOperations: React.FC = () => {
       {/* Yard Allocation Audit */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-900">Yard Allocation Audit Logs</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-slate-900">Yard Allocation Audit Logs</h3>
+            <button
+              onClick={() => setShowManualEntry(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg hover:from-orange-600 hover:to-red-700 transition-colors shadow-lg"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Manual Entry</span>
+            </button>
+          </div>
         </div>
         <div className="p-6">
           <DataTable data={allocationData} columns={columns} />
@@ -403,6 +446,16 @@ const YardOperations: React.FC = () => {
           </div>
         </Modal>
       )}
+
+      {/* Manual Entry Modal */}
+      <ManualEntryModal
+        isOpen={showManualEntry}
+        onClose={() => setShowManualEntry(false)}
+        title="Add Yard Allocation Record"
+        fields={yardFields}
+        onSubmit={handleManualEntry}
+        moduleType="yard_operations"
+      />
     </div>
   );
 };

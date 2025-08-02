@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
+import ManualEntryModal from './ui/ManualEntryModal';
 import { useToast } from '../hooks/useToast';
 import { calculateEquipmentStats } from '../utils/dataCalculations';
-import { Settings, Activity, Wrench, AlertTriangle, Eye } from 'lucide-react';
+import { Settings, Activity, Wrench, AlertTriangle, Eye, Plus } from 'lucide-react';
 
 const ResourceManagement: React.FC = () => {
   const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
+  const [showManualEntry, setShowManualEntry] = useState(false);
   const { showSuccess, showInfo } = useToast();
 
   const equipmentData = [
@@ -111,6 +113,36 @@ const ResourceManagement: React.FC = () => {
     setSelectedEquipment(equipment);
     showInfo('Equipment Details', `Viewing details for ${equipment.equipmentId}`);
   };
+
+  const handleManualEntry = (data: any) => {
+    console.log('Manual equipment entry created:', data);
+    
+    const newEntry = {
+      id: Date.now(),
+      ...data,
+      status: 'Manual Entry',
+      entryType: 'manual'
+    };
+    
+    showSuccess('Manual Entry Created', `Equipment record for ${data.equipmentId} has been created successfully`);
+  };
+
+  const equipmentFields = [
+    { key: 'equipmentId', label: 'Equipment ID', type: 'text' as const, required: true, placeholder: 'e.g., CRN-032' },
+    { key: 'type', label: 'Equipment Type', type: 'select' as const, required: true, options: ['Gantry Crane', 'Reach Stacker', 'Forklift', 'Container Trailer', 'Tug Master', 'Mobile Crane'] },
+    { key: 'operatorName', label: 'Operator Name', type: 'text' as const, required: true, placeholder: 'Operator full name' },
+    { key: 'location', label: 'Current Location', type: 'text' as const, required: true, placeholder: 'e.g., Berth 3' },
+    { key: 'lastUsed', label: 'Last Used Time', type: 'datetime-local' as const, required: true },
+    { key: 'operationalHours', label: 'Operational Hours', type: 'number' as const, required: true, placeholder: '142' },
+    { key: 'loadCapacity', label: 'Load Capacity (MT)', type: 'number' as const, required: true, placeholder: '45' },
+    { key: 'currentLoad', label: 'Current Load (MT)', type: 'number' as const, required: false, placeholder: '32' },
+    { key: 'fuelConsumption', label: 'Fuel Consumption (L/hr)', type: 'number' as const, required: false, placeholder: '45' },
+    { key: 'lastMaintenance', label: 'Last Maintenance Date', type: 'datetime-local' as const, required: true },
+    { key: 'warrantyStatus', label: 'Warranty Status', type: 'select' as const, required: true, options: ['Active', 'Expired', 'Extended'] },
+    { key: 'healthScore', label: 'Health Score (%)', type: 'number' as const, required: true, placeholder: '92' },
+    { key: 'status', label: 'Current Status', type: 'select' as const, required: true, options: ['In Use', 'Available', 'Under Repair', 'Maintenance'] },
+    { key: 'issueReported', label: 'Issue Reported', type: 'text' as const, required: false, placeholder: 'Describe any issues' }
+  ];
 
   const columns = [
     { key: 'equipmentId', label: 'Equipment ID' },
@@ -280,7 +312,16 @@ const ResourceManagement: React.FC = () => {
       {/* Equipment Health & Service Logs */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-900">Equipment Health & Service Logs</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-slate-900">Equipment Health & Service Logs</h3>
+            <button
+              onClick={() => setShowManualEntry(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg hover:from-orange-600 hover:to-red-700 transition-colors shadow-lg"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Manual Entry</span>
+            </button>
+          </div>
         </div>
         <div className="p-6">
           <DataTable data={equipmentData} columns={columns} />
@@ -450,6 +491,16 @@ const ResourceManagement: React.FC = () => {
           </div>
         </Modal>
       )}
+
+      {/* Manual Entry Modal */}
+      <ManualEntryModal
+        isOpen={showManualEntry}
+        onClose={() => setShowManualEntry(false)}
+        title="Add Equipment Record"
+        fields={equipmentFields}
+        onSubmit={handleManualEntry}
+        moduleType="resource_management"
+      />
     </div>
   );
 };
