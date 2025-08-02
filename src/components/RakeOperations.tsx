@@ -404,6 +404,50 @@ const RakeOperations: React.FC = () => {
             </div>
           </div>
         </Modal>
+          {/* OCR Identification Images */}
+          <div className="bg-gray-50 rounded-xl p-6 mt-6">
+            <h4 className="font-semibold text-gray-900 mb-4">OCR System Identification</h4>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="bg-white rounded-lg p-4 border border-gray-200">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-medium text-gray-600">Train Identification</p>
+                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">
+                    OCR Verified
+                  </span>
+                </div>
+                <img 
+                  src="https://images.pexels.com/photos/258510/pexels-photo-258510.jpeg?auto=compress&cs=tinysrgb&w=600&h=300&fit=crop"
+                  alt="Train with identification number"
+                  className="w-full h-48 object-cover rounded-lg mb-3"
+                />
+                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                  <p className="text-xs font-medium text-blue-700 mb-1">Detected Train Number</p>
+                  <p className="text-lg font-bold text-blue-900">{selectedRake.rakeRefNo}</p>
+                  <p className="text-xs text-blue-600 mt-1">Confidence: 98.7% | Location: Entry Gate</p>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 border border-gray-200">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-medium text-gray-600">Wagon Configuration</p>
+                  <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">
+                    {selectedRake.wagonCount} Wagons
+                  </span>
+                </div>
+                <img 
+                  src="https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=600&h=300&fit=crop"
+                  alt="Train wagon configuration"
+                  className="w-full h-48 object-cover rounded-lg mb-3"
+                </div>
+                <div className="bg-orange-50 rounded-lg p-3 border border-orange-200">
+                  <p className="text-xs font-medium text-orange-700 mb-1">Cargo Analysis</p>
+                  <p className="text-sm font-semibold text-orange-900">{selectedRake.cargoType}</p>
+                  <p className="text-xs text-orange-600 mt-1">Weight: {selectedRake.totalWeight} | Source: {selectedRake.sourceTerminal}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
       )}
     </div>
   );
