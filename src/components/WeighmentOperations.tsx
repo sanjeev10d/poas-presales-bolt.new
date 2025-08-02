@@ -189,9 +189,9 @@ const WeighmentOperations: React.FC = () => {
       </div>
 
       {/* Weighbridge Queue Status */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900 mb-4">Weighbridge Queue Status</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {weighbridgeQueue.map((wb) => (
             <div key={wb.id} className="border border-slate-200 rounded-lg p-4">
               <div className="flex items-center justify-between mb-3">

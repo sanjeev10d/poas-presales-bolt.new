@@ -29,7 +29,7 @@ const menuItems = [
 
 const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
   return (
-    <div className="w-72 bg-white border-r border-gray-200 flex flex-col shadow-sm">
+    <div className="w-64 lg:w-72 bg-white border-r border-gray-200 flex flex-col shadow-sm flex-shrink-0">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-gray-900">POAS</h1>
-            <p className="text-gray-500 text-sm">Paradip Port Authority</p>
+            <p className="text-gray-500 text-sm hidden lg:block">Paradip Port Authority</p>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
                   }`}
                 >
                   <IconComponent className="w-5 h-5" />
-                  <span className="flex-1 font-medium">{item.label}</span>
+                  <span className="flex-1 font-medium text-sm lg:text-base">{item.label}</span>
                   {isActive && <ChevronRight className="w-4 h-4 text-white/80" />}
                 </button>
               </li>

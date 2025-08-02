@@ -164,8 +164,8 @@ const YardOperations: React.FC = () => {
       </div>
 
       {/* Cargo Distribution and Alerts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
           <h3 className="text-lg font-semibold text-slate-900 mb-4">Cargo Type Distribution</h3>
           <div className="space-y-4">
             {cargoDistribution.map((cargo, index) => (
@@ -175,7 +175,7 @@ const YardOperations: React.FC = () => {
                   <span className="text-sm font-medium text-slate-900">{cargo.type}</span>
                   <span className="text-sm text-slate-600">{cargo.percentage}%</span>
                 </div>
-                <div className="w-24 bg-slate-200 rounded-full h-2">
+                <div className="w-16 sm:w-24 bg-slate-200 rounded-full h-2">
                   <div 
                     className={`h-2 rounded-full ${cargo.color}`}
                     style={{ width: `${cargo.percentage}%` }}
@@ -186,7 +186,7 @@ const YardOperations: React.FC = () => {
           </div>
         </div>
         
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
           <h3 className="text-lg font-semibold text-slate-900 mb-4">Yard Alerts & Exceptions</h3>
           <div className="space-y-3">
             <div className="flex items-start space-x-3 p-3 bg-red-50 rounded-lg border-l-4 border-red-500">

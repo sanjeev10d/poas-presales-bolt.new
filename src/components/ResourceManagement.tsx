@@ -208,29 +208,29 @@ const ResourceManagement: React.FC = () => {
       </div>
 
       {/* Equipment Category Summary */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900 mb-4">Equipment Category Summary</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead>
               <tr className="border-b border-slate-200">
-                <th className="text-left py-2 text-sm font-medium text-slate-600">Equipment Type</th>
-                <th className="text-center py-2 text-sm font-medium text-slate-600">Total</th>
-                <th className="text-center py-2 text-sm font-medium text-slate-600">In Use</th>
-                <th className="text-center py-2 text-sm font-medium text-slate-600">Available</th>
-                <th className="text-center py-2 text-sm font-medium text-slate-600">Maintenance</th>
-                <th className="text-center py-2 text-sm font-medium text-slate-600">Faulty</th>
+                <th className="text-left py-2 px-2 text-xs sm:text-sm font-medium text-slate-600">Equipment Type</th>
+                <th className="text-center py-2 px-1 text-xs sm:text-sm font-medium text-slate-600">Total</th>
+                <th className="text-center py-2 px-1 text-xs sm:text-sm font-medium text-slate-600">In Use</th>
+                <th className="text-center py-2 px-1 text-xs sm:text-sm font-medium text-slate-600">Available</th>
+                <th className="text-center py-2 px-1 text-xs sm:text-sm font-medium text-slate-600">Maintenance</th>
+                <th className="text-center py-2 px-1 text-xs sm:text-sm font-medium text-slate-600">Faulty</th>
               </tr>
             </thead>
             <tbody>
               {equipmentSummary.map((equipment, index) => (
                 <tr key={index} className="border-b border-slate-100">
-                  <td className="py-3 text-sm font-medium text-slate-900">{equipment.type}</td>
-                  <td className="text-center py-3 text-sm text-slate-600">{equipment.total}</td>
-                  <td className="text-center py-3 text-sm text-green-600 font-medium">{equipment.inUse}</td>
-                  <td className="text-center py-3 text-sm text-blue-600">{equipment.available}</td>
-                  <td className="text-center py-3 text-sm text-orange-600">{equipment.maintenance}</td>
-                  <td className="text-center py-3 text-sm text-red-600">{equipment.faulty}</td>
+                  <td className="py-3 px-2 text-xs sm:text-sm font-medium text-slate-900">{equipment.type}</td>
+                  <td className="text-center py-3 px-1 text-xs sm:text-sm text-slate-600">{equipment.total}</td>
+                  <td className="text-center py-3 px-1 text-xs sm:text-sm text-green-600 font-medium">{equipment.inUse}</td>
+                  <td className="text-center py-3 px-1 text-xs sm:text-sm text-blue-600">{equipment.available}</td>
+                  <td className="text-center py-3 px-1 text-xs sm:text-sm text-orange-600">{equipment.maintenance}</td>
+                  <td className="text-center py-3 px-1 text-xs sm:text-sm text-red-600">{equipment.faulty}</td>
                 </tr>
               ))}
             </tbody>
@@ -239,24 +239,24 @@ const ResourceManagement: React.FC = () => {
       </div>
 
       {/* Predictive Maintenance */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900 mb-4">Predictive Maintenance Forecast</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead>
               <tr className="border-b border-slate-200">
-                <th className="text-left py-2 text-sm font-medium text-slate-600">Equipment ID</th>
-                <th className="text-center py-2 text-sm font-medium text-slate-600">Risk Level</th>
-                <th className="text-left py-2 text-sm font-medium text-slate-600">Component at Risk</th>
-                <th className="text-center py-2 text-sm font-medium text-slate-600">Days to Failure</th>
-                <th className="text-center py-2 text-sm font-medium text-slate-600">Confidence</th>
-                <th className="text-left py-2 text-sm font-medium text-slate-600">Recommended Action</th>
+                <th className="text-left py-2 px-2 text-xs sm:text-sm font-medium text-slate-600">Equipment ID</th>
+                <th className="text-center py-2 px-1 text-xs sm:text-sm font-medium text-slate-600">Risk Level</th>
+                <th className="text-left py-2 px-2 text-xs sm:text-sm font-medium text-slate-600">Component at Risk</th>
+                <th className="text-center py-2 px-1 text-xs sm:text-sm font-medium text-slate-600">Days to Failure</th>
+                <th className="text-center py-2 px-1 text-xs sm:text-sm font-medium text-slate-600">Confidence</th>
+                <th className="text-left py-2 px-2 text-xs sm:text-sm font-medium text-slate-600">Recommended Action</th>
               </tr>
             </thead>
             <tbody>
               {predictiveMaintenanceData.map((item, index) => (
                 <tr key={index} className="border-b border-slate-100">
-                  <td className="py-3 text-sm font-medium text-slate-900">{item.equipmentId}</td>
+                  <td className="py-3 px-2 text-xs sm:text-sm font-medium text-slate-900">{item.equipmentId}</td>
                   <td className="text-center py-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       item.riskLevel === 'High' ? 'bg-red-100 text-red-800' :
@@ -266,10 +266,10 @@ const ResourceManagement: React.FC = () => {
                       {item.riskLevel}
                     </span>
                   </td>
-                  <td className="py-3 text-sm text-slate-600">{item.componentAtRisk}</td>
-                  <td className="text-center py-3 text-sm text-slate-900 font-medium">{item.daysToFailure}</td>
-                  <td className="text-center py-3 text-sm text-slate-600">{item.confidenceLevel}</td>
-                  <td className="py-3 text-sm text-slate-600">{item.recommendedAction}</td>
+                  <td className="py-3 px-2 text-xs sm:text-sm text-slate-600">{item.componentAtRisk}</td>
+                  <td className="text-center py-3 px-1 text-xs sm:text-sm text-slate-900 font-medium">{item.daysToFailure}</td>
+                  <td className="text-center py-3 px-1 text-xs sm:text-sm text-slate-600">{item.confidenceLevel}</td>
+                  <td className="py-3 px-2 text-xs sm:text-sm text-slate-600">{item.recommendedAction}</td>
                 </tr>
               ))}
             </tbody>

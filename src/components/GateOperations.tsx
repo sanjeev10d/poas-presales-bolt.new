@@ -308,7 +308,7 @@ const GateOperations: React.FC = () => {
       </div>
 
       {/* Terminal Distribution Card - Full Width */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-all duration-300">
         <div className="flex items-center justify-between mb-4">
           <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
             {activeTab === 'cargo' ? <Truck className="w-6 h-6 text-white" /> : <Users className="w-6 h-6 text-white" />}
@@ -326,7 +326,7 @@ const GateOperations: React.FC = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-semibold text-blue-700">Terminal 1</span>

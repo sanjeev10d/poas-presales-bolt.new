@@ -21,10 +21,10 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-8 py-6 shadow-sm">
-      <div className="flex items-center justify-between">
+    <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-6 shadow-sm">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{getModuleTitle(activeModule)}</h1>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">{getModuleTitle(activeModule)}</h1>
           <div className="flex items-center space-x-2 text-sm text-gray-500 mt-2">
             <Clock className="w-4 h-4" />
             <span>{new Date().toLocaleString('en-IN', { 
@@ -35,13 +35,13 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
           </div>
         </div>
         
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <div className="relative">
             <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               placeholder="Search operations..."
-              className="pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent w-80 bg-gray-50 focus:bg-white transition-colors"
+              className="pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent w-48 sm:w-64 lg:w-80 bg-gray-50 focus:bg-white transition-colors"
             />
           </div>
           
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ activeModule }) => {
             <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
           </button>
           
-          <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
+          <div className="hidden sm:flex items-center space-x-3 pl-4 border-l border-gray-200">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
               <User className="w-5 h-5 text-white" />
             </div>
