@@ -297,7 +297,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
                   ></div>
                   <span className="text-gray-700">{item.label}</span>
                 </div>
-                <span className="font-semibold text-gray-900">{item.value}%</span>
+                <span className="font-semibold text-gray-900">{item.value} MT</span>
               </div>
             ))}
           </div>
