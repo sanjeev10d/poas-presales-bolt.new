@@ -239,7 +239,7 @@ const GateOperations: React.FC = () => {
           <>
             <StatCard
               title="Vehicles In"
-              value="154"
+              value="3,247"
               subtitle="Today's inbound cargo vehicles"
               icon={Truck}
               trend={{ value: 12, isPositive: true }}
@@ -247,7 +247,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Vehicles Out"
-              value="142"
+              value="2,985"
               subtitle="Today's outbound vehicles"
               icon={CheckCircle}
               trend={{ value: 8, isPositive: true }}
@@ -255,14 +255,14 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Vehicles Inside"
-              value="124"
+              value="2,124"
               subtitle="Currently inside port"
               icon={Building}
               color="purple"
             />
             <StatCard
               title="Avg TAT"
-              value="2h 15m"
+              value="3h 45m"
               subtitle="Average turnaround time"
               icon={Clock}
               trend={{ value: 15, isPositive: false }}
@@ -273,7 +273,7 @@ const GateOperations: React.FC = () => {
           <>
             <StatCard
               title="Pedestrians In"
-              value="87"
+              value="1,247"
               subtitle="Today's pedestrian entries"
               icon={Users}
               trend={{ value: 5, isPositive: true }}
@@ -281,7 +281,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Pedestrians Out"
-              value="82"
+              value="1,189"
               subtitle="Today's pedestrian exits"
               icon={CheckCircle}
               trend={{ value: 4, isPositive: true }}
@@ -289,7 +289,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Non-Cargo In"
-              value="35"
+              value="847"
               subtitle="Today's non-cargo entries"
               icon={Truck}
               trend={{ value: 7, isPositive: true }}
@@ -297,7 +297,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Non-Cargo Out"
-              value="32"
+              value="723"
               subtitle="Today's non-cargo exits"
               icon={XCircle}
               trend={{ value: 3, isPositive: true }}
@@ -341,7 +341,7 @@ const GateOperations: React.FC = () => {
               <span className="text-xs font-semibold text-green-700">Terminal 2</span>
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
             </div>
-            <p className="text-2xl font-bold text-green-900">{activeTab === 'cargo' ? '32' : '12'}</p>
+            <p className="text-2xl font-bold text-green-900">{activeTab === 'cargo' ? '687' : '245'}</p>
             <p className="text-xs text-green-600">{activeTab === 'cargo' ? 'Fertilizer' : 'Service Vehicles'}</p>
           </div>
           
@@ -350,7 +350,7 @@ const GateOperations: React.FC = () => {
               <span className="text-xs font-semibold text-orange-700">Terminal 3</span>
               <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
             </div>
-            <p className="text-2xl font-bold text-orange-900">{activeTab === 'cargo' ? '28' : '6'}</p>
+            <p className="text-2xl font-bold text-orange-900">{activeTab === 'cargo' ? '542' : '187'}</p>
             <p className="text-xs text-orange-600">{activeTab === 'cargo' ? 'Containers' : 'Maintenance'}</p>
           </div>
           
@@ -359,7 +359,7 @@ const GateOperations: React.FC = () => {
               <span className="text-xs font-semibold text-teal-700">Terminal 4</span>
               <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
             </div>
-            <p className="text-2xl font-bold text-teal-900">{activeTab === 'cargo' ? '19' : '4'}</p>
+            <p className="text-2xl font-bold text-teal-900">{activeTab === 'cargo' ? '398' : '124'}</p>
             <p className="text-xs text-teal-600">{activeTab === 'cargo' ? 'General Cargo' : 'Visitors'}</p>
           </div>
         </div>
@@ -367,7 +367,7 @@ const GateOperations: React.FC = () => {
         <div className="mt-4 pt-3 border-t border-gray-200">
           <div className="flex items-center justify-between text-xs">
             <span className="text-gray-500">Total Active</span>
-            <span className="font-bold text-gray-900">{activeTab === 'cargo' ? '124 vehicles' : '30 vehicles'}</span>
+            <span className="font-bold text-gray-900">{activeTab === 'cargo' ? '2,124 vehicles' : '723 vehicles'}</span>
           </div>
         </div>
       </div>
