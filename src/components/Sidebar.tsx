@@ -29,7 +29,7 @@ const menuItems = [
 
 const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
   return (
-    <div className="fixed left-0 top-0 w-64 lg:w-72 h-screen bg-white border-r border-gray-200 flex flex-col shadow-sm z-10">
+    <div className="fixed left-0 top-0 w-64 lg:w-72 h-screen bg-white border-r border-gray-200 flex flex-col shadow-sm z-40 pt-24">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -42,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
         </div>
       </div>
       
-      <nav className="flex-1 p-6 overflow-y-auto">
+      <nav className="flex-1 p-6 overflow-y-auto pb-6">
         <ul className="space-y-2">
           {menuItems.map((item) => {
             const IconComponent = item.icon;
