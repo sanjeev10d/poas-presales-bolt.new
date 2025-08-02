@@ -75,3 +75,55 @@
   filter: brightness(1.1);
   transform: translateY(-2px);
 }
+
+/* Syncfusion Chart Enhancements */
+.syncfusion-chart-container {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.syncfusion-chart-container .e-chart {
+  background: transparent !important;
+}
+
+.syncfusion-chart-container .e-chart-title {
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+
+.syncfusion-chart-container .e-chart-sub-title {
+  font-weight: 500 !important;
+  color: #6B7280 !important;
+}
+
+.syncfusion-chart-container .e-legend-text {
+  font-weight: 500 !important;
+  color: #6B7280 !important;
+}
+
+.syncfusion-chart-container .e-axis-label {
+  font-weight: 500 !important;
+  color: #6B7280 !important;
+}
+
+.syncfusion-chart-container .e-tooltip {
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Chart container hover effects */
+.chart-content:hover .syncfusion-chart-container {
+  transform: scale(1.01);
+  transition: transform 0.3s ease;
+}
+
+/* Responsive chart adjustments */
+@media (max-width: 768px) {
+  .syncfusion-chart-container .e-chart {
+    height: 250px !important;
+  }
+  
+  .syncfusion-chart-container .e-legend {
+    position: relative !important;
+    bottom: auto !important;
+  }
+}
