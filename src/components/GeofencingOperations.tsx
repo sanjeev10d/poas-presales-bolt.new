@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
+import { useToast } from '../hooks/useToast';
+import { calculateRouteCompliance } from '../utils/dataCalculations';
 import { MapPin, Route, AlertTriangle, CheckCircle, Play, Clock, User, Navigation } from 'lucide-react';
 
 const GeofencingOperations: React.FC = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
+  const { showSuccess, showInfo } = useToast();
 
   const geofencingData = [
     {
@@ -192,7 +195,7 @@ const GeofencingOperations: React.FC = () => {
       label: 'Actions',
       render: (row: any) => (
         <button
-          onClick={() => setSelectedVehicle(row)}
+          onClick={() => handleRouteReplay(row)}
           className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
           <Play className="w-4 h-4" />
@@ -201,6 +204,15 @@ const GeofencingOperations: React.FC = () => {
       )
     }
   ];
+
+  // Calculate dynamic values from real data
+  const routeStats = calculateRouteCompliance(geofencingData);
+  const restrictedViolations = geofencingData.filter(v => v.restrictedAreaEntry).length;
+  
+  const handleRouteReplay = (vehicle: any) => {
+    setSelectedVehicle(vehicle);
+    showInfo('Route Replay', `Starting route replay for ${vehicle.vehicleNumber}`);
+  };
 
   const recentAlerts = [
     {
@@ -229,14 +241,14 @@ const GeofencingOperations: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Vehicles On Route"
-          value="145"
+          value={routeStats.totalVehicles.toString()}
           subtitle="Currently tracked vehicles"
           icon={Route}
           color="blue"
         />
         <StatCard
           title="Route Deviations"
-          value="8"
+          value={routeStats.deviations.toString()}
           subtitle="Vehicles off assigned routes"
           icon={AlertTriangle}
           trend={{ value: 15, isPositive: false }}
@@ -244,14 +256,14 @@ const GeofencingOperations: React.FC = () => {
         />
         <StatCard
           title="Restricted Violations"
-          value="3"
+          value={restrictedViolations.toString()}
           subtitle="Unauthorized area entries"
           icon={MapPin}
           color="red"
         />
         <StatCard
           title="Route Compliance"
-          value="94.5%"
+          value={`${routeStats.complianceRate}%`}
           subtitle="Overall adherence rate"
           icon={CheckCircle}
           trend={{ value: 2, isPositive: true }}

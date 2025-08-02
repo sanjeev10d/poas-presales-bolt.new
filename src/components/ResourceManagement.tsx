@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
+import { useToast } from '../hooks/useToast';
+import { calculateEquipmentStats } from '../utils/dataCalculations';
 import { Settings, Activity, Wrench, AlertTriangle, Eye } from 'lucide-react';
 
 const ResourceManagement: React.FC = () => {
   const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
+  const { showSuccess, showInfo } = useToast();
 
   const equipmentData = [
     {
@@ -101,6 +104,14 @@ const ResourceManagement: React.FC = () => {
     }
   ];
 
+  // Calculate dynamic values from real data
+  const equipmentStats = calculateEquipmentStats(equipmentData);
+  
+  const handleViewDetails = (equipment: any) => {
+    setSelectedEquipment(equipment);
+    showInfo('Equipment Details', `Viewing details for ${equipment.equipmentId}`);
+  };
+
   const columns = [
     { key: 'equipmentId', label: 'Equipment ID' },
     { key: 'type', label: 'Type' },
@@ -151,7 +162,7 @@ const ResourceManagement: React.FC = () => {
       label: 'Actions',
       render: (row: any) => (
         <button
-          onClick={() => setSelectedEquipment(row)}
+          onClick={() => handleViewDetails(row)}
           className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
           <Eye className="w-4 h-4" />
@@ -167,14 +178,14 @@ const ResourceManagement: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Total Equipment"
-          value="100"
+          value={equipmentStats.total.toString()}
           subtitle="Across all categories"
           icon={Settings}
           color="blue"
         />
         <StatCard
           title="Equipment In Use"
-          value="50"
+          value={equipmentStats.inUse.toString()}
           subtitle="Currently operational"
           icon={Activity}
           trend={{ value: 8, isPositive: true }}
@@ -182,14 +193,14 @@ const ResourceManagement: React.FC = () => {
         />
         <StatCard
           title="Under Maintenance"
-          value="7"
+          value={equipmentStats.maintenance.toString()}
           subtitle="Scheduled & emergency"
           icon={Wrench}
           color="orange"
         />
         <StatCard
           title="High Risk Equipment"
-          value="3"
+          value={equipmentStats.highRisk.toString()}
           subtitle="Requires immediate attention"
           icon={AlertTriangle}
           color="red"

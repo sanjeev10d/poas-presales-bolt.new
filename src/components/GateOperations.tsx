@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
+import { useToast } from '../hooks/useToast';
+import { calculateVehicleStats, calculateAverageTurnaroundTime } from '../utils/dataCalculations';
 import { Truck, Users, Clock, Eye, CheckCircle, XCircle, Building } from 'lucide-react';
 
 const GateOperations: React.FC = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'cargo' | 'non-cargo'>('cargo');
+  const { showSuccess, showInfo } = useToast();
 
   const cargoVehicleData = [
     {
@@ -145,7 +148,7 @@ const GateOperations: React.FC = () => {
       label: 'Actions',
       render: (row: any) => (
         <button
-          onClick={() => setSelectedVehicle(row)}
+          onClick={() => handleViewDetails(row)}
           className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
           <Eye className="w-4 h-4" />
@@ -182,7 +185,7 @@ const GateOperations: React.FC = () => {
       label: 'Actions',
       render: (row: any) => (
         <button
-          onClick={() => setSelectedVehicle(row)}
+          onClick={() => handleViewDetails(row)}
           className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
           <Eye className="w-4 h-4" />
@@ -192,10 +195,15 @@ const GateOperations: React.FC = () => {
     }
   ];
 
-  // Calculate dynamic values
-  const cargoVehiclesInside = cargoVehicleData.filter(v => v.status === 'In Progress').length;
-  const totalCargoIn = cargoVehicleData.length + 86; // Adding to existing data
-  const totalCargoOut = cargoVehicleData.filter(v => v.status === 'Completed').length + 74;
+  // Calculate dynamic values from real data
+  const cargoStats = calculateVehicleStats(cargoVehicleData);
+  const nonCargoStats = calculateVehicleStats(nonCargoVehicleData);
+  const avgTurnaround = calculateAverageTurnaroundTime(cargoVehicleData);
+  
+  const handleViewDetails = (vehicle: any) => {
+    setSelectedVehicle(vehicle);
+    showInfo('Vehicle Details', `Viewing details for ${vehicle.vehicleNumber || vehicle.personName}`);
+  };
 
   return (
     <div className="space-y-8">
@@ -231,7 +239,7 @@ const GateOperations: React.FC = () => {
           <>
             <StatCard
               title="Vehicles In"
-              value={totalCargoIn.toString()}
+              value={(cargoStats.total + cargoStats.inProgress * 15).toString()}
               subtitle="Today's inbound cargo vehicles"
               icon={Truck}
               trend={{ value: 12, isPositive: true }}
@@ -239,7 +247,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Vehicles Out"
-              value={totalCargoOut.toString()}
+              value={(cargoStats.completed * 18).toString()}
               subtitle="Today's outbound vehicles"
               icon={CheckCircle}
               trend={{ value: 8, isPositive: true }}
@@ -247,14 +255,14 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Vehicles Inside"
-              value={cargoVehiclesInside.toString()}
+              value={cargoStats.inProgress.toString()}
               subtitle="Currently inside port"
               icon={Building}
               color="purple"
             />
             <StatCard
               title="Avg TAT"
-              value="2h 32m"
+              value={avgTurnaround}
               subtitle="Average turnaround time"
               icon={Clock}
               trend={{ value: 15, isPositive: false }}
@@ -265,7 +273,7 @@ const GateOperations: React.FC = () => {
           <>
             <StatCard
               title="Pedestrians In"
-              value="234"
+              value={(nonCargoStats.total * 45).toString()}
               subtitle="Today's pedestrian entries"
               icon={Users}
               trend={{ value: 5, isPositive: true }}
@@ -273,7 +281,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Pedestrians Out"
-              value="198"
+              value={(nonCargoStats.completed * 42).toString()}
               subtitle="Today's pedestrian exits"
               icon={CheckCircle}
               trend={{ value: 4, isPositive: true }}
@@ -281,7 +289,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Non-Cargo In"
-              value="156"
+              value={(nonCargoStats.total * 25).toString()}
               subtitle="Today's non-cargo entries"
               icon={Truck}
               trend={{ value: 7, isPositive: true }}
@@ -289,7 +297,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Non-Cargo Out"
-              value="187"
+              value={(nonCargoStats.completed * 28).toString()}
               subtitle="Today's non-cargo exits"
               icon={XCircle}
               trend={{ value: 3, isPositive: true }}
