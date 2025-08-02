@@ -127,41 +127,16 @@ const RakeOperations: React.FC = () => {
     { key: 'emptyWagons', label: 'Empty Wagons' },
     { key: 'wtr', label: 'WTR' },
     { 
-      key: 'alerts', 
-      label: 'Alerts',
-      render: (row: any) => (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          row.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-        }`}>
-          {row.alerts}
-        </span>
-      )
-    },
-    { key: 'sourceTerminal', label: 'Source Terminal' },
-    { 
-      key: 'actions', 
       label: 'Actions',
       render: (row: any) => (
         <div className="flex space-x-2">
           <button
             onClick={() => setSelectedRake(row)}
-            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
+            className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
           >
-            <Eye className="w-3 h-3" />
+            <Eye className="w-4 h-4" />
             <span>View</span>
           </button>
-          {row.status === 'In Progress' && (
-            <>
-              <button className="flex items-center space-x-1 px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs hover:bg-orange-200">
-                <Wrench className="w-3 h-3" />
-                <span>Inspect</span>
-              </button>
-              <button className="flex items-center space-x-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">
-                <RotateCcw className="w-3 h-3" />
-                <span>Reprocess</span>
-              </button>
-            </>
-          )}
         </div>
       )
     }
@@ -351,7 +326,7 @@ const RakeOperations: React.FC = () => {
             <h4 className="font-medium text-slate-900 mb-4">Operation Timeline</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               {selectedRake.timeline.map((stage: any, index: number) => (
-                <div key={index} className="flex items-center space-x-3 p-3 rounded-lg border ${
+                <div key={index} className={`flex items-center space-x-3 p-3 rounded-lg border ${
                   stage.status === 'completed' ? 'bg-green-50 border-green-200' :
                   stage.status === 'in-progress' ? 'bg-blue-50 border-blue-200' :
                   'bg-slate-50 border-slate-200'
@@ -366,71 +341,14 @@ const RakeOperations: React.FC = () => {
                   <div className="text-center">
                     <p className="text-xs font-medium text-slate-900">{stage.stage}</p>
                     <p className="text-xs text-slate-600">{stage.time}</p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Vehicle Details Card */}
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-            {/* Weighment Details Card */}
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
-                Weighment Details
-              </h4>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="font-medium text-gray-600">Driver Name:</span>
-                  <span className="text-gray-900">{selectedRecord.driver.name}</span>
+                  </div>
+                  {index < selectedRake.timeline.length - 1 && (
+                    <div className={`w-8 h-0.5 ${
+                      stage.status === 'completed' ? 'bg-green-500' : 'bg-slate-300'
+                    }`} />
+                  )}
                 </div>
-                <div className="flex justify-between">
-                  <span className="font-medium text-gray-600">License:</span>
-                  <span className="text-gray-900">{selectedRecord.driver.license}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium text-gray-600">Tare Weight:</span>
-                  <span className="text-gray-900 font-semibold">{selectedRecord.tareWeight}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium text-gray-600">Gross Weight:</span>
-                  <span className="text-gray-900 font-semibold">{selectedRecord.grossWeight}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium text-gray-600">Net Weight:</span>
-                  <span className="text-gray-900 font-semibold text-blue-600">{selectedRecord.netWeight}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium text-gray-600">Challan Generated:</span>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    selectedRecord.challanGenerated ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                  }`}>
-                    {selectedRecord.challanGenerated ? 'Yes' : 'No'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Vehicle Images */}
-          <div className="mt-6 bg-gray-50 rounded-xl p-6 border border-gray-200">
-            <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-              <Eye className="w-5 h-5 mr-2 text-purple-600" />
-              Captured Images
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-lg p-4 border border-gray-200">
-                <p className="text-sm font-medium text-gray-700 mb-3">Number Plate</p>
-                <img 
-                  src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop"
-                  alt="Vehicle number plate"
-                  className="w-full h-32 object-cover rounded-lg"
-                />
-              </div>
-              <div className="bg-white rounded-lg p-4 border border-gray-200">
-                <p className="text-sm font-medium text-gray-700 mb-3">Vehicle at Weighbridge</p>
-                <img 
-                  src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop"
-                  alt="Vehicle at weighbridge"
-                  className="w-full h-32 object-cover rounded-lg"
-                />
-              </div>
+              ))}
             </div>
           </div>
         </Modal>
