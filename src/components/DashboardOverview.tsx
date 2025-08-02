@@ -71,6 +71,9 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
     [0, 0, 0, 0, 0, 0]
   ];
 
+  const xLabels = ['Terminal A', 'Terminal B', 'Terminal C', 'Terminal D', 'Terminal E', 'Terminal F'];
+  const yLabels = ['06:00-12:00', '12:00-18:00', '18:00-00:00', '00:00-06:00'];
+
   // Additional chart data for enhanced visualizations
   const hourlyTrafficData = [
     { label: '00:00', value: 45 },
@@ -340,7 +343,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-bold text-gray-900">Terminal Utilization Heatmap</h3>
-            <p className="text-sm text-gray-500">Real-time utilization across terminals and time periods</p>
+            <p className="text-sm text-gray-500">Vehicle traffic across terminals and time periods</p>
           </div>
           <div className="flex items-center space-x-2">
             <BarChart3 className="w-5 h-5 text-gray-400" />
@@ -348,17 +351,27 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
           </div>
         </div>
         
-        <HeatMap
-          data={terminalUtilizationData}
-          colorScale={['#f3f4f6', '#dbeafe', '#93c5fd', '#3b82f6', '#1d4ed8']}
-          className="mb-4"
-        />
+        <div className="mb-4">
+          <HeatMap
+            xLabels={xLabels}
+            yLabels={yLabels}
+            data={terminalUtilizationData}
+            cellStyle={(background, value, min, max, data, x, y) => ({
+              background: `rgba(59, 130, 246, ${(value - min) / (max - min) * 0.8 + 0.1})`,
+              fontSize: '11px',
+              color: value > (max - min) * 0.6 + min ? '#fff' : '#1f2937',
+              border: '1px solid #e5e7eb',
+              borderRadius: '4px'
+            })}
+            cellRender={value => value && `${value}`}
+            title={(value, unit) => `${value} vehicles/hour`}
+          />
+        </div>
         
         <div className="text-xs text-gray-500 text-center">
-          Higher intensity indicates greater utilization. Click on cells for detailed breakdown.
+          Higher values indicate more vehicle traffic. Peak hours: 10:00-14:00
         </div>
       </div>
-
 
       {/* Navigation Cards */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
