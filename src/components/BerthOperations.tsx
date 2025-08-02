@@ -2,155 +2,138 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { Train, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Ship, Anchor, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const BerthOperations: React.FC = () => {
   const [selectedVessel, setSelectedVessel] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState('regular');
 
-  const rakeData = [
+  const vesselData = [
     {
       id: 1,
-      rakeRefNo: 'RK-2024-001',
-      wagonCount: 58,
+      vesselName: 'MV OCEAN PRIDE',
+      imoNumber: 'IMO9876543',
+      vesselType: 'Bulk Carrier',
+      berthNumber: 'Berth-1',
       timeIn: '08:30 AM',
       timeOut: '02:15 PM',
-      loadedWagons: 58,
-      emptyWagons: 0,
-      wtr: '5h 45m',
-      alerts: 'None',
-      sourceTerminal: 'Jharsuguda',
-      status: 'Completed',
       cargoType: 'Coal',
-      railwayPNNumber: 'RPN-2024-001',
-      operatorName: 'Suresh Kumar',
-      destination: 'Terminal 1',
-      totalWeight: '3480 MT',
+      cargoQuantity: '45,000 MT',
+      status: 'Completed',
+      captain: {
+        name: 'Captain Smith',
+        license: 'ML12345',
+        nationality: 'Indian'
+      },
+      operatorName: 'Port Authority',
+      dwt: '65,000 MT',
+      loa: '225m',
+      beam: '32m',
+      draft: '12.5m',
       timeline: [
-        { stage: 'Station Arrival', time: '08:15 AM', status: 'completed' },
-        { stage: 'Station Departure', time: '08:30 AM', status: 'completed' },
-        { stage: 'Top Point Arrival', time: '08:45 AM', status: 'completed' },
-        { stage: 'Hopper Placement', time: '08:55 AM', status: 'completed' },
-        { stage: 'Unloading Complete', time: '01:30 PM', status: 'completed' },
-        { stage: 'Rake Dispatch (Railway PN)', time: '02:00 PM', status: 'completed' },
-        { stage: 'PRP Top Point Arrival', time: '02:10 PM', status: 'completed' },
-        { stage: 'Station Arrival', time: '02:15 PM', status: 'completed' },
-        { stage: 'Station Departure', time: '02:15 PM', status: 'completed' }
+        { stage: 'Vessel Arrival', time: '08:15 AM', status: 'completed' },
+        { stage: 'Pilot Boarding', time: '08:30 AM', status: 'completed' },
+        { stage: 'Berth Allocation', time: '08:45 AM', status: 'completed' },
+        { stage: 'Mooring Complete', time: '09:00 AM', status: 'completed' },
+        { stage: 'Loading Started', time: '09:30 AM', status: 'completed' },
+        { stage: 'Loading Complete', time: '01:30 PM', status: 'completed' },
+        { stage: 'Unmooring', time: '02:00 PM', status: 'completed' },
+        { stage: 'Pilot Disembark', time: '02:10 PM', status: 'completed' },
+        { stage: 'Vessel Departure', time: '02:15 PM', status: 'completed' }
       ]
     },
     {
       id: 2,
-      rakeRefNo: 'RK-2024-002',
-      wagonCount: 60,
+      vesselName: 'MV COASTAL STAR',
+      imoNumber: 'IMO9876544',
+      vesselType: 'Container Ship',
+      berthNumber: 'Berth-3',
       timeIn: '10:15 AM',
       timeOut: '—',
-      loadedWagons: 55,
-      emptyWagons: 5,
-      wtr: '6h 12m (ongoing)',
-      alerts: 'Load Discrepancy',
-      sourceTerminal: 'Talcher',
+      cargoType: 'Containers',
+      cargoQuantity: '1,200 TEU',
       status: 'In Progress',
-      cargoType: 'Coal',
-      railwayPNNumber: 'RPN-2024-002',
-      operatorName: 'Rajesh Patel',
-      destination: 'Terminal 2',
-      totalWeight: '3300 MT',
+      captain: {
+        name: 'Captain Johnson',
+        license: 'ML67890',
+        nationality: 'British'
+      },
+      operatorName: 'Terminal Operator',
+      dwt: '85,000 MT',
+      loa: '280m',
+      beam: '40m',
+      draft: '14.2m',
       timeline: [
-        { stage: 'Station Arrival', time: '10:00 AM', status: 'completed' },
-        { stage: 'Station Departure', time: '10:15 AM', status: 'completed' },
-        { stage: 'Top Point Arrival', time: '10:30 AM', status: 'completed' },
-        { stage: 'Hopper Placement', time: '10:40 AM', status: 'completed' },
-        { stage: 'Unloading Complete', time: '—', status: 'in-progress' },
-        { stage: 'Rake Dispatch (Railway PN)', time: '—', status: 'pending' },
-        { stage: 'PRP Top Point Arrival', time: '—', status: 'pending' },
-        { stage: 'Station Arrival', time: '—', status: 'pending' },
-        { stage: 'Station Departure', time: '—', status: 'pending' }
-      ]
-    }
-  ];
-
-  const bobrnRakeData = [
-    {
-      id: 1,
-      rakeRefNo: 'BOBRN-2024-001',
-      wagonCount: 45,
-      timeIn: '07:45 AM',
-      timeOut: '01:45 PM',
-      loadedWagons: 45,
-      emptyWagons: 0,
-      wtr: '6h 00m',
-      alerts: 'None',
-      sourceTerminal: 'Barbil',
-      status: 'Completed',
-      cargoType: 'Iron Ore',
-      railwayPNNumber: 'BOBRN-PN-2024-001',
-      operatorName: 'Amit Singh',
-      destination: 'Terminal 3',
-      totalWeight: '2700 MT',
-      timeline: [
-        { stage: 'Station Arrival', time: '07:30 AM', status: 'completed' },
-        { stage: 'Station Departure', time: '07:45 AM', status: 'completed' },
-        { stage: 'Top Point Arrival', time: '08:00 AM', status: 'completed' },
-        { stage: 'Hopper Placement', time: '08:15 AM', status: 'completed' },
-        { stage: 'Unloading Complete', time: '01:00 PM', status: 'completed' },
-        { stage: 'Rake Dispatch (Railway PN)', time: '01:15 PM', status: 'completed' },
-        { stage: 'PRP Top Point Arrival', time: '01:30 PM', status: 'completed' },
-        { stage: 'Station Arrival', time: '01:40 PM', status: 'completed' },
-        { stage: 'Station Departure', time: '01:45 PM', status: 'completed' }
+        { stage: 'Vessel Arrival', time: '10:00 AM', status: 'completed' },
+        { stage: 'Pilot Boarding', time: '10:15 AM', status: 'completed' },
+        { stage: 'Berth Allocation', time: '10:30 AM', status: 'completed' },
+        { stage: 'Mooring Complete', time: '10:45 AM', status: 'completed' },
+        { stage: 'Loading Started', time: '11:00 AM', status: 'completed' },
+        { stage: 'Loading Complete', time: '—', status: 'in-progress' },
+        { stage: 'Unmooring', time: '—', status: 'pending' },
+        { stage: 'Pilot Disembark', time: '—', status: 'pending' },
+        { stage: 'Vessel Departure', time: '—', status: 'pending' }
       ]
     },
     {
-      id: 2,
-      rakeRefNo: 'BOBRN-2024-002',
-      wagonCount: 52,
-      timeIn: '09:30 AM',
-      timeOut: '—',
-      loadedWagons: 48,
-      emptyWagons: 4,
-      wtr: '4h 15m (ongoing)',
-      alerts: 'Delayed Unloading',
-      sourceTerminal: 'Rourkela',
-      status: 'In Progress',
+      id: 3,
+      vesselName: 'MV IRON DUKE',
+      imoNumber: 'IMO9876545',
+      vesselType: 'Ore Carrier',
+      berthNumber: 'Berth-2',
+      timeIn: '07:45 AM',
+      timeOut: '01:45 PM',
       cargoType: 'Iron Ore',
-      railwayPNNumber: 'BOBRN-PN-2024-002',
-      operatorName: 'Priya Sharma',
-      destination: 'Terminal 4',
-      totalWeight: '2880 MT',
+      cargoQuantity: '52,000 MT',
+      status: 'Completed',
+      captain: {
+        name: 'Captain Singh',
+        license: 'ML11223',
+        nationality: 'Indian'
+      },
+      operatorName: 'Bulk Terminal',
+      dwt: '75,000 MT',
+      loa: '240m',
+      beam: '38m',
+      draft: '13.8m',
       timeline: [
-        { stage: 'Station Arrival', time: '09:15 AM', status: 'completed' },
-        { stage: 'Station Departure', time: '09:30 AM', status: 'completed' },
-        { stage: 'Top Point Arrival', time: '09:45 AM', status: 'completed' },
-        { stage: 'Hopper Placement', time: '10:00 AM', status: 'completed' },
-        { stage: 'Unloading Complete', time: '—', status: 'in-progress' },
-        { stage: 'Rake Dispatch (Railway PN)', time: '—', status: 'pending' },
-        { stage: 'PRP Top Point Arrival', time: '—', status: 'pending' },
-        { stage: 'Station Arrival', time: '—', status: 'pending' },
-        { stage: 'Station Departure', time: '—', status: 'pending' }
+        { stage: 'Vessel Arrival', time: '07:30 AM', status: 'completed' },
+        { stage: 'Pilot Boarding', time: '07:45 AM', status: 'completed' },
+        { stage: 'Berth Allocation', time: '08:00 AM', status: 'completed' },
+        { stage: 'Mooring Complete', time: '08:15 AM', status: 'completed' },
+        { stage: 'Loading Started', time: '08:30 AM', status: 'completed' },
+        { stage: 'Loading Complete', time: '01:00 PM', status: 'completed' },
+        { stage: 'Unmooring', time: '01:15 PM', status: 'completed' },
+        { stage: 'Pilot Disembark', time: '01:30 PM', status: 'completed' },
+        { stage: 'Vessel Departure', time: '01:45 PM', status: 'completed' }
       ]
     }
   ];
 
   const columns = [
-    { key: 'rakeRefNo', label: 'Rake Ref No.' },
-    { key: 'wagonCount', label: 'Wagon Count' },
-    { key: 'cargoType', label: 'Cargo Type' },
-    { key: 'sourceTerminal', label: 'Source Terminal' },
-    { key: 'destination', label: 'Destination' },
-    { key: 'operatorName', label: 'Operator' },
-    { key: 'timeIn', label: 'In Time' },
-    { key: 'timeOut', label: 'Out Time' },
-    { key: 'loadedWagons', label: 'Loaded Wagons' },
-    { key: 'emptyWagons', label: 'Empty Wagons' },
-    { key: 'totalWeight', label: 'Total Weight' },
-    { key: 'wtr', label: 'WTR' },
+    { key: 'vesselName', label: 'Vessel Name' },
+    { key: 'imoNumber', label: 'IMO Number' },
+    { key: 'vesselType', label: 'Vessel Type' },
+    { key: 'berthNumber', label: 'Berth Number' },
     { 
-      key: 'alerts', 
-      label: 'Alerts',
+      key: 'captain', 
+      label: 'Captain',
+      render: (row: any) => row.captain?.name || row.captain
+    },
+    { key: 'cargoType', label: 'Cargo Type' },
+    { key: 'cargoQuantity', label: 'Cargo Quantity' },
+    { key: 'timeIn', label: 'Arrival Time' },
+    { key: 'timeOut', label: 'Departure Time' },
+    { key: 'operatorName', label: 'Operator' },
+    { key: 'dwt', label: 'DWT' },
+    { key: 'loa', label: 'LOA' },
+    { 
+      key: 'status', 
+      label: 'Status',
       render: (row: any) => (
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          row.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+          row.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
         }`}>
-          {row.alerts}
+          {row.status}
         </span>
       )
     },
@@ -170,112 +153,50 @@ const BerthOperations: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Tab Navigation */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-2">
-        <nav className="flex space-x-2">
-          <button
-            onClick={() => setActiveTab('regular')}
-            className={`flex-1 py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 ${
-              activeTab === 'regular'
-                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Regular Rakes
-          </button>
-          <button
-            onClick={() => setActiveTab('bobrn')}
-            className={`flex-1 py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 ${
-              activeTab === 'bobrn'
-                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            BOBRN Rakes
-          </button>
-        </nav>
-      </div>
-
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {activeTab === 'regular' ? (
-          <>
-            <StatCard
-              title="Active Rakes"
-              value="3"
-              subtitle="Currently in progress"
-              icon={Train}
-              color="blue"
-            />
-            <StatCard
-              title="Completed Rakes"
-              value="12"
-              subtitle="Dispatched today"
-              icon={CheckCircle}
-              trend={{ value: 15, isPositive: true }}
-              color="green"
-            />
-            <StatCard
-              title="Exception Alerts"
-              value="2"
-              subtitle="Requires attention"
-              icon={AlertTriangle}
-              color="red"
-            />
-            <StatCard
-              title="Avg WTR"
-              value="5h 42m"
-              subtitle="Wagon turnaround time"
-              icon={Clock}
-              trend={{ value: 8, isPositive: false }}
-              color="orange"
-            />
-          </>
-        ) : (
-          <>
-            <StatCard
-              title="Active BOBRN Rakes"
-              value="1"
-              subtitle="Currently in progress"
-              icon={Train}
-              color="blue"
-            />
-            <StatCard
-              title="Completed BOBRN"
-              value="8"
-              subtitle="Dispatched today"
-              icon={CheckCircle}
-              trend={{ value: 12, isPositive: true }}
-              color="green"
-            />
-            <StatCard
-              title="Exception Alerts"
-              value="1"
-              subtitle="Requires attention"
-              icon={AlertTriangle}
-              color="red"
-            />
-            <StatCard
-              title="Avg WTR"
-              value="6h 15m"
-              subtitle="Wagon turnaround time"
-              icon={Clock}
-              trend={{ value: 5, isPositive: false }}
-              color="orange"
-            />
-          </>
-        )}
+        <StatCard
+          title="Active Vessels"
+          value="2"
+          subtitle="Currently at berth"
+          icon={Ship}
+          color="blue"
+        />
+        <StatCard
+          title="Completed Operations"
+          value="11"
+          subtitle="Vessels departed today"
+          icon={CheckCircle}
+          trend={{ value: 15, isPositive: true }}
+          color="green"
+        />
+        <StatCard
+          title="Berth Utilization"
+          value="85%"
+          subtitle="Average berth occupancy"
+          icon={Anchor}
+          trend={{ value: 8, isPositive: true }}
+          color="purple"
+        />
+        <StatCard
+          title="Avg Turnaround"
+          value="13h 15m"
+          subtitle="Average vessel turnaround"
+          icon={Clock}
+          trend={{ value: 5, isPositive: false }}
+          color="orange"
+        />
       </div>
 
-      {/* Rake Audit Logs */}
+      {/* Berth Operations Audit Logs */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
           <h3 className="text-lg font-semibold text-gray-900">
-            {activeTab === 'regular' ? 'Regular Rake' : 'BOBRN Rake'} Operations Audit Logs
+            Berth Operations - All Vessels
           </h3>
         </div>
         <div className="p-6">
-          <DataTable data={activeTab === 'regular' ? rakeData : bobrnRakeData} columns={columns} />
+          <DataTable data={vesselData} columns={columns} />
         </div>
       </div>
 
@@ -284,42 +205,42 @@ const BerthOperations: React.FC = () => {
         <Modal
           isOpen={!!selectedVessel}
           onClose={() => setSelectedVessel(null)}
-          title={`Rake Details - ${selectedVessel.rakeRefNo}`}
+          title={`Vessel Details - ${selectedVessel.vesselName}`}
           size="xl"
         >
           <div className="space-y-6">
-            {/* Rake Information Cards */}
+            {/* Vessel Information Cards */}
             <div className="grid grid-cols-2 gap-6">
               <div className="bg-gray-50 rounded-xl p-6">
-                <h4 className="font-semibold text-gray-900 mb-4">Rake Information</h4>
+                <h4 className="font-semibold text-gray-900 mb-4">Vessel Information</h4>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Reference No:</span>
-                    <span className="text-gray-900">{selectedVessel.rakeRefNo}</span>
+                    <span className="font-medium text-gray-600">Vessel Name:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselName}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Source Station:</span>
-                    <span className="text-gray-900">{selectedVessel.sourceTerminal}</span>
+                    <span className="font-medium text-gray-600">IMO Number:</span>
+                    <span className="text-gray-900">{selectedVessel.imoNumber}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Destination:</span>
-                    <span className="text-gray-900">{selectedVessel.destination}</span>
+                    <span className="font-medium text-gray-600">Vessel Type:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselType}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Cargo Type:</span>
-                    <span className="text-gray-900">{selectedVessel.cargoType}</span>
+                    <span className="font-medium text-gray-600">DWT:</span>
+                    <span className="text-gray-900">{selectedVessel.dwt}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Total Wagons:</span>
-                    <span className="text-gray-900">{selectedVessel.wagonCount}</span>
+                    <span className="font-medium text-gray-600">LOA:</span>
+                    <span className="text-gray-900">{selectedVessel.loa}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Total Weight:</span>
-                    <span className="text-gray-900">{selectedVessel.totalWeight}</span>
+                    <span className="font-medium text-gray-600">Beam:</span>
+                    <span className="text-gray-900">{selectedVessel.beam}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Railway PN Number:</span>
-                    <span className="text-gray-900">{selectedVessel.railwayPNNumber}</span>
+                    <span className="font-medium text-gray-600">Draft:</span>
+                    <span className="text-gray-900">{selectedVessel.draft}</span>
                   </div>
                 </div>
               </div>
@@ -328,30 +249,38 @@ const BerthOperations: React.FC = () => {
                 <h4 className="font-semibold text-gray-900 mb-4">Operation Details</h4>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Operator:</span>
-                    <span className="text-gray-900">{selectedVessel.operatorName}</span>
+                    <span className="font-medium text-gray-600">Captain:</span>
+                    <span className="text-gray-900">{selectedVessel.captain.name}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Port Entry Time:</span>
+                    <span className="font-medium text-gray-600">License:</span>
+                    <span className="text-gray-900">{selectedVessel.captain.license}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Nationality:</span>
+                    <span className="text-gray-900">{selectedVessel.captain.nationality}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Berth Number:</span>
+                    <span className="text-gray-900">{selectedVessel.berthNumber}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Arrival Time:</span>
                     <span className="text-gray-900">{selectedVessel.timeIn}</span>
                   </div>
                   {selectedVessel.timeOut !== '—' && (
                     <div className="flex justify-between">
-                      <span className="font-medium text-gray-600">Port Exit Time:</span>
+                      <span className="font-medium text-gray-600">Departure Time:</span>
                       <span className="text-gray-900">{selectedVessel.timeOut}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Loaded Wagons:</span>
-                    <span className="text-gray-900">{selectedVessel.loadedWagons}</span>
+                    <span className="font-medium text-gray-600">Cargo Type:</span>
+                    <span className="text-gray-900">{selectedVessel.cargoType}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Empty Wagons:</span>
-                    <span className="text-gray-900">{selectedVessel.emptyWagons}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">WTR Time:</span>
-                    <span className="text-gray-900">{selectedVessel.wtr}</span>
+                    <span className="font-medium text-gray-600">Cargo Quantity:</span>
+                    <span className="text-gray-900">{selectedVessel.cargoQuantity}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Status:</span>
@@ -359,14 +288,6 @@ const BerthOperations: React.FC = () => {
                       selectedVessel.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
                     }`}>
                       {selectedVessel.status}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Alerts:</span>
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      selectedVessel.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {selectedVessel.alerts}
                     </span>
                   </div>
                 </div>
