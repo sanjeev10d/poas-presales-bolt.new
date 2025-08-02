@@ -332,36 +332,27 @@ const BerthOperations: React.FC = () => {
             </div>
           </div>
           
-          {/* Operation Timeline */}
-          <div className="mt-6 bg-gray-50 rounded-xl p-6 border border-gray-200">
-            <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-              <Clock className="w-5 h-5 mr-2 text-purple-600" />
-              Operation Timeline
-            </h4>
+          {/* Vessel Operation Timeline */}
+          <div className="bg-gray-50 rounded-xl p-6">
+            <h4 className="font-semibold text-gray-900 mb-4">Complete Vessel Operation Timeline</h4>
             <div className="space-y-3">
               {selectedVessel.timeline.map((stage: any, index: number) => (
-                <div key={index} className={`flex items-center justify-between p-4 bg-white rounded-lg border-l-4 ${
-                  stage.status === 'completed' ? 'border-green-500' :
-                  stage.status === 'in-progress' ? 'border-blue-500' :
-                  'border-slate-300'
-                }`}>
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
-                      stage.status === 'completed' ? 'bg-green-500 text-white' :
-                      stage.status === 'in-progress' ? 'bg-blue-500 text-white' :
-                      'bg-slate-300 text-slate-600'
-                    }`}>
-                      {index + 1}
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-slate-900">{stage.stage}</p>
-                      <p className="text-xs text-slate-600">{stage.time}</p>
-                    </div>
+                <div key={index} className="flex items-center space-x-4 p-3 bg-white rounded-lg border border-gray-200">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
+                    stage.status === 'completed' ? 'bg-green-500' :
+                    stage.status === 'in-progress' ? 'bg-blue-500' :
+                    'bg-gray-300'
+                  }`}>
+                    {index + 1}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">{stage.stage}</p>
+                    <p className="text-xs text-gray-600">{stage.time}</p>
                   </div>
                   <div className={`px-2 py-1 rounded-full text-xs font-medium ${
                     stage.status === 'completed' ? 'bg-green-100 text-green-800' :
                     stage.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
-                    'bg-slate-100 text-slate-600'
+                    'bg-gray-100 text-gray-600'
                   }`}>
                     {stage.status === 'completed' ? 'Completed' :
                      stage.status === 'in-progress' ? 'In Progress' : 'Pending'}
