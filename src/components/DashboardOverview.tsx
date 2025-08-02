@@ -19,7 +19,8 @@ import {
   RefreshCw,
   ArrowRight,
   Eye,
-  ChevronDown
+  ChevronDown,
+  TrendingDown
 } from 'lucide-react';
 
 const DashboardOverview: React.FC = () => {
@@ -52,10 +53,10 @@ const DashboardOverview: React.FC = () => {
   ];
 
   const cargoDistributionData = [
-    { label: 'Coal', value: 52 },
-    { label: 'Iron Ore', value: 28 },
-    { label: 'Fertilizer', value: 15 },
-    { label: 'Containers', value: 5 }
+    { label: 'Coal', value: 52000 },
+    { label: 'Iron Ore', value: 28000 },
+    { label: 'Fertilizer', value: 15000 },
+    { label: 'Containers', value: 5000 }
   ];
 
   const terminalUtilizationData = [
@@ -74,7 +75,24 @@ const DashboardOverview: React.FC = () => {
   ];
 
   const performanceMetricsData = [
-    { label: 'Efficiency', value: 87 }
+    { label: 'Overall Performance Score', value: 87 }
+  ];
+
+  // Additional chart data for enhanced visualizations
+  const hourlyTrafficData = [
+    { label: '00:00', value: 45 },
+    { label: '04:00', value: 32 },
+    { label: '08:00', value: 189 },
+    { label: '12:00', value: 245 },
+    { label: '16:00', value: 198 },
+    { label: '20:00', value: 156 }
+  ];
+
+  const equipmentUtilizationData = [
+    { label: 'Cranes', value: 89 },
+    { label: 'Reach Stackers', value: 76 },
+    { label: 'Forklifts', value: 82 },
+    { label: 'Trailers', value: 94 }
   ];
 
   const handleQuickAction = (action: string, module: string) => {
@@ -253,6 +271,59 @@ const DashboardOverview: React.FC = () => {
           
           <div className="space-y-2">
             {cargoDistributionData.map((item, index) => (
+      {/* Hourly Traffic Analysis */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">Hourly Traffic Pattern</h3>
+              <p className="text-sm text-gray-500">Vehicle movements by time of day</p>
+            </div>
+            <div className="flex items-center space-x-2 text-sm">
+              <TrendingUp className="w-4 h-4 text-green-600" />
+              <span className="text-green-600 font-semibold">Peak at 12:00</span>
+            </div>
+          </div>
+          
+          <Chart
+            type="bar"
+            data={hourlyTrafficData}
+            config={{
+              colors: ['#8B5CF6', '#EC4899', '#F59E0B', '#10B981', '#3B82F6', '#EF4444'],
+              height: 250,
+              showGrid: true,
+              animate: true
+            }}
+          />
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">Equipment Utilization</h3>
+              <p className="text-sm text-gray-500">Current utilization rates by equipment type</p>
+            </div>
+            <div className="flex items-center space-x-2 text-sm">
+              <Activity className="w-4 h-4 text-blue-600" />
+              <span className="text-blue-600 font-semibold">85% Avg</span>
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            {equipmentUtilizationData.map((item, index) => (
+              <Chart
+                key={index}
+                type="progress"
+                data={[item]}
+                config={{
+                  colors: [['#3B82F6', '#10B981', '#F59E0B', '#8B5CF6'][index]],
+                  animate: true
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
               <div key={index} className="flex items-center justify-between text-sm">
                 <div className="flex items-center space-x-2">
                   <div 
@@ -292,48 +363,6 @@ const DashboardOverview: React.FC = () => {
         </div>
       </div>
 
-      {/* Performance Metrics */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-lg font-bold text-gray-900">Overall Performance Score</h3>
-            <p className="text-sm text-gray-500">Composite efficiency rating based on all operations</p>
-          </div>
-          <div className="flex items-center space-x-2 text-sm">
-            <TrendingUp className="w-4 h-4 text-green-600" />
-            <span className="text-green-600 font-semibold">+5% from last week</span>
-          </div>
-        </div>
-        
-        <Chart
-          type="progress"
-          data={performanceMetricsData}
-          config={{
-            colors: ['#10B981'],
-            animate: true
-          }}
-          className="mb-4"
-        />
-        
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-          <div className="text-center p-3 bg-blue-50 rounded-lg">
-            <div className="text-2xl font-bold text-blue-600">98.7%</div>
-            <div className="text-xs text-blue-700">Uptime</div>
-          </div>
-          <div className="text-center p-3 bg-green-50 rounded-lg">
-            <div className="text-2xl font-bold text-green-600">2.1h</div>
-            <div className="text-xs text-green-700">Avg TAT</div>
-          </div>
-          <div className="text-center p-3 bg-purple-50 rounded-lg">
-            <div className="text-2xl font-bold text-purple-600">92%</div>
-            <div className="text-xs text-purple-700">Utilization</div>
-          </div>
-          <div className="text-center p-3 bg-orange-50 rounded-lg">
-            <div className="text-2xl font-bold text-orange-600">23</div>
-            <div className="text-xs text-orange-700">Active Alerts</div>
-          </div>
-        </div>
-      </div>
 
       {/* Navigation Cards */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
