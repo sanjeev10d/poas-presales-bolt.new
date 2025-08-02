@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { Warehouse, PieChart, Clock, AlertTriangle, Eye, RotateCcw, Flag } from 'lucide-react';
+import { Warehouse, PieChart, Clock, AlertTriangle, Eye } from 'lucide-react';
 
 const YardOperations: React.FC = () => {
   const [selectedAllocation, setSelectedAllocation] = useState<any>(null);
@@ -19,17 +19,27 @@ const YardOperations: React.FC = () => {
       allocationTime: '11:20 AM',
       status: 'Active',
       utilization: 72,
+      operatorName: 'Rajesh Kumar',
+      dwellTime: '4h 15m',
+      stackHeight: '8.5m',
+      moistureLevel: '12%',
+      temperatureReading: '28°C',
+      lastInspection: '10:45 AM',
       yardDetails: {
         yardType: 'Open',
         surfaceType: 'Paved',
         capacity: '5,000 MT',
-        coordinates: '20.2648°N, 86.6993°E'
+        coordinates: '20.2648°N, 86.6993°E',
+        drainageStatus: 'Good',
+        accessRoad: 'Primary'
       },
       cargoDetails: {
         weight: '2,800 MT',
         volume: '2,150 m³',
         packaging: 'Bulk',
-        hazardTag: 'None'
+        hazardTag: 'None',
+        qualityGrade: 'Grade A',
+        sourceLocation: 'Jharsuguda'
       }
     },
     {
@@ -43,17 +53,27 @@ const YardOperations: React.FC = () => {
       allocationTime: '09:45 AM',
       status: 'Overstacked',
       utilization: 112,
+      operatorName: 'Priya Sharma',
+      dwellTime: '6h 30m',
+      stackHeight: '12.2m',
+      moistureLevel: '8%',
+      temperatureReading: '32°C',
+      lastInspection: '09:30 AM',
       yardDetails: {
         yardType: 'Covered',
         surfaceType: 'Concrete',
         capacity: '3,500 MT',
-        coordinates: '20.2655°N, 86.6985°E'
+        coordinates: '20.2655°N, 86.6985°E',
+        drainageStatus: 'Excellent',
+        accessRoad: 'Secondary'
       },
       cargoDetails: {
         weight: '3,200 MT',
         volume: '2,800 m³',
         packaging: 'Bagged',
-        hazardTag: 'Chemical'
+        hazardTag: 'Chemical',
+        qualityGrade: 'Grade B',
+        sourceLocation: 'Talcher'
       }
     }
   ];
@@ -69,10 +89,16 @@ const YardOperations: React.FC = () => {
     { key: 'allocationId', label: 'Allocation ID' },
     { key: 'yardNumber', label: 'Yard Number' },
     { key: 'cargoType', label: 'Cargo Type' },
+    { key: 'operatorName', label: 'Operator' },
     { key: 'allocatedSpace', label: 'Allocated Space' },
     { key: 'occupiedSpace', label: 'Occupied Space' },
     { key: 'assignedVehicle', label: 'Assigned Vehicle' },
     { key: 'allocationTime', label: 'Allocation Time' },
+    { key: 'dwellTime', label: 'Dwell Time' },
+    { key: 'stackHeight', label: 'Stack Height' },
+    { key: 'moistureLevel', label: 'Moisture %' },
+    { key: 'temperatureReading', label: 'Temperature' },
+    { key: 'lastInspection', label: 'Last Inspection' },
     { 
       key: 'status', 
       label: 'Status',
@@ -90,27 +116,13 @@ const YardOperations: React.FC = () => {
       key: 'actions', 
       label: 'Actions',
       render: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => setSelectedAllocation(row)}
-            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
-          >
-            <Eye className="w-3 h-3" />
-            <span>View</span>
-          </button>
-          {row.status === 'Overstacked' && (
-            <>
-              <button className="flex items-center space-x-1 px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs hover:bg-orange-200">
-                <RotateCcw className="w-3 h-3" />
-                <span>Reallocate</span>
-              </button>
-              <button className="flex items-center space-x-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">
-                <Flag className="w-3 h-3" />
-                <span>Flag</span>
-              </button>
-            </>
-          )}
-        </div>
+        <button
+          onClick={() => setSelectedAllocation(row)}
+          className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+        >
+          <Eye className="w-4 h-4" />
+          <span>View</span>
+        </button>
       )
     }
   ];
@@ -215,76 +227,179 @@ const YardOperations: React.FC = () => {
           title={`Yard Allocation - ${selectedAllocation.allocationId}`}
           size="xl"
         >
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Yard Details</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Yard ID:</span> {selectedAllocation.yardNumber}</p>
-                  <p><span className="font-medium">Yard Type:</span> {selectedAllocation.yardDetails.yardType}</p>
-                  <p><span className="font-medium">Surface Type:</span> {selectedAllocation.yardDetails.surfaceType}</p>
-                  <p><span className="font-medium">Capacity:</span> {selectedAllocation.yardDetails.capacity}</p>
-                  <p><span className="font-medium">Coordinates:</span> {selectedAllocation.yardDetails.coordinates}</p>
+          <div className="space-y-6">
+            {/* Yard and Allocation Information */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Yard Details</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Yard ID:</span>
+                    <span className="text-gray-900">{selectedAllocation.yardNumber}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Yard Type:</span>
+                    <span className="text-gray-900">{selectedAllocation.yardDetails.yardType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Surface Type:</span>
+                    <span className="text-gray-900">{selectedAllocation.yardDetails.surfaceType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Capacity:</span>
+                    <span className="text-gray-900">{selectedAllocation.yardDetails.capacity}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Coordinates:</span>
+                    <span className="text-gray-900">{selectedAllocation.yardDetails.coordinates}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Drainage Status:</span>
+                    <span className="text-gray-900">{selectedAllocation.yardDetails.drainageStatus}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Access Road:</span>
+                    <span className="text-gray-900">{selectedAllocation.yardDetails.accessRoad}</span>
+                  </div>
                 </div>
               </div>
               
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Stack Image</h4>
-                <img 
-                  src="https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop"
-                  alt="Yard stack view"
-                  className="w-full h-40 object-cover rounded-lg"
-                />
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Allocation Information</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Allocation ID:</span> {selectedAllocation.allocationId}</p>
-                  <p><span className="font-medium">Allocation Time:</span> {selectedAllocation.allocationTime}</p>
-                  <p><span className="font-medium">Assigned Vehicle:</span> {selectedAllocation.assignedVehicle}</p>
-                  <p><span className="font-medium">Allocated Space:</span> {selectedAllocation.allocatedSpace}</p>
-                  <p><span className="font-medium">Occupied Space:</span> {selectedAllocation.occupiedSpace}</p>
-                  <p><span className="font-medium">Utilization:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Allocation Information</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Allocation ID:</span>
+                    <span className="text-gray-900">{selectedAllocation.allocationId}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Allocation Time:</span>
+                    <span className="text-gray-900">{selectedAllocation.allocationTime}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Assigned Vehicle:</span>
+                    <span className="text-gray-900">{selectedAllocation.assignedVehicle}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Operator:</span>
+                    <span className="text-gray-900">{selectedAllocation.operatorName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Allocated Space:</span>
+                    <span className="text-gray-900">{selectedAllocation.allocatedSpace}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Occupied Space:</span>
+                    <span className="text-gray-900">{selectedAllocation.occupiedSpace}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Utilization:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
                       selectedAllocation.utilization > 100 ? 'bg-red-100 text-red-800' :
                       selectedAllocation.utilization > 80 ? 'bg-yellow-100 text-yellow-800' :
                       'bg-green-100 text-green-800'
                     }`}>
                       {selectedAllocation.utilization}%
                     </span>
-                  </p>
+                  </div>
                 </div>
               </div>
-              
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Cargo Details</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Cargo Type:</span> {selectedAllocation.cargoType}</p>
-                  <p><span className="font-medium">Weight:</span> {selectedAllocation.cargoDetails.weight}</p>
-                  <p><span className="font-medium">Volume:</span> {selectedAllocation.cargoDetails.volume}</p>
-                  <p><span className="font-medium">Packaging:</span> {selectedAllocation.cargoDetails.packaging}</p>
-                  <p><span className="font-medium">Hazard Classification:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
+            </div>
+
+            {/* Cargo Details and Environmental Conditions */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Cargo Details</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Cargo Type:</span>
+                    <span className="text-gray-900">{selectedAllocation.cargoType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Weight:</span>
+                    <span className="text-gray-900">{selectedAllocation.cargoDetails.weight}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Volume:</span>
+                    <span className="text-gray-900">{selectedAllocation.cargoDetails.volume}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Packaging:</span>
+                    <span className="text-gray-900">{selectedAllocation.cargoDetails.packaging}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Quality Grade:</span>
+                    <span className="text-gray-900">{selectedAllocation.cargoDetails.qualityGrade}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Source Location:</span>
+                    <span className="text-gray-900">{selectedAllocation.cargoDetails.sourceLocation}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Hazard Classification:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
                       selectedAllocation.cargoDetails.hazardTag === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                     }`}>
                       {selectedAllocation.cargoDetails.hazardTag}
                     </span>
-                  </p>
+                  </div>
                 </div>
               </div>
               
-              {selectedAllocation.status === 'Overstacked' && (
-                <div className="p-3 bg-red-50 rounded-lg border border-red-200">
-                  <p className="text-sm font-medium text-red-800">Overstacking Warning</p>
-                  <p className="text-xs text-red-600 mt-1">
-                    Occupied space exceeds allocated limit. Immediate action required.
-                  </p>
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Environmental Conditions</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Dwell Time:</span>
+                    <span className="text-gray-900">{selectedAllocation.dwellTime}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Stack Height:</span>
+                    <span className="text-gray-900">{selectedAllocation.stackHeight}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Moisture Level:</span>
+                    <span className="text-gray-900">{selectedAllocation.moistureLevel}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Temperature:</span>
+                    <span className="text-gray-900">{selectedAllocation.temperatureReading}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Last Inspection:</span>
+                    <span className="text-gray-900">{selectedAllocation.lastInspection}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Status:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      selectedAllocation.status === 'Active' ? 'bg-green-100 text-green-800' :
+                      selectedAllocation.status === 'Overstacked' ? 'bg-red-100 text-red-800' :
+                      'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {selectedAllocation.status}
+                    </span>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
+            
+            {/* Stack Image */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="font-semibold text-gray-900 mb-4">Yard Stack View</h4>
+              <img 
+                src="https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=600&h=300&fit=crop"
+                alt="Yard stack view"
+                className="w-full h-48 object-cover rounded-lg"
+              />
+            </div>
+
+            {selectedAllocation.status === 'Overstacked' && (
+              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                <p className="text-sm font-medium text-red-800">Overstacking Warning</p>
+                <p className="text-xs text-red-600 mt-1">
+                  Occupied space exceeds allocated limit. Immediate action required to prevent safety hazards and operational inefficiencies.
+                </p>
+              </div>
+            )}
           </div>
         </Modal>
       )}

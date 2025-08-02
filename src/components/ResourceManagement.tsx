@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { Settings, Activity, Wrench, AlertTriangle, Eye, Calendar, Flag } from 'lucide-react';
+import { Settings, Activity, Wrench, AlertTriangle, Eye } from 'lucide-react';
 
 const ResourceManagement: React.FC = () => {
   const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
@@ -19,15 +19,25 @@ const ResourceManagement: React.FC = () => {
       issueReported: null,
       location: 'Berth 3',
       utilization: 78,
+      operatorName: 'Suresh Kumar',
+      shiftDuration: '8h',
+      fuelConsumption: '45L/hr',
+      loadCapacity: '45 MT',
+      currentLoad: '32 MT',
+      operationalHours: '142h',
+      lastMaintenance: '15-Jul-25',
+      warrantyStatus: 'Active',
       maintenanceHistory: [
-        { date: '15-Jul-25', type: 'Routine Service', status: 'Completed' },
-        { date: '20-Jun-25', type: 'Hydraulic Repair', status: 'Completed' }
+        { date: '15-Jul-25', type: 'Routine Service', status: 'Completed', cost: '₹25,000' },
+        { date: '20-Jun-25', type: 'Hydraulic Repair', status: 'Completed', cost: '₹45,000' }
       ],
       telemetry: {
         operationalHours: 142,
         loadCapacity: '45 MT',
         temperature: '68°C',
-        fuelLevel: '85%'
+        fuelLevel: '85%',
+        hydraulicPressure: '210 bar',
+        engineRPM: '1850 RPM'
       }
     },
     {
@@ -41,15 +51,25 @@ const ResourceManagement: React.FC = () => {
       issueReported: 'Hydraulic Leak',
       location: 'Yard 5',
       utilization: 0,
+      operatorName: 'Rajesh Patel',
+      shiftDuration: '0h',
+      fuelConsumption: '0L/hr',
+      loadCapacity: '5 MT',
+      currentLoad: '0 MT',
+      operationalHours: '0h',
+      lastMaintenance: '10-Jul-25',
+      warrantyStatus: 'Expired',
       maintenanceHistory: [
-        { date: '01-Aug-25', type: 'Emergency Repair', status: 'In Progress' },
-        { date: '10-Jul-25', type: 'Routine Service', status: 'Completed' }
+        { date: '01-Aug-25', type: 'Emergency Repair', status: 'In Progress', cost: '₹15,000' },
+        { date: '10-Jul-25', type: 'Routine Service', status: 'Completed', cost: '₹8,000' }
       ],
       telemetry: {
         operationalHours: 0,
         loadCapacity: '5 MT',
         temperature: 'N/A',
-        fuelLevel: '45%'
+        fuelLevel: '45%',
+        hydraulicPressure: 'N/A',
+        engineRPM: 'N/A'
       }
     }
   ];
@@ -68,21 +88,30 @@ const ResourceManagement: React.FC = () => {
       riskLevel: 'High',
       componentAtRisk: 'Hydraulic Arm',
       daysToFailure: 3,
-      recommendedAction: 'Schedule Inspection'
+      recommendedAction: 'Schedule Inspection',
+      confidenceLevel: '89%'
     },
     {
       equipmentId: 'TRL-019',
       riskLevel: 'Medium',
       componentAtRisk: 'Brake System',
       daysToFailure: 6,
-      recommendedAction: 'Preventive Check'
+      recommendedAction: 'Preventive Check',
+      confidenceLevel: '76%'
     }
   ];
 
   const columns = [
     { key: 'equipmentId', label: 'Equipment ID' },
     { key: 'type', label: 'Type' },
+    { key: 'operatorName', label: 'Operator' },
+    { key: 'location', label: 'Location' },
     { key: 'lastUsed', label: 'Last Used' },
+    { key: 'operationalHours', label: 'Op. Hours' },
+    { key: 'currentLoad', label: 'Current Load' },
+    { key: 'fuelConsumption', label: 'Fuel Rate' },
+    { key: 'lastMaintenance', label: 'Last Service' },
+    { key: 'warrantyStatus', label: 'Warranty' },
     { 
       key: 'status', 
       label: 'Status',
@@ -121,25 +150,13 @@ const ResourceManagement: React.FC = () => {
       key: 'actions', 
       label: 'Actions',
       render: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => setSelectedEquipment(row)}
-            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
-          >
-            <Eye className="w-3 h-3" />
-            <span>View</span>
-          </button>
-          {row.status !== 'In Use' && (
-            <button className="flex items-center space-x-1 px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs hover:bg-orange-200">
-              <Calendar className="w-3 h-3" />
-              <span>Schedule</span>
-            </button>
-          )}
-          <button className="flex items-center space-x-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">
-            <Flag className="w-3 h-3" />
-            <span>Flag</span>
-          </button>
-        </div>
+        <button
+          onClick={() => setSelectedEquipment(row)}
+          className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+        >
+          <Eye className="w-4 h-4" />
+          <span>View</span>
+        </button>
       )
     }
   ];
@@ -221,6 +238,7 @@ const ResourceManagement: React.FC = () => {
                 <th className="text-center py-2 text-sm font-medium text-slate-600">Risk Level</th>
                 <th className="text-left py-2 text-sm font-medium text-slate-600">Component at Risk</th>
                 <th className="text-center py-2 text-sm font-medium text-slate-600">Days to Failure</th>
+                <th className="text-center py-2 text-sm font-medium text-slate-600">Confidence</th>
                 <th className="text-left py-2 text-sm font-medium text-slate-600">Recommended Action</th>
               </tr>
             </thead>
@@ -239,6 +257,7 @@ const ResourceManagement: React.FC = () => {
                   </td>
                   <td className="py-3 text-sm text-slate-600">{item.componentAtRisk}</td>
                   <td className="text-center py-3 text-sm text-slate-900 font-medium">{item.daysToFailure}</td>
+                  <td className="text-center py-3 text-sm text-slate-600">{item.confidenceLevel}</td>
                   <td className="py-3 text-sm text-slate-600">{item.recommendedAction}</td>
                 </tr>
               ))}
@@ -265,90 +284,163 @@ const ResourceManagement: React.FC = () => {
           title={`Equipment Details - ${selectedEquipment.equipmentId}`}
           size="xl"
         >
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Equipment Information</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Equipment ID:</span> {selectedEquipment.equipmentId}</p>
-                  <p><span className="font-medium">Type:</span> {selectedEquipment.type}</p>
-                  <p><span className="font-medium">Current Location:</span> {selectedEquipment.location}</p>
-                  <p><span className="font-medium">Last Used:</span> {selectedEquipment.lastUsed}</p>
-                  <p><span className="font-medium">Status:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
+          <div className="space-y-6">
+            {/* Equipment Information Cards */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Equipment Information</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Equipment ID:</span>
+                    <span className="text-gray-900">{selectedEquipment.equipmentId}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Type:</span>
+                    <span className="text-gray-900">{selectedEquipment.type}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Current Location:</span>
+                    <span className="text-gray-900">{selectedEquipment.location}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Operator:</span>
+                    <span className="text-gray-900">{selectedEquipment.operatorName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Last Used:</span>
+                    <span className="text-gray-900">{selectedEquipment.lastUsed}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Shift Duration:</span>
+                    <span className="text-gray-900">{selectedEquipment.shiftDuration}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Status:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
                       selectedEquipment.status === 'In Use' ? 'bg-green-100 text-green-800' :
                       selectedEquipment.status === 'Available' ? 'bg-blue-100 text-blue-800' :
                       'bg-red-100 text-red-800'
                     }`}>
                       {selectedEquipment.status}
                     </span>
-                  </p>
-                  <p><span className="font-medium">Utilization:</span> {selectedEquipment.utilization}%</p>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Utilization:</span>
+                    <span className="text-gray-900">{selectedEquipment.utilization}%</span>
+                  </div>
                 </div>
               </div>
               
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Maintenance History</h4>
-                <div className="space-y-2">
-                  {selectedEquipment.maintenanceHistory.map((maintenance: any, index: number) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded text-sm">
-                      <div>
-                        <p className="font-medium">{maintenance.type}</p>
-                        <p className="text-slate-600">{maintenance.date}</p>
-                      </div>
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        maintenance.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
-                      }`}>
-                        {maintenance.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Sensor Telemetry</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Operational Hours Today:</span> {selectedEquipment.telemetry.operationalHours}</p>
-                  <p><span className="font-medium">Load Capacity:</span> {selectedEquipment.telemetry.loadCapacity}</p>
-                  <p><span className="font-medium">Temperature:</span> {selectedEquipment.telemetry.temperature}</p>
-                  <p><span className="font-medium">Fuel/Battery Level:</span> {selectedEquipment.telemetry.fuelLevel}</p>
-                  <p><span className="font-medium">Health Score:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Operational Metrics</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Load Capacity:</span>
+                    <span className="text-gray-900">{selectedEquipment.loadCapacity}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Current Load:</span>
+                    <span className="text-gray-900">{selectedEquipment.currentLoad}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Operational Hours:</span>
+                    <span className="text-gray-900">{selectedEquipment.operationalHours}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Fuel Consumption:</span>
+                    <span className="text-gray-900">{selectedEquipment.fuelConsumption}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Last Maintenance:</span>
+                    <span className="text-gray-900">{selectedEquipment.lastMaintenance}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Warranty Status:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      selectedEquipment.warrantyStatus === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`}>
+                      {selectedEquipment.warrantyStatus}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Health Score:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
                       selectedEquipment.healthScore >= 80 ? 'bg-green-100 text-green-800' :
                       selectedEquipment.healthScore >= 60 ? 'bg-yellow-100 text-yellow-800' :
                       'bg-red-100 text-red-800'
                     }`}>
                       {selectedEquipment.healthScore}%
                     </span>
-                  </p>
+                  </div>
                 </div>
               </div>
-              
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Predictive Analysis</h4>
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <p className="text-sm font-medium text-blue-900">AI-Generated Assessment</p>
-                  <p className="text-sm text-blue-800 mt-1">
-                    {selectedEquipment.healthScore >= 80 
-                      ? "Equipment operating within normal parameters. Routine maintenance recommended as scheduled."
-                      : selectedEquipment.healthScore >= 60
-                      ? "Minor performance degradation detected. Consider preventive maintenance within the next week."
-                      : "Significant issues detected. Immediate inspection and repair required to prevent failure."
-                    }
-                  </p>
-                </div>
-              </div>
-              
-              {selectedEquipment.issueReported && (
-                <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                  <p className="text-sm font-medium text-red-800">Current Issue</p>
-                  <p className="text-sm text-red-700 mt-1">{selectedEquipment.issueReported}</p>
-                </div>
-              )}
             </div>
+
+            {/* Sensor Telemetry */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="font-semibold text-gray-900 mb-4">Real-time Sensor Telemetry</h4>
+              <div className="grid grid-cols-3 gap-4 text-sm">
+                <div className="bg-white rounded-lg p-3 border border-gray-200">
+                  <p className="font-medium text-gray-600">Temperature</p>
+                  <p className="text-lg font-bold text-gray-900">{selectedEquipment.telemetry.temperature}</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-gray-200">
+                  <p className="font-medium text-gray-600">Fuel Level</p>
+                  <p className="text-lg font-bold text-gray-900">{selectedEquipment.telemetry.fuelLevel}</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-gray-200">
+                  <p className="font-medium text-gray-600">Hydraulic Pressure</p>
+                  <p className="text-lg font-bold text-gray-900">{selectedEquipment.telemetry.hydraulicPressure}</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Maintenance History */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="font-semibold text-gray-900 mb-4">Maintenance History</h4>
+              <div className="space-y-3">
+                {selectedEquipment.maintenanceHistory.map((maintenance: any, index: number) => (
+                  <div key={index} className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
+                    <div>
+                      <p className="font-medium text-gray-900">{maintenance.type}</p>
+                      <p className="text-sm text-gray-600">{maintenance.date}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        maintenance.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                      }`}>
+                        {maintenance.status}
+                      </span>
+                      <p className="text-sm text-gray-600 mt-1">{maintenance.cost}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Predictive Analysis */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="font-semibold text-gray-900 mb-4">AI-Powered Predictive Analysis</h4>
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <p className="text-sm font-medium text-blue-900">Equipment Assessment</p>
+                <p className="text-sm text-blue-800 mt-1">
+                  {selectedEquipment.healthScore >= 80 
+                    ? "Equipment operating within normal parameters. Routine maintenance recommended as scheduled."
+                    : selectedEquipment.healthScore >= 60
+                    ? "Minor performance degradation detected. Consider preventive maintenance within the next week."
+                    : "Significant issues detected. Immediate inspection and repair required to prevent failure."
+                  }
+                </p>
+              </div>
+            </div>
+            
+            {selectedEquipment.issueReported && (
+              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                <p className="text-sm font-medium text-red-800">Current Issue</p>
+                <p className="text-sm text-red-700 mt-1">{selectedEquipment.issueReported}</p>
+                <p className="text-xs text-red-600 mt-2">Immediate attention required to restore operational status.</p>
+              </div>
+            )}
           </div>
         </Modal>
       )}

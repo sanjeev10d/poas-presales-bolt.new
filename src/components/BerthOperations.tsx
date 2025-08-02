@@ -20,18 +20,40 @@ const BerthOperations: React.FC = () => {
       assignedBerth: 'Berth 3',
       status: 'Completed',
       cargoType: 'Coal',
+      captain: 'Capt. Ravi Sharma',
+      flag: 'India',
+      lastPort: 'Kolkata',
+      vesselLength: '225m',
+      draft: '12.5m',
+      cargoQuantity: '45,000 MT',
+      berthUtilization: '89%',
       vesselDetails: {
         length: '225m',
         beam: '32m',
         draft: '12.5m',
         flag: 'India',
-        lastPort: 'Kolkata'
+        lastPort: 'Kolkata',
+        dwt: '75,000 MT',
+        grt: '42,500 GT'
       },
       captain: {
         name: 'Capt. Ravi Sharma',
         license: 'CP12345',
-        crewCount: 22
-      }
+        crewCount: 22,
+        nationality: 'Indian'
+      },
+      operationTimeline: [
+        { stage: 'Vessel Spotted', time: '04:15 AM', status: 'completed' },
+        { stage: 'Anchor Down', time: '04:30 AM', status: 'completed' },
+        { stage: 'Pilot Boarding', time: '04:45 AM', status: 'completed' },
+        { stage: 'Berth Allocation', time: '05:00 AM', status: 'completed' },
+        { stage: 'Gangway Connection', time: '05:10 AM', status: 'completed' },
+        { stage: 'Cargo Operations Start', time: '05:30 AM', status: 'completed' },
+        { stage: 'Cargo Operations Complete', time: '02:30 PM', status: 'completed' },
+        { stage: 'Gangway Disconnection', time: '02:50 PM', status: 'completed' },
+        { stage: 'Pilot Disembark', time: '03:00 PM', status: 'completed' },
+        { stage: 'Anchor Up', time: '03:15 PM', status: 'completed' }
+      ]
     },
     {
       id: 2,
@@ -45,18 +67,40 @@ const BerthOperations: React.FC = () => {
       assignedBerth: 'Berth 5',
       status: 'At Anchorage',
       cargoType: 'Fertilizer',
+      captain: 'Capt. Lee Ming',
+      flag: 'Singapore',
+      lastPort: 'Chennai',
+      vesselLength: '180m',
+      draft: '10.2m',
+      cargoQuantity: '28,000 MT',
+      berthUtilization: '—',
       vesselDetails: {
         length: '180m',
         beam: '28m',
         draft: '10.2m',
         flag: 'Singapore',
-        lastPort: 'Chennai'
+        lastPort: 'Chennai',
+        dwt: '45,000 MT',
+        grt: '28,500 GT'
       },
       captain: {
         name: 'Capt. Lee Ming',
         license: 'CP67890',
-        crewCount: 18
-      }
+        crewCount: 18,
+        nationality: 'Singaporean'
+      },
+      operationTimeline: [
+        { stage: 'Vessel Spotted', time: '06:30 AM', status: 'completed' },
+        { stage: 'Anchor Down', time: '06:45 AM', status: 'completed' },
+        { stage: 'Pilot Boarding', time: '—', status: 'pending' },
+        { stage: 'Berth Allocation', time: '—', status: 'pending' },
+        { stage: 'Gangway Connection', time: '—', status: 'pending' },
+        { stage: 'Cargo Operations Start', time: '—', status: 'pending' },
+        { stage: 'Cargo Operations Complete', time: '—', status: 'pending' },
+        { stage: 'Gangway Disconnection', time: '—', status: 'pending' },
+        { stage: 'Pilot Disembark', time: '—', status: 'pending' },
+        { stage: 'Anchor Up', time: '—', status: 'pending' }
+      ]
     }
   ];
 
@@ -70,11 +114,18 @@ const BerthOperations: React.FC = () => {
 
   const columns = [
     { key: 'shipName', label: 'Ship Name' },
+    { key: 'shipId', label: 'IMO Number' },
+    { key: 'assignedBerth', label: 'Berth' },
+    { key: 'cargoType', label: 'Cargo Type' },
+    { key: 'captain', label: 'Captain' },
+    { key: 'flag', label: 'Flag' },
+    { key: 'vesselLength', label: 'Length' },
+    { key: 'draft', label: 'Draft' },
+    { key: 'cargoQuantity', label: 'Cargo Qty' },
     { key: 'anchorDownTime', label: 'Anchor Down' },
     { key: 'anchorUpTime', label: 'Anchor Up' },
-    { key: 'gangwayIn', label: 'Gangway In' },
-    { key: 'gangwayOut', label: 'Gangway Out' },
     { key: 'waitingTime', label: 'Waiting Time' },
+    { key: 'berthUtilization', label: 'Berth Util.' },
     { 
       key: 'status', 
       label: 'Status',
@@ -97,7 +148,7 @@ const BerthOperations: React.FC = () => {
           className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
           <Eye className="w-4 h-4" />
-          <span>View Details</span>
+          <span>View</span>
         </button>
       )
     }
@@ -192,74 +243,163 @@ const BerthOperations: React.FC = () => {
           title={`Vessel Details - ${selectedVessel.shipName}`}
           size="xl"
         >
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Ship Details</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Name:</span> {selectedVessel.shipName}</p>
-                  <p><span className="font-medium">IMO Number:</span> {selectedVessel.shipId}</p>
-                  <p><span className="font-medium">Flag:</span> {selectedVessel.vesselDetails.flag}</p>
-                  <p><span className="font-medium">Length:</span> {selectedVessel.vesselDetails.length}</p>
-                  <p><span className="font-medium">Beam:</span> {selectedVessel.vesselDetails.beam}</p>
-                  <p><span className="font-medium">Draft:</span> {selectedVessel.vesselDetails.draft}</p>
-                  <p><span className="font-medium">Last Port:</span> {selectedVessel.vesselDetails.lastPort}</p>
+          <div className="space-y-6">
+            {/* Vessel Information Cards */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Vessel Information</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Ship Name:</span>
+                    <span className="text-gray-900">{selectedVessel.shipName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">IMO Number:</span>
+                    <span className="text-gray-900">{selectedVessel.shipId}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Flag:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselDetails.flag}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Length:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselDetails.length}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Beam:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselDetails.beam}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Draft:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselDetails.draft}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">DWT:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselDetails.dwt}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">GRT:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselDetails.grt}</span>
+                  </div>
                 </div>
               </div>
               
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Berth Assignment</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Assigned Berth:</span> {selectedVessel.assignedBerth}</p>
-                  <p><span className="font-medium">Anchor Down:</span> {selectedVessel.anchorDownTime}</p>
-                  {selectedVessel.gangwayIn !== '—' && (
-                    <p><span className="font-medium">Gangway In:</span> {selectedVessel.gangwayIn}</p>
-                  )}
-                  {selectedVessel.gangwayOut !== '—' && (
-                    <p><span className="font-medium">Gangway Out:</span> {selectedVessel.gangwayOut}</p>
-                  )}
-                  <p><span className="font-medium">Waiting Time:</span> {selectedVessel.waitingTime}</p>
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Captain & Crew Details</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Captain:</span>
+                    <span className="text-gray-900">{selectedVessel.captain.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">License:</span>
+                    <span className="text-gray-900">{selectedVessel.captain.license}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Nationality:</span>
+                    <span className="text-gray-900">{selectedVessel.captain.nationality}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Crew Count:</span>
+                    <span className="text-gray-900">{selectedVessel.captain.crewCount}</span>
+                  </div>
                 </div>
               </div>
             </div>
-            
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Captain & Crew Details</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Captain:</span> {selectedVessel.captain.name}</p>
-                  <p><span className="font-medium">License:</span> {selectedVessel.captain.license}</p>
-                  <p><span className="font-medium">Crew Count:</span> {selectedVessel.captain.crewCount}</p>
+
+            {/* Berth Assignment & Cargo Information */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Berth Assignment</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Assigned Berth:</span>
+                    <span className="text-gray-900">{selectedVessel.assignedBerth}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Anchor Down:</span>
+                    <span className="text-gray-900">{selectedVessel.anchorDownTime}</span>
+                  </div>
+                  {selectedVessel.gangwayIn !== '—' && (
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-600">Gangway In:</span>
+                      <span className="text-gray-900">{selectedVessel.gangwayIn}</span>
+                    </div>
+                  )}
+                  {selectedVessel.gangwayOut !== '—' && (
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-600">Gangway Out:</span>
+                      <span className="text-gray-900">{selectedVessel.gangwayOut}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Waiting Time:</span>
+                    <span className="text-gray-900">{selectedVessel.waitingTime}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Last Port:</span>
+                    <span className="text-gray-900">{selectedVessel.vesselDetails.lastPort}</span>
+                  </div>
                 </div>
               </div>
               
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Cargo Information</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Cargo Type:</span> {selectedVessel.cargoType}</p>
-                  <p><span className="font-medium">Status:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Cargo Information</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Cargo Type:</span>
+                    <span className="text-gray-900">{selectedVessel.cargoType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Cargo Quantity:</span>
+                    <span className="text-gray-900">{selectedVessel.cargoQuantity}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Status:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${
                       selectedVessel.status === 'Completed' ? 'bg-green-100 text-green-800' :
                       'bg-yellow-100 text-yellow-800'
                     }`}>
                       {selectedVessel.status}
                     </span>
-                  </p>
+                  </div>
+                  {selectedVessel.berthUtilization !== '—' && (
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-600">Berth Utilization:</span>
+                      <span className="text-gray-900">{selectedVessel.berthUtilization}</span>
+                    </div>
+                  )}
                 </div>
               </div>
-              
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Alert Flags</h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedVessel.status === 'At Anchorage' && (
-                    <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">
-                      Awaiting Berth Assignment
-                    </span>
-                  )}
-                  <span className="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">
-                    Security Cleared
-                  </span>
-                </div>
+            </div>
+            
+            {/* Operation Timeline */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="font-semibold text-gray-900 mb-4">Vessel Operation Timeline</h4>
+              <div className="space-y-3">
+                {selectedVessel.operationTimeline.map((stage: any, index: number) => (
+                  <div key={index} className="flex items-center space-x-4 p-3 bg-white rounded-lg border border-gray-200">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
+                      stage.status === 'completed' ? 'bg-green-500' :
+                      stage.status === 'in-progress' ? 'bg-blue-500' :
+                      'bg-gray-300'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">{stage.stage}</p>
+                      <p className="text-xs text-gray-600">{stage.time}</p>
+                    </div>
+                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      stage.status === 'completed' ? 'bg-green-100 text-green-800' :
+                      stage.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>
+                      {stage.status === 'completed' ? 'Completed' :
+                       stage.status === 'in-progress' ? 'In Progress' : 'Pending'}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
