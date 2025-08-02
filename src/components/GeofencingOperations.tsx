@@ -272,7 +272,7 @@ const GeofencingOperations: React.FC = () => {
       </div>
 
       {/* Live Alerts Feed */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900 mb-4">Live Alerts & Notifications</h3>
         <div className="space-y-3">
           {recentAlerts.map((alert, index) => (
@@ -294,7 +294,7 @@ const GeofencingOperations: React.FC = () => {
                 <p className="text-xs text-slate-600">{alert.message}</p>
                 <p className="text-xs text-slate-500 mt-1">{alert.timestamp}</p>
               </div>
-              <button className="text-xs text-slate-400 hover:text-slate-600">Acknowledge</button>
+              <button className="text-xs text-slate-400 hover:text-slate-600 flex-shrink-0">Acknowledge</button>
             </div>
           ))}
         </div>
