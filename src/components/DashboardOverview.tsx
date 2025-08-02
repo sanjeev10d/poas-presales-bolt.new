@@ -356,7 +356,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
             xLabels={xLabels}
             yLabels={yLabels}
             data={terminalUtilizationData}
-            cellStyle={(background, value, min, max, data, x, y) => ({
+            cellStyle={(background, value, min, max) => ({
               background: `rgba(59, 130, 246, ${(value - min) / (max - min) * 0.8 + 0.1})`,
               fontSize: '11px',
               color: value > (max - min) * 0.6 + min ? '#fff' : '#1f2937',
@@ -364,7 +364,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule =
               borderRadius: '4px'
             })}
             cellRender={value => value && `${value}`}
-            title={(value, unit) => `${value} vehicles/hour`}
+            title={(value) => `${value} vehicles/hour`}
           />
         </div>
         
