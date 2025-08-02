@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StatCard from './ui/StatCard';
 import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
-import { MapPin, Route, AlertTriangle, CheckCircle, Play, Flag } from 'lucide-react';
+import { MapPin, Route, AlertTriangle, CheckCircle, Eye, Play, Flag } from 'lucide-react';
 
 const GeofencingOperations: React.FC = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
@@ -11,116 +11,72 @@ const GeofencingOperations: React.FC = () => {
     {
       id: 1,
       vehicleNumber: 'OR09AB2345',
-      driverName: 'Ram Kumar',
-      driverLicense: 'DL12345',
       assignedRoute: 'Gate → WB-3',
-      currentLocation: 'Near Yard-2',
       lastKnownLocation: 'Near Yard-2',
       deviationFlag: true,
       restrictedAreaEntry: false,
       timestamp: '16:42, 01 Aug',
       routeEfficiency: 65,
-      speedViolations: 2,
-      idleTime: '15 mins',
-      fuelConsumption: '12.5L',
-      distanceCovered: '3.2 km',
-      estimatedArrival: '17:15',
-      complianceScore: 78,
       driver: {
         name: 'Ram Kumar',
         id: 'DRV001',
-        complianceScore: 78,
-        contact: '9876543210'
+        complianceScore: 78
       },
       routeDetails: {
         plannedDistance: '2.5 km',
         actualDistance: '3.2 km',
         deviationPoints: 3,
-        timeOutsideCorridor: '15 mins',
-        plannedDuration: '25 mins',
-        actualDuration: '42 mins'
+        timeOutsideCorridor: '15 mins'
       }
     },
     {
       id: 2,
       vehicleNumber: 'OD25AK9901',
-      driverName: 'Suresh Patel',
-      driverLicense: 'DL67890',
       assignedRoute: 'WB-4 → Berth 5',
-      currentLocation: 'Within Route',
       lastKnownLocation: 'Within Route',
       deviationFlag: false,
       restrictedAreaEntry: false,
       timestamp: '16:38, 01 Aug',
       routeEfficiency: 95,
-      speedViolations: 0,
-      idleTime: '2 mins',
-      fuelConsumption: '8.2L',
-      distanceCovered: '1.8 km',
-      estimatedArrival: '16:55',
-      complianceScore: 92,
       driver: {
         name: 'Suresh Patel',
         id: 'DRV002',
-        complianceScore: 92,
-        contact: '9876543211'
+        complianceScore: 92
       },
       routeDetails: {
         plannedDistance: '1.8 km',
         actualDistance: '1.8 km',
         deviationPoints: 0,
-        timeOutsideCorridor: '0 mins',
-        plannedDuration: '18 mins',
-        actualDuration: '18 mins'
+        timeOutsideCorridor: '0 mins'
       }
     },
     {
       id: 3,
       vehicleNumber: 'OR05JK8870',
-      driverName: 'Amit Singh',
-      driverLicense: 'DL11223',
       assignedRoute: 'WB-2 → Yard-3',
-      currentLocation: 'Zone-Red',
       lastKnownLocation: 'Zone-Red',
       deviationFlag: true,
       restrictedAreaEntry: true,
       timestamp: '16:34, 01 Aug',
       routeEfficiency: 35,
-      speedViolations: 5,
-      idleTime: '25 mins',
-      fuelConsumption: '18.7L',
-      distanceCovered: '4.8 km',
-      estimatedArrival: '17:45',
-      complianceScore: 45,
       driver: {
         name: 'Amit Singh',
         id: 'DRV003',
-        complianceScore: 45,
-        contact: '9876543212'
+        complianceScore: 45
       },
       routeDetails: {
         plannedDistance: '3.1 km',
         actualDistance: '4.8 km',
         deviationPoints: 8,
-        timeOutsideCorridor: '25 mins',
-        plannedDuration: '30 mins',
-        actualDuration: '68 mins'
+        timeOutsideCorridor: '25 mins'
       }
     }
   ];
 
   const columns = [
     { key: 'vehicleNumber', label: 'Vehicle No.' },
-    { key: 'driverName', label: 'Driver Name' },
-    { key: 'driverLicense', label: 'License' },
     { key: 'assignedRoute', label: 'Assigned Route' },
-    { key: 'currentLocation', label: 'Current Location' },
-    { key: 'distanceCovered', label: 'Distance' },
-    { key: 'fuelConsumption', label: 'Fuel Used' },
-    { key: 'speedViolations', label: 'Speed Violations' },
-    { key: 'idleTime', label: 'Idle Time' },
-    { key: 'estimatedArrival', label: 'ETA' },
-    { key: 'complianceScore', label: 'Compliance Score' },
+    { key: 'lastKnownLocation', label: 'Last Known Location' },
     { 
       key: 'deviationFlag', 
       label: 'Deviation',
@@ -148,23 +104,24 @@ const GeofencingOperations: React.FC = () => {
       key: 'actions', 
       label: 'Actions',
       render: (row: any) => (
-        <button
-          onClick={() => setSelectedVehicle(row)}
-          className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
-        >
-          <Play className="w-4 h-4" />
-          <span>Replay</span>
-        </button>
+        <div className="flex space-x-2">
+          <button
+            onClick={() => setSelectedVehicle(row)}
+            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
+          >
+            <Play className="w-3 h-3" />
+            <span>Replay</span>
+          </button>
+          {(row.deviationFlag || row.restrictedAreaEntry) && (
+            <button className="flex items-center space-x-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">
+              <Flag className="w-3 h-3" />
+              <span>Alert</span>
+            </button>
+          )}
+        </div>
       )
     }
   ];
-
-  // Calculate dynamic values
-  const vehiclesOnRoute = geofencingData.length;
-  const routeDeviations = geofencingData.filter(v => v.deviationFlag).length;
-  const restrictedViolations = geofencingData.filter(v => v.restrictedAreaEntry).length;
-  const totalCompliance = geofencingData.reduce((sum, v) => sum + v.complianceScore, 0);
-  const avgCompliance = Math.round(totalCompliance / geofencingData.length * 10) / 10;
 
   const recentAlerts = [
     {
@@ -180,15 +137,9 @@ const GeofencingOperations: React.FC = () => {
       severity: 'high'
     },
     {
-      type: 'Speed Violation',
-      message: 'Vehicle OR05JK8870 exceeded speed limit in Terminal Area',
-      timestamp: '16:28',
-      severity: 'medium'
-    },
-    {
       type: 'Idle Warning',
       message: 'Vehicle OD11CX5001 stationary for over 15 minutes',
-      timestamp: '16:25',
+      timestamp: '16:28',
       severity: 'low'
     }
   ];
@@ -199,14 +150,14 @@ const GeofencingOperations: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Vehicles On Route"
-          value={vehiclesOnRoute.toString()}
+          value="145"
           subtitle="Currently tracked vehicles"
           icon={Route}
           color="blue"
         />
         <StatCard
           title="Route Deviations"
-          value={routeDeviations.toString()}
+          value="8"
           subtitle="Vehicles off assigned routes"
           icon={AlertTriangle}
           trend={{ value: 15, isPositive: false }}
@@ -214,14 +165,14 @@ const GeofencingOperations: React.FC = () => {
         />
         <StatCard
           title="Restricted Violations"
-          value={restrictedViolations.toString()}
+          value="3"
           subtitle="Unauthorized area entries"
           icon={MapPin}
           color="red"
         />
         <StatCard
           title="Route Compliance"
-          value={`${avgCompliance}%`}
+          value="94.5%"
           subtitle="Overall adherence rate"
           icon={CheckCircle}
           trend={{ value: 2, isPositive: true }}
@@ -276,179 +227,82 @@ const GeofencingOperations: React.FC = () => {
           title={`Route Replay - ${selectedVehicle.vehicleNumber}`}
           size="xl"
         >
-          <div className="space-y-6">
-            {/* Vehicle & Route Details */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                  <Route className="w-5 h-5 mr-2 text-blue-600" />
-                  Vehicle & Route Details
-                </h4>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Vehicle Number:</span>
-                    <span className="text-gray-900">{selectedVehicle.vehicleNumber}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Assigned Route:</span>
-                    <span className="text-gray-900">{selectedVehicle.assignedRoute}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Current Location:</span>
-                    <span className="text-gray-900">{selectedVehicle.currentLocation}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Distance Covered:</span>
-                    <span className="text-gray-900">{selectedVehicle.distanceCovered}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Fuel Consumption:</span>
-                    <span className="text-gray-900">{selectedVehicle.fuelConsumption}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">ETA:</span>
-                    <span className="text-gray-900">{selectedVehicle.estimatedArrival}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Route Efficiency:</span>
-                    <span className={`px-2 py-1 rounded text-xs ${
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-medium text-slate-900 mb-2">Vehicle & Route Details</h4>
+                <div className="space-y-2 text-sm">
+                  <p><span className="font-medium">Vehicle Number:</span> {selectedVehicle.vehicleNumber}</p>
+                  <p><span className="font-medium">Assigned Route:</span> {selectedVehicle.assignedRoute}</p>
+                  <p><span className="font-medium">Last Location:</span> {selectedVehicle.lastKnownLocation}</p>
+                  <p><span className="font-medium">Route Efficiency:</span> 
+                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
                       selectedVehicle.routeEfficiency >= 80 ? 'bg-green-100 text-green-800' :
                       selectedVehicle.routeEfficiency >= 60 ? 'bg-yellow-100 text-yellow-800' :
                       'bg-red-100 text-red-800'
                     }`}>
                       {selectedVehicle.routeEfficiency}%
                     </span>
-                  </div>
+                  </p>
                 </div>
               </div>
               
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                  <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
-                  Driver Details
-                </h4>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Name:</span>
-                    <span className="text-gray-900">{selectedVehicle.driver.name}</span>
+              <div>
+                <h4 className="font-medium text-slate-900 mb-2">Route Map Playback</h4>
+                <div className="w-full h-48 bg-slate-100 rounded-lg flex items-center justify-center border-2 border-dashed border-slate-300">
+                  <div className="text-center">
+                    <MapPin className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                    <p className="text-sm text-slate-600">Interactive Route Map</p>
+                    <p className="text-xs text-slate-500">
+                      Green: Assigned Route | Red: Actual Path | Orange: Violations
+                    </p>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Driver ID:</span>
-                    <span className="text-gray-900">{selectedVehicle.driver.id}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">License:</span>
-                    <span className="text-gray-900">{selectedVehicle.driverLicense}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Contact:</span>
-                    <span className="text-gray-900">{selectedVehicle.driver.contact}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Speed Violations:</span>
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      selectedVehicle.speedViolations === 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {selectedVehicle.speedViolations}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Idle Time:</span>
-                    <span className="text-gray-900">{selectedVehicle.idleTime}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Compliance Score:</span>
-                    <span className={`px-2 py-1 rounded text-xs ${
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-medium text-slate-900 mb-2">Driver Details</h4>
+                <div className="space-y-2 text-sm">
+                  <p><span className="font-medium">Name:</span> {selectedVehicle.driver.name}</p>
+                  <p><span className="font-medium">Driver ID:</span> {selectedVehicle.driver.id}</p>
+                  <p><span className="font-medium">Compliance Score:</span> 
+                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
                       selectedVehicle.driver.complianceScore >= 80 ? 'bg-green-100 text-green-800' :
                       selectedVehicle.driver.complianceScore >= 60 ? 'bg-yellow-100 text-yellow-800' :
                       'bg-red-100 text-red-800'
                     }`}>
                       {selectedVehicle.driver.complianceScore}%
                     </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Route Map Playback */}
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <MapPin className="w-5 h-5 mr-2 text-purple-600" />
-                Route Map Playback
-              </h4>
-              <div className="w-full h-64 bg-slate-100 rounded-lg flex items-center justify-center border-2 border-dashed border-slate-300">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-slate-400 mx-auto mb-3" />
-                  <p className="text-lg font-medium text-slate-600">Interactive Route Map</p>
-                  <p className="text-sm text-slate-500 mt-2">
-                    Green: Assigned Route | Red: Actual Path | Orange: Violations
                   </p>
-                  <div className="flex items-center justify-center space-x-4 mt-4">
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                      Play Route
-                    </button>
-                    <button className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
-                      Reset View
-                    </button>
-                  </div>
                 </div>
               </div>
+              
+              <div>
+                <h4 className="font-medium text-slate-900 mb-2">Route Deviation Analytics</h4>
+                <div className="space-y-2 text-sm">
+                  <p><span className="font-medium">Planned Distance:</span> {selectedVehicle.routeDetails.plannedDistance}</p>
+                  <p><span className="font-medium">Actual Distance:</span> {selectedVehicle.routeDetails.actualDistance}</p>
+                  <p><span className="font-medium">Deviation Points:</span> {selectedVehicle.routeDetails.deviationPoints}</p>
+                  <p><span className="font-medium">Time Outside Corridor:</span> {selectedVehicle.routeDetails.timeOutsideCorridor}</p>
+                </div>
+              </div>
+              
+              {(selectedVehicle.deviationFlag || selectedVehicle.restrictedAreaEntry) && (
+                <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                  <p className="text-sm font-medium text-red-800">Violation Summary</p>
+                  <div className="mt-2 space-y-1 text-xs text-red-700">
+                    {selectedVehicle.deviationFlag && (
+                      <p>• Route deviation detected - exceeded corridor boundaries</p>
+                    )}
+                    {selectedVehicle.restrictedAreaEntry && (
+                      <p>• Unauthorized entry into restricted zone</p>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-            
-            {/* Route Deviation Analytics */}
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <AlertTriangle className="w-5 h-5 mr-2 text-orange-600" />
-                Route Deviation Analytics
-              </h4>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Planned Distance:</span>
-                    <span className="text-gray-900">{selectedVehicle.routeDetails.plannedDistance}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Actual Distance:</span>
-                    <span className="text-gray-900">{selectedVehicle.routeDetails.actualDistance}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Deviation Points:</span>
-                    <span className="text-gray-900">{selectedVehicle.routeDetails.deviationPoints}</span>
-                  </div>
-                </div>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Planned Duration:</span>
-                    <span className="text-gray-900">{selectedVehicle.routeDetails.plannedDuration}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Actual Duration:</span>
-                    <span className="text-gray-900">{selectedVehicle.routeDetails.actualDuration}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-gray-600">Time Outside Corridor:</span>
-                    <span className="text-gray-900">{selectedVehicle.routeDetails.timeOutsideCorridor}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {(selectedVehicle.deviationFlag || selectedVehicle.restrictedAreaEntry) && (
-              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                <p className="text-sm font-medium text-red-800">Violation Summary</p>
-                <div className="mt-2 space-y-1 text-xs text-red-700">
-                  {selectedVehicle.deviationFlag && (
-                    <p>• Route deviation detected - exceeded corridor boundaries</p>
-                  )}
-                  {selectedVehicle.restrictedAreaEntry && (
-                    <p>• Unauthorized entry into restricted zone</p>
-                  )}
-                  {selectedVehicle.speedViolations > 0 && (
-                    <p>• {selectedVehicle.speedViolations} speed limit violations recorded</p>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         </Modal>
       )}
