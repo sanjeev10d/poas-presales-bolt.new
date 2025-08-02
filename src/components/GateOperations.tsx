@@ -249,84 +249,133 @@ const RakeOperations: React.FC = () => {
             />
             <StatCard
               title="Exception Alerts"
-            {/* Driver/Person Information Card */}
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <Users className="w-5 h-5 mr-2 text-green-600" />
-                {selectedVehicle.driver ? 'Driver' : 'Person'} Details
-              </h4>
-              <div className="space-y-3 text-sm">
-                {selectedVehicle.driver && (
-                  <>
-                    <div className="flex justify-between">
-                      <span className="font-medium text-gray-600">Name:</span>
-                      <span className="text-gray-900">{selectedVehicle.driver.name}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium text-gray-600">License:</span>
-                      <span className="text-gray-900">{selectedVehicle.driver.license}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium text-gray-600">Contact:</span>
-                      <span className="text-gray-900">{selectedVehicle.driver.contact}</span>
-                    </div>
-                  </>
-                )}
-                {selectedVehicle.person && (
-                  <>
-                    <div className="flex justify-between">
-                      <span className="font-medium text-gray-600">Name:</span>
-                      <span className="text-gray-900">{selectedVehicle.person.name}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium text-gray-600">ID:</span>
-                      <span className="text-gray-900">{selectedVehicle.person.id}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium text-gray-600">Department:</span>
-                      <span className="text-gray-900">{selectedVehicle.person.department}</span>
-                    </div>
-                  </>
-                )}
+              value="1"
+              subtitle="Requires attention"
+              icon={AlertTriangle}
+              color="red"
+            />
+            <StatCard
+              title="Avg WTR"
+              value="6h 15m"
+              subtitle="Wagon turnaround time"
+              icon={Clock}
+              trend={{ value: 5, isPositive: false }}
+              color="orange"
+            />
+          </>
+        )}
+      </div>
+
+      {/* Rake Audit Logs */}
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200">
+        <div className="p-6 border-b border-slate-200">
+          <h3 className="text-lg font-semibold text-gray-900">
+            {activeTab === 'regular' ? 'Regular Rake' : 'BOBRN Rake'} Operations Audit Logs
+          </h3>
+        </div>
+        <div className="p-6">
+          <DataTable data={activeTab === 'regular' ? rakeData : bobrnRakeData} columns={columns} />
+        </div>
+      </div>
+
+      {/* Detail Modal */}
+      {selectedRake && (
+        <Modal
+          isOpen={!!selectedRake}
+          onClose={() => setSelectedRake(null)}
+          title={`Rake Details - ${selectedRake.rakeRefNo}`}
+          size="xl"
+        >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-medium text-slate-900 mb-2">Rake Information</h4>
+                <div className="space-y-2 text-sm">
+                  <p><span className="font-medium">Reference No:</span> {selectedRake.rakeRefNo}</p>
+                  <p><span className="font-medium">Source Station:</span> {selectedRake.sourceTerminal}</p>
+                  <p><span className="font-medium">Cargo Type:</span> {selectedRake.cargoType}</p>
+                  <p><span className="font-medium">Total Wagons:</span> {selectedRake.wagonCount}</p>
+                  <p><span className="font-medium">Railway PN Number:</span> {selectedRake.railwayPNNumber}</p>
+                  <p><span className="font-medium">Port Entry Time:</span> {selectedRake.timeIn}</p>
+                  {selectedRake.timeOut !== '—' && (
+                    <p><span className="font-medium">Port Exit Time:</span> {selectedRake.timeOut}</p>
+                  )}
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-medium text-slate-900 mb-2">Wagon Images</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  <img 
+                    src="https://images.pexels.com/photos/2331733/pexels-photo-2331733.jpeg?auto=compress&cs=tinysrgb&w=150&h=100&fit=crop"
+                    alt="Wagon In"
+                    className="w-full h-20 object-cover rounded"
+                  />
+                  <img 
+                    src="https://images.pexels.com/photos/2331733/pexels-photo-2331733.jpeg?auto=compress&cs=tinysrgb&w=150&h=100&fit=crop"
+                    alt="Wagon Out"
+                    className="w-full h-20 object-cover rounded"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-medium text-slate-900 mb-2">Wagon Breakdown</h4>
+                <div className="space-y-2 text-sm">
+                  <p><span className="font-medium">Loaded Wagons:</span> {selectedRake.loadedWagons}</p>
+                  <p><span className="font-medium">Empty Wagons:</span> {selectedRake.emptyWagons}</p>
+                  <p><span className="font-medium">WTR Time:</span> {selectedRake.wtr}</p>
+                  <p><span className="font-medium">Status:</span> 
+                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
+                      selectedRake.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                    }`}>
+                      {selectedRake.status}
+                    </span>
+                  </p>
+                  <p><span className="font-medium">Alerts:</span> 
+                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
+                      selectedRake.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`}>
+                      {selectedRake.alerts}
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
           
-          {/* Vehicle Images - Only 3 images for cargo vehicles */}
-          {selectedVehicle.cargoType && (
-            <div className="mt-6 bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <Eye className="w-5 h-5 mr-2 text-purple-600" />
-                Vehicle Images
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-sm font-medium text-gray-700 mb-3">Front View</p>
-                  <img 
-                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop"
-                    alt="Vehicle front view"
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
+          {/* Timeline */}
+          <div className="mt-6 pt-6 border-t border-slate-200">
+            <h4 className="font-medium text-slate-900 mb-4">Operation Timeline</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+              {selectedRake.timeline.map((stage: any, index: number) => (
+                <div key={index} className={`flex items-center space-x-3 p-3 rounded-lg border ${
+                  stage.status === 'completed' ? 'bg-green-50 border-green-200' :
+                  stage.status === 'in-progress' ? 'bg-blue-50 border-blue-200' :
+                  'bg-slate-50 border-slate-200'
+                }`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+                    stage.status === 'completed' ? 'bg-green-500 text-white' :
+                    stage.status === 'in-progress' ? 'bg-blue-500 text-white' :
+                    'bg-slate-300 text-slate-600'
+                  }`}>
+                    {index + 1}
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs font-medium text-slate-900">{stage.stage}</p>
+                    <p className="text-xs text-slate-600">{stage.time}</p>
+                  </div>
+                  {index < selectedRake.timeline.length - 1 && (
+                    <div className={`w-8 h-0.5 ${
+                      stage.status === 'completed' ? 'bg-green-500' : 'bg-slate-300'
+                    }`} />
+                  )}
                 </div>
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-sm font-medium text-gray-700 mb-3">Overhead View</p>
-                  <img 
-                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop"
-                    alt="Vehicle overhead view"
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                </div>
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-sm font-medium text-gray-700 mb-3">Number Plate</p>
-                  <img 
-                    src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop"
-                    alt="Vehicle number plate"
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
-          )}
+          </div>
         </Modal>
       )}
     </div>

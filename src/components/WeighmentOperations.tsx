@@ -127,16 +127,41 @@ const RakeOperations: React.FC = () => {
     { key: 'emptyWagons', label: 'Empty Wagons' },
     { key: 'wtr', label: 'WTR' },
     { 
+      key: 'alerts', 
+      label: 'Alerts',
+      render: (row: any) => (
+        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+          row.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+        }`}>
+          {row.alerts}
+        </span>
+      )
+    },
+    { key: 'sourceTerminal', label: 'Source Terminal' },
+    { 
+      key: 'actions', 
       label: 'Actions',
       render: (row: any) => (
         <div className="flex space-x-2">
           <button
             onClick={() => setSelectedRake(row)}
-            className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
           >
-            <Eye className="w-4 h-4" />
+            <Eye className="w-3 h-3" />
             <span>View</span>
           </button>
+          {row.status === 'In Progress' && (
+            <>
+              <button className="flex items-center space-x-1 px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs hover:bg-orange-200">
+                <Wrench className="w-3 h-3" />
+                <span>Inspect</span>
+              </button>
+              <button className="flex items-center space-x-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">
+                <RotateCcw className="w-3 h-3" />
+                <span>Reprocess</span>
+              </button>
+            </>
+          )}
         </div>
       )
     }
@@ -342,11 +367,6 @@ const RakeOperations: React.FC = () => {
                     <p className="text-xs font-medium text-slate-900">{stage.stage}</p>
                     <p className="text-xs text-slate-600">{stage.time}</p>
                   </div>
-                  {index < selectedRake.timeline.length - 1 && (
-                    <div className={`w-8 h-0.5 ${
-                      stage.status === 'completed' ? 'bg-green-500' : 'bg-slate-300'
-                    }`} />
-                  )}
                 </div>
               ))}
             </div>
