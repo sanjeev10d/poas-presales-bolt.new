@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Save, AlertCircle, User, Clock } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
+import { DateTimePicker } from './DateTimePickerForm';
 
 interface ManualEntryField {
   key: string;
@@ -139,13 +140,12 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({
 
       case 'datetime-local':
         return (
-          <input
-            type="datetime-local"
+          <DateTimePicker
             value={value}
-            onChange={(e) => handleInputChange(field.key, e.target.value)}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              hasError ? 'border-red-500' : 'border-gray-300'
-            }`}
+            onChange={(date) => handleInputChange(field.key, date)}
+            label={field.label}
+            placeholder={field.placeholder || 'Select date and time'}
+            required={field.required}
           />
         );
 
