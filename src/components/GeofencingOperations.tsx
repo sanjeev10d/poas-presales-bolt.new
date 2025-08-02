@@ -60,7 +60,7 @@ const GeofencingOperations: React.FC = () => {
       deviationFlag: false,
       restrictedAreaEntry: false,
       timestamp: '16:38, 01 Aug',
-      routeEfficiency: 95,
+      routeEfficiency: 98,
       currentSpeed: '20 km/h',
       estimatedArrival: '16:55',
       totalDistance: '1.8 km',
@@ -89,7 +89,7 @@ const GeofencingOperations: React.FC = () => {
         capacity: '25 MT',
         currentLoad: '22 MT',
         fuelLevel: '85%',
-        lastMaintenance: '20-Jul-25',
+        lastMaintenance: '20-Jul-2025',
         gpsStatus: 'Active'
       }
     },
@@ -130,7 +130,7 @@ const GeofencingOperations: React.FC = () => {
         capacity: '40 MT',
         currentLoad: '35 MT',
         fuelLevel: '45%',
-        lastMaintenance: '05-Jul-25',
+        lastMaintenance: '05-Jul-2025',
         gpsStatus: 'Intermittent'
       }
     }
@@ -263,7 +263,7 @@ const GeofencingOperations: React.FC = () => {
         />
         <StatCard
           title="Route Compliance"
-          value={`${routeStats.complianceRate}%`}
+          value="95%"
           subtitle="Overall adherence rate"
           icon={CheckCircle}
           trend={{ value: 2, isPositive: true }}

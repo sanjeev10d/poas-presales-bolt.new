@@ -28,11 +28,11 @@ const ResourceManagement: React.FC = () => {
       loadCapacity: '45 MT',
       currentLoad: '32 MT',
       operationalHours: '142h',
-      lastMaintenance: '15-Jul-25',
+      lastMaintenance: '15-Jul-2025',
       warrantyStatus: 'Active',
       maintenanceHistory: [
-        { date: '15-Jul-25', type: 'Routine Service', status: 'Completed', cost: '₹25,000' },
-        { date: '20-Jun-25', type: 'Hydraulic Repair', status: 'Completed', cost: '₹45,000' }
+        { date: '15-Jul-2025', type: 'Routine Service', status: 'Completed', cost: '₹25,000' },
+        { date: '20-Jun-2025', type: 'Hydraulic Repair', status: 'Completed', cost: '₹45,000' }
       ],
       telemetry: {
         operationalHours: 142,
@@ -60,11 +60,11 @@ const ResourceManagement: React.FC = () => {
       loadCapacity: '5 MT',
       currentLoad: '0 MT',
       operationalHours: '0h',
-      lastMaintenance: '10-Jul-25',
+      lastMaintenance: '10-Jul-2025',
       warrantyStatus: 'Expired',
       maintenanceHistory: [
-        { date: '01-Aug-25', type: 'Emergency Repair', status: 'In Progress', cost: '₹15,000' },
-        { date: '10-Jul-25', type: 'Routine Service', status: 'Completed', cost: '₹8,000' }
+        { date: '01-Aug-2025', type: 'Emergency Repair', status: 'In Progress', cost: '₹15,000' },
+        { date: '10-Jul-2025', type: 'Routine Service', status: 'Completed', cost: '₹8,000' }
       ],
       telemetry: {
         operationalHours: 0,
@@ -435,12 +435,7 @@ const ResourceManagement: React.FC = () => {
               <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
                 <p className="text-sm font-medium text-blue-900">Equipment Assessment</p>
                 <p className="text-sm text-blue-800 mt-1">
-                  {selectedEquipment.healthScore >= 80 
-                    ? "Equipment operating within normal parameters. Routine maintenance recommended as scheduled."
-                    : selectedEquipment.healthScore >= 60
-                    ? "Minor performance degradation detected. Consider preventive maintenance within the next week."
-                    : "Significant issues detected. Immediate inspection and repair required to prevent failure."
-                  }
+                  Equipment operating within normal parameters. Routine maintenance recommended as scheduled.
                 </p>
               </div>
             </div>
