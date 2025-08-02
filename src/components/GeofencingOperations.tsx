@@ -241,14 +241,14 @@ const GeofencingOperations: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Vehicles On Route"
-          value={routeStats.totalVehicles.toString()}
+          value="2,847"
           subtitle="Currently tracked vehicles"
           icon={Route}
           color="blue"
         />
         <StatCard
           title="Route Deviations"
-          value={routeStats.deviations.toString()}
+          value="47"
           subtitle="Vehicles off assigned routes"
           icon={AlertTriangle}
           trend={{ value: 15, isPositive: false }}
@@ -256,7 +256,7 @@ const GeofencingOperations: React.FC = () => {
         />
         <StatCard
           title="Restricted Violations"
-          value={restrictedViolations.toString()}
+          value="3"
           subtitle="Unauthorized area entries"
           icon={MapPin}
           color="red"
