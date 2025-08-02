@@ -239,7 +239,7 @@ const GateOperations: React.FC = () => {
           <>
             <StatCard
               title="Vehicles In"
-              value={(cargoStats.total + cargoStats.inProgress * 15).toString()}
+              value="154"
               subtitle="Today's inbound cargo vehicles"
               icon={Truck}
               trend={{ value: 12, isPositive: true }}
@@ -247,7 +247,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Vehicles Out"
-              value={(cargoStats.completed * 18).toString()}
+              value="142"
               subtitle="Today's outbound vehicles"
               icon={CheckCircle}
               trend={{ value: 8, isPositive: true }}
@@ -255,14 +255,14 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Vehicles Inside"
-              value={cargoStats.inProgress.toString()}
+              value="124"
               subtitle="Currently inside port"
               icon={Building}
               color="purple"
             />
             <StatCard
               title="Avg TAT"
-              value={avgTurnaround}
+              value="2h 15m"
               subtitle="Average turnaround time"
               icon={Clock}
               trend={{ value: 15, isPositive: false }}
@@ -273,7 +273,7 @@ const GateOperations: React.FC = () => {
           <>
             <StatCard
               title="Pedestrians In"
-              value={(nonCargoStats.total * 45).toString()}
+              value="87"
               subtitle="Today's pedestrian entries"
               icon={Users}
               trend={{ value: 5, isPositive: true }}
@@ -281,7 +281,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Pedestrians Out"
-              value={(nonCargoStats.completed * 42).toString()}
+              value="82"
               subtitle="Today's pedestrian exits"
               icon={CheckCircle}
               trend={{ value: 4, isPositive: true }}
@@ -289,7 +289,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Non-Cargo In"
-              value={(nonCargoStats.total * 25).toString()}
+              value="35"
               subtitle="Today's non-cargo entries"
               icon={Truck}
               trend={{ value: 7, isPositive: true }}
@@ -297,7 +297,7 @@ const GateOperations: React.FC = () => {
             />
             <StatCard
               title="Non-Cargo Out"
-              value={(nonCargoStats.completed * 28).toString()}
+              value="32"
               subtitle="Today's non-cargo exits"
               icon={XCircle}
               trend={{ value: 3, isPositive: true }}

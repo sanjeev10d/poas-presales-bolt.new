@@ -10,10 +10,10 @@ const DashboardOverview: React.FC = () => {
   // Sample data for calculations (in real app, this would come from context/state)
   const sampleVehicleData = [
     { status: 'Completed', turnaroundTime: '2h 15m' },
-    { status: 'In Progress', turnaroundTime: '3h 42m' },
-    { status: 'Completed', turnaroundTime: '3h 45m' },
-    { status: 'Completed', turnaroundTime: '2h 30m' },
-    { status: 'Completed', turnaroundTime: '1h 45m' }
+    { status: 'In Progress', turnaroundTime: '2h 30m' },
+    { status: 'Completed', turnaroundTime: '2h 45m' },
+    { status: 'Completed', turnaroundTime: '2h 20m' },
+    { status: 'Completed', turnaroundTime: '2h 10m' }
   ];
   
   const vehicleStats = calculateVehicleStats(sampleVehicleData);
@@ -37,8 +37,8 @@ const DashboardOverview: React.FC = () => {
         />
         <StatCard
           title="Active Vehicles"
-          value={vehicleStats.total.toString()}
-          subtitle="89 cargo, 58 non-cargo"
+          value="147"
+          subtitle="124 cargo, 30 non-cargo"
           icon={Truck}
           trend={{ value: 8, isPositive: true }}
           color="green"
@@ -53,7 +53,7 @@ const DashboardOverview: React.FC = () => {
         />
         <StatCard
           title="System Health"
-          value={`${vehicleStats.completionRate}%`}
+          value="95%"
           subtitle="All systems operational"
           icon={Activity}
           trend={{ value: 2, isPositive: true }}
@@ -80,7 +80,7 @@ const DashboardOverview: React.FC = () => {
                 </div>
                 <span className="font-semibold text-gray-900">Gate Operations</span>
               </div>
-              <p className="text-2xl font-bold text-blue-600">147</p>
+              <p className="text-2xl font-bold text-blue-600">154</p>
               <p className="text-sm text-blue-700">active vehicles</p>
             </div>
             
@@ -91,7 +91,7 @@ const DashboardOverview: React.FC = () => {
                 </div>
                 <span className="font-semibold text-gray-900">Weighment Operations</span>
               </div>
-              <p className="text-2xl font-bold text-green-600">8</p>
+              <p className="text-2xl font-bold text-green-600">3</p>
               <p className="text-sm text-green-700">vehicles in queue</p>
             </div>
             
@@ -113,7 +113,7 @@ const DashboardOverview: React.FC = () => {
                 </div>
                 <span className="font-semibold text-gray-900">Yard Allocation</span>
               </div>
-              <p className="text-2xl font-bold text-orange-600">78%</p>
+              <p className="text-2xl font-bold text-orange-600">72%</p>
               <p className="text-sm text-orange-700">utilization</p>
             </div>
           </div>

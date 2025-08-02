@@ -147,7 +147,7 @@ const YardOperations: React.FC = () => {
         />
         <StatCard
           title="Utilization Rate"
-          value="78%"
+          value="72%"
           subtitle="Overall yard utilization"
           icon={PieChart}
           trend={{ value: 5, isPositive: true }}
@@ -155,7 +155,7 @@ const YardOperations: React.FC = () => {
         />
         <StatCard
           title="Avg Dwell Time"
-          value="4h 32m"
+          value="4h 15m"
           subtitle="Average cargo stay duration"
           icon={Clock}
           trend={{ value: 12, isPositive: false }}

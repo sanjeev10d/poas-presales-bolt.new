@@ -32,7 +32,7 @@ const BerthOperations: React.FC = () => {
       status: 'Loading',
       cargoType: 'Coal',
       timeline: [
-        { stage: 'Vessel Arrival', time: '06:15 AM', status: 'completed' },
+        { stage: 'Tug In', time: '06:15 AM', status: 'completed' },
         { stage: 'Pilot Boarding', time: '06:30 AM', status: 'completed' },
         { stage: 'Berth Allocation', time: '06:45 AM', status: 'completed' },
         { stage: 'Mooring Complete', time: '07:00 AM', status: 'completed' },
@@ -64,7 +64,7 @@ const BerthOperations: React.FC = () => {
       status: 'Unloading',
       cargoType: 'Iron Ore',
       timeline: [
-        { stage: 'Vessel Arrival', time: '10:00 AM', status: 'completed' },
+        { stage: 'Tug In', time: '10:00 AM', status: 'completed' },
         { stage: 'Pilot Boarding', time: '10:15 AM', status: 'completed' },
         { stage: 'Berth Allocation', time: '10:30 AM', status: 'completed' },
         { stage: 'Mooring Complete', time: '10:45 AM', status: 'completed' },
@@ -97,7 +97,7 @@ const BerthOperations: React.FC = () => {
       status: 'Completed',
       cargoType: 'Crude Oil',
       timeline: [
-        { stage: 'Vessel Arrival', time: '07:45 AM', status: 'completed' },
+        { stage: 'Tug In', time: '07:45 AM', status: 'completed' },
         { stage: 'Pilot Boarding', time: '08:00 AM', status: 'completed' },
         { stage: 'Berth Allocation', time: '08:15 AM', status: 'completed' },
         { stage: 'Mooring Complete', time: '08:30 AM', status: 'completed' },
@@ -180,7 +180,7 @@ const BerthOperations: React.FC = () => {
         />
         <StatCard
           title="Completed Operations"
-          value={(completedOperations * 8).toString()}
+          value="24"
           subtitle="Vessels departed today"
           icon={CheckCircle}
           trend={{ value: 12, isPositive: true }}
@@ -188,7 +188,7 @@ const BerthOperations: React.FC = () => {
         />
         <StatCard
           title="Berth Utilization"
-          value={`${berthStats.utilization}%`}
+          value="85%"
           subtitle="Average utilization"
           icon={Anchor}
           trend={{ value: 5, isPositive: true }}
@@ -196,7 +196,7 @@ const BerthOperations: React.FC = () => {
         />
         <StatCard
           title="Avg Turnaround"
-          value={avgTurnaround}
+          value="14h 30m"
           subtitle="Average vessel time"
           icon={Clock}
           trend={{ value: 8, isPositive: false }}

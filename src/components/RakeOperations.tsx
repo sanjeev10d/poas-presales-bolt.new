@@ -34,8 +34,8 @@ const RakeOperations: React.FC = () => {
         { stage: 'Unloading Complete', time: '01:30 PM', status: 'completed' },
         { stage: 'Rake Dispatch (Railway PN)', time: '02:00 PM', status: 'completed' },
         { stage: 'PRP Top Point Arrival', time: '02:10 PM', status: 'completed' },
-        { stage: 'Station Arrival', time: '02:15 PM', status: 'completed' },
-        { stage: 'Station Departure', time: '02:15 PM', status: 'completed' }
+        { stage: 'Station Arrival', time: '02:45 PM', status: 'completed' },
+        { stage: 'Station Departure', time: '03:00 PM', status: 'completed' }
       ]
     },
     {

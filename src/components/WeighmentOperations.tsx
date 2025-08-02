@@ -156,7 +156,7 @@ const WeighmentOperations: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Vehicles Weighed"
-          value={(weightStats.totalWeighed * 25).toString()}
+          value="75"
           subtitle="Today's completed weighments"
           icon={Scale}
           trend={{ value: 8, isPositive: true }}
@@ -164,7 +164,7 @@ const WeighmentOperations: React.FC = () => {
         />
         <StatCard
           title="Deviation Alerts"
-          value={weightStats.deviations.toString()}
+          value="1"
           subtitle="Route/timing deviations"
           icon={AlertTriangle}
           trend={{ value: 12, isPositive: false }}
@@ -172,7 +172,7 @@ const WeighmentOperations: React.FC = () => {
         />
         <StatCard
           title="Success Rate"
-          value={`${weightStats.successRate}%`}
+          value="95%"
           subtitle="Successful weighments"
           icon={CheckCircle}
           trend={{ value: 2, isPositive: true }}
@@ -180,7 +180,7 @@ const WeighmentOperations: React.FC = () => {
         />
         <StatCard
           title="Avg Queue Time"
-          value={avgQueueTime}
+          value="5m"
           subtitle="Average waiting time"
           icon={Clock}
           trend={{ value: 15, isPositive: false }}
@@ -207,7 +207,7 @@ const WeighmentOperations: React.FC = () => {
               {wb.queue.length > 0 ? (
                 <div className="space-y-2">
                   {wb.queue.map((vehicle, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded">
+                    <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded text-xs">
                       <span className="text-sm font-medium">{vehicle.vehicleNumber}</span>
                       <div className="text-xs text-slate-600">
                         <span className={vehicle.status === 'In Progress' ? 'text-blue-600 font-medium' : ''}>
@@ -219,7 +219,7 @@ const WeighmentOperations: React.FC = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-slate-500 italic">No vehicles in queue</p>
+                <p className="text-xs text-slate-500 italic">No vehicles in queue</p>
               )}
             </div>
           ))}
