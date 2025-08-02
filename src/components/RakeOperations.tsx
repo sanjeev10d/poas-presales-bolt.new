@@ -6,6 +6,7 @@ import { Train, Clock, AlertTriangle, CheckCircle, Eye, Wrench, RotateCcw } from
 
 const RakeOperations: React.FC = () => {
   const [selectedRake, setSelectedRake] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState('regular');
 
   const rakeData = [
     {
@@ -53,6 +54,61 @@ const RakeOperations: React.FC = () => {
         { stage: 'Station Departure', time: '10:15 AM', status: 'completed' },
         { stage: 'Top Point Arrival', time: '10:30 AM', status: 'completed' },
         { stage: 'Hopper Placement', time: '10:40 AM', status: 'completed' },
+        { stage: 'Unloading Complete', time: '—', status: 'in-progress' },
+        { stage: 'Rake Dispatch (Railway PN)', time: '—', status: 'pending' },
+        { stage: 'PRP Top Point Arrival', time: '—', status: 'pending' },
+        { stage: 'Station Arrival', time: '—', status: 'pending' },
+        { stage: 'Station Departure', time: '—', status: 'pending' }
+      ]
+    }
+  ];
+
+  const bobrnRakeData = [
+    {
+      id: 1,
+      rakeRefNo: 'BOBRN-2024-001',
+      wagonCount: 45,
+      timeIn: '07:45 AM',
+      timeOut: '01:45 PM',
+      loadedWagons: 45,
+      emptyWagons: 0,
+      wtr: '6h 00m',
+      alerts: 'None',
+      sourceTerminal: 'Barbil',
+      status: 'Completed',
+      cargoType: 'Iron Ore',
+      railwayPNNumber: 'BOBRN-PN-2024-001',
+      timeline: [
+        { stage: 'Station Arrival', time: '07:30 AM', status: 'completed' },
+        { stage: 'Station Departure', time: '07:45 AM', status: 'completed' },
+        { stage: 'Top Point Arrival', time: '08:00 AM', status: 'completed' },
+        { stage: 'Hopper Placement', time: '08:15 AM', status: 'completed' },
+        { stage: 'Unloading Complete', time: '01:00 PM', status: 'completed' },
+        { stage: 'Rake Dispatch (Railway PN)', time: '01:15 PM', status: 'completed' },
+        { stage: 'PRP Top Point Arrival', time: '01:30 PM', status: 'completed' },
+        { stage: 'Station Arrival', time: '01:40 PM', status: 'completed' },
+        { stage: 'Station Departure', time: '01:45 PM', status: 'completed' }
+      ]
+    },
+    {
+      id: 2,
+      rakeRefNo: 'BOBRN-2024-002',
+      wagonCount: 52,
+      timeIn: '09:30 AM',
+      timeOut: '—',
+      loadedWagons: 48,
+      emptyWagons: 4,
+      wtr: '4h 15m (ongoing)',
+      alerts: 'Delayed Unloading',
+      sourceTerminal: 'Rourkela',
+      status: 'In Progress',
+      cargoType: 'Iron Ore',
+      railwayPNNumber: 'BOBRN-PN-2024-002',
+      timeline: [
+        { stage: 'Station Arrival', time: '09:15 AM', status: 'completed' },
+        { stage: 'Station Departure', time: '09:30 AM', status: 'completed' },
+        { stage: 'Top Point Arrival', time: '09:45 AM', status: 'completed' },
+        { stage: 'Hopper Placement', time: '10:00 AM', status: 'completed' },
         { stage: 'Unloading Complete', time: '—', status: 'in-progress' },
         { stage: 'Rake Dispatch (Railway PN)', time: '—', status: 'pending' },
         { stage: 'PRP Top Point Arrival', time: '—', status: 'pending' },
@@ -113,47 +169,112 @@ const RakeOperations: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Tab Navigation */}
+      <div className="border-b border-slate-200">
+        <nav className="-mb-px flex space-x-8">
+          <button
+            onClick={() => setActiveTab('regular')}
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              activeTab === 'regular'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            Regular Rakes
+          </button>
+          <button
+            onClick={() => setActiveTab('bobrn')}
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              activeTab === 'bobrn'
+                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+            }`}
+          >
+            BOBRN Rakes
+          </button>
+        </nav>
+      </div>
+
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title="Active Rakes"
-          value="3"
-          subtitle="Currently in progress"
-          icon={Train}
-          color="blue"
-        />
-        <StatCard
-          title="Completed Rakes"
-          value="12"
-          subtitle="Dispatched today"
-          icon={CheckCircle}
-          trend={{ value: 15, isPositive: true }}
-          color="green"
-        />
-        <StatCard
-          title="Exception Alerts"
-          value="2"
-          subtitle="Requires attention"
-          icon={AlertTriangle}
-          color="red"
-        />
-        <StatCard
-          title="Avg WTR"
-          value="5h 42m"
-          subtitle="Wagon turnaround time"
-          icon={Clock}
-          trend={{ value: 8, isPositive: false }}
-          color="orange"
-        />
+        {activeTab === 'regular' ? (
+          <>
+            <StatCard
+              title="Active Rakes"
+              value="3"
+              subtitle="Currently in progress"
+              icon={Train}
+              color="blue"
+            />
+            <StatCard
+              title="Completed Rakes"
+              value="12"
+              subtitle="Dispatched today"
+              icon={CheckCircle}
+              trend={{ value: 15, isPositive: true }}
+              color="green"
+            />
+            <StatCard
+              title="Exception Alerts"
+              value="2"
+              subtitle="Requires attention"
+              icon={AlertTriangle}
+              color="red"
+            />
+            <StatCard
+              title="Avg WTR"
+              value="5h 42m"
+              subtitle="Wagon turnaround time"
+              icon={Clock}
+              trend={{ value: 8, isPositive: false }}
+              color="orange"
+            />
+          </>
+        ) : (
+          <>
+            <StatCard
+              title="Active BOBRN Rakes"
+              value="1"
+              subtitle="Currently in progress"
+              icon={Train}
+              color="blue"
+            />
+            <StatCard
+              title="Completed BOBRN"
+              value="8"
+              subtitle="Dispatched today"
+              icon={CheckCircle}
+              trend={{ value: 12, isPositive: true }}
+              color="green"
+            />
+            <StatCard
+              title="Exception Alerts"
+              value="1"
+              subtitle="Requires attention"
+              icon={AlertTriangle}
+              color="red"
+            />
+            <StatCard
+              title="Avg WTR"
+              value="6h 15m"
+              subtitle="Wagon turnaround time"
+              icon={Clock}
+              trend={{ value: 5, isPositive: false }}
+              color="orange"
+            />
+          </>
+        )}
       </div>
 
       {/* Rake Audit Logs */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-900">Rake Operations Audit Logs</h3>
+          <h3 className="text-lg font-semibold text-gray-900">
+            {activeTab === 'regular' ? 'Regular Rake' : 'BOBRN Rake'} Operations Audit Logs
+          </h3>
         </div>
         <div className="p-6">
-          <DataTable data={rakeData} columns={columns} />
+          <DataTable data={activeTab === 'regular' ? rakeData : bobrnRakeData} columns={columns} />
         </div>
       </div>
 
