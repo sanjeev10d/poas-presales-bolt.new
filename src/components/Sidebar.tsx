@@ -49,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule }) => {
                 >
                   <IconComponent className="w-5 h-5" />
                   <span className="flex-1 font-medium text-sm lg:text-base">{item.label}</span>
-                  {isActive && <ChevronRight className="w-4 h-4 text-white/80" />}
+                  {/* {isActive && <ChevronRight className="w-4 h-4 text-white/80" />} */}
                 </button>
               </li>
             );
