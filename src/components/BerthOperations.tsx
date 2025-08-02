@@ -152,8 +152,8 @@ const BerthOperations: React.FC = () => {
     { key: 'cargoQuantity', label: 'Cargo Quantity (MT)', type: 'number' as const, required: true, placeholder: '45000' },
     { key: 'cargoType', label: 'Cargo Type', type: 'select' as const, required: true, options: ['Coal', 'Iron Ore', 'Crude Oil', 'Fertilizer', 'Containers'] },
     { key: 'berthNumber', label: 'Berth Number', type: 'select' as const, required: true, options: ['B-01', 'B-02', 'B-03', 'T-01', 'T-02'] },
-    { key: 'arrivalTime', label: 'Arrival Time', type: 'datetime-local' as const, required: true, placeholder: 'Select vessel arrival time' },
-    { key: 'departureTime', label: 'Expected Departure', type: 'datetime-local' as const, required: false, placeholder: 'Select expected departure time' },
+    { key: 'arrivalTime', label: 'Arrival Time', type: 'datetime-local' as const, required: true },
+    { key: 'departureTime', label: 'Expected Departure', type: 'datetime-local' as const, required: false },
     { key: 'status', label: 'Current Status', type: 'select' as const, required: true, options: ['Loading', 'Unloading', 'Completed', 'Waiting'] }
   ];
 

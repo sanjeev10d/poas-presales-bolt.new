@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { X, Save, AlertCircle, User, Clock } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
-import DateTimePicker from './DateTimePicker';
 
 interface ManualEntryField {
   key: string;
@@ -45,21 +44,6 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({
     }
   };
 
-  const handleDateTimeChange = (key: string, date: Date | null) => {
-    if (date) {
-      // Convert to ISO string for consistent storage
-      const isoString = date.toISOString();
-      handleInputChange(key, isoString);
-    } else {
-      handleInputChange(key, '');
-    }
-  };
-
-  const getDateValue = (key: string): Date | null => {
-    const value = formData[key];
-    if (!value) return null;
-    return new Date(value);
-  };
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
@@ -155,15 +139,13 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({
 
       case 'datetime-local':
         return (
-          <DateTimePicker
-            selected={getDateValue(field.key)}
-            onChange={(date) => handleDateTimeChange(field.key, date)}
-            placeholder={field.placeholder || `Select ${field.label.toLowerCase()}`}
-            className={`${
+          <input
+            type="datetime-local"
+            value={value}
+            onChange={(e) => handleInputChange(field.key, e.target.value)}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
               hasError ? 'border-red-500' : 'border-gray-300'
             }`}
-            required={field.required}
-            maxDate={new Date()} // Prevent future dates for audit logs
           />
         );
 

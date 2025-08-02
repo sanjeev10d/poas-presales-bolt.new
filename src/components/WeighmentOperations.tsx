@@ -140,7 +140,7 @@ const WeighmentOperations: React.FC = () => {
     { key: 'grossWeight', label: 'Gross Weight (MT)', type: 'number' as const, required: true, placeholder: '35.2' },
     { key: 'destination', label: 'Destination', type: 'select' as const, required: true, options: ['Terminal 1', 'Terminal 2', 'Terminal 3', 'Terminal 4'] },
     { key: 'operatorName', label: 'Weighbridge Operator', type: 'text' as const, required: true, placeholder: 'Operator name' },
-    { key: 'timestamp', label: 'Weighment Time', type: 'datetime-local' as const, required: true, placeholder: 'Select weighment date and time' },
+    { key: 'timestamp', label: 'Weighment Time', type: 'datetime-local' as const, required: true },
     { key: 'deviationAlert', label: 'Deviation Alert', type: 'select' as const, required: true, options: ['No', 'Yes'] },
     { key: 'thresholdViolation', label: 'Threshold Violation', type: 'select' as const, required: true, options: ['No', 'Yes'] },
     { key: 'challanGenerated', label: 'Challan Generated', type: 'select' as const, required: true, options: ['Yes', 'No'] }

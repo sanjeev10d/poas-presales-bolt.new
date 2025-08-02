@@ -240,13 +240,13 @@ const GeofencingOperations: React.FC = () => {
     { key: 'driverExperience', label: 'Driver Experience', type: 'text' as const, required: false, placeholder: 'e.g., 8 years' },
     { key: 'lastKnownLocation', label: 'Last Known Location', type: 'text' as const, required: true, placeholder: 'e.g., Near Yard-2' },
     { key: 'currentSpeed', label: 'Current Speed (km/h)', type: 'number' as const, required: false, placeholder: '15' },
-    { key: 'estimatedArrival', label: 'Estimated Arrival', type: 'datetime-local' as const, required: false, placeholder: 'Select estimated arrival time' },
+    { key: 'estimatedArrival', label: 'Estimated Arrival', type: 'datetime-local' as const, required: false },
     { key: 'totalDistance', label: 'Total Distance (km)', type: 'number' as const, required: true, placeholder: '3.2' },
     { key: 'completedDistance', label: 'Completed Distance (km)', type: 'number' as const, required: true, placeholder: '2.1' },
     { key: 'fuelConsumption', label: 'Fuel Consumption (L/100km)', type: 'number' as const, required: false, placeholder: '12.5' },
     { key: 'deviationFlag', label: 'Route Deviation', type: 'select' as const, required: true, options: ['No', 'Yes'] },
     { key: 'restrictedAreaEntry', label: 'Restricted Area Entry', type: 'select' as const, required: true, options: ['No', 'Yes'] },
-    { key: 'timestamp', label: 'Record Time', type: 'datetime-local' as const, required: true, placeholder: 'Select record time' }
+    { key: 'timestamp', label: 'Record Time', type: 'datetime-local' as const, required: true }
   ];
 
   const recentAlerts = [
