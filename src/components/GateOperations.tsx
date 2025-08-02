@@ -25,7 +25,7 @@ const GateOperations: React.FC = () => {
       driverLicense: 'DL12345',
       driverContact: '9876543210',
       vehicleWeight: '35.2 MT',
-      destination: 'Terminal 1',
+      destination: 'Gate 1',
       gateNumber: 'Gate-A1',
       securityClearance: 'Verified',
       images: { 
@@ -47,7 +47,7 @@ const GateOperations: React.FC = () => {
       driverLicense: 'DL67890',
       driverContact: '9876543211',
       vehicleWeight: '42.3 MT',
-      destination: 'Terminal 2',
+      destination: 'Gate 2',
       gateNumber: 'Gate-B2',
       securityClearance: 'Pending',
       images: { 
@@ -69,7 +69,7 @@ const GateOperations: React.FC = () => {
       driverLicense: 'DL11223',
       driverContact: '9876543212',
       vehicleWeight: '38.7 MT',
-      destination: 'Terminal 3',
+      destination: 'Gate 3',
       gateNumber: 'Gate-C1',
       securityClearance: 'Verified',
       images: { 
@@ -307,7 +307,7 @@ const GateOperations: React.FC = () => {
         )}
       </div>
 
-      {/* Terminal Distribution Card - Full Width */}
+      {/* Gate Distribution Card - Full Width */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-all duration-300">
         <div className="flex items-center justify-between mb-4">
           <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -320,7 +320,7 @@ const GateOperations: React.FC = () => {
         </div>
         
         <div className="space-y-1 mb-4">
-          <p className="text-sm font-semibold text-gray-700">Terminal Distribution</p>
+          <p className="text-sm font-semibold text-gray-700">Gate Distribution</p>
           <p className="text-xs text-gray-500">
             {activeTab === 'cargo' ? 'Vehicles currently present' : 'Non-cargo vehicles present'}
           </p>
@@ -329,7 +329,7 @@ const GateOperations: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-blue-700">Terminal 1</span>
+              <span className="text-xs font-semibold text-blue-700">Gate 1</span>
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
             </div>
             <p className="text-2xl font-bold text-blue-900">{activeTab === 'cargo' ? '45' : '8'}</p>
@@ -338,7 +338,7 @@ const GateOperations: React.FC = () => {
           
           <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-green-700">Terminal 2</span>
+              <span className="text-xs font-semibold text-green-700">Gate 2</span>
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
             </div>
             <p className="text-2xl font-bold text-green-900">{activeTab === 'cargo' ? '687' : '245'}</p>
@@ -347,7 +347,7 @@ const GateOperations: React.FC = () => {
           
           <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-orange-700">Terminal 3</span>
+              <span className="text-xs font-semibold text-orange-700">Gate 3</span>
               <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
             </div>
             <p className="text-2xl font-bold text-orange-900">{activeTab === 'cargo' ? '542' : '187'}</p>
@@ -356,7 +356,7 @@ const GateOperations: React.FC = () => {
           
           <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-4 border border-teal-200">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-teal-700">Terminal 4</span>
+              <span className="text-xs font-semibold text-teal-700">Gate 4</span>
               <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
             </div>
             <p className="text-2xl font-bold text-teal-900">{activeTab === 'cargo' ? '398' : '124'}</p>
