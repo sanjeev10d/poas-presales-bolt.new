@@ -142,13 +142,27 @@ const RakeOperations: React.FC = () => {
       key: 'actions', 
       label: 'Actions',
       render: (row: any) => (
-        <button
-          onClick={() => setSelectedRake(row)}
-          className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
-        >
-          <Eye className="w-4 h-4" />
-          <span>View</span>
-        </button>
+        <div className="flex space-x-2">
+          <button
+            onClick={() => setSelectedRake(row)}
+            className="flex items-center space-x-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
+          >
+            <Eye className="w-3 h-3" />
+            <span>View</span>
+          </button>
+          {row.status === 'In Progress' && (
+            <>
+              <button className="flex items-center space-x-1 px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs hover:bg-orange-200">
+                <Wrench className="w-3 h-3" />
+                <span>Inspect</span>
+              </button>
+              <button className="flex items-center space-x-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">
+                <RotateCcw className="w-3 h-3" />
+                <span>Reprocess</span>
+              </button>
+            </>
+          )}
+        </div>
       )
     }
   ];
@@ -272,24 +286,47 @@ const RakeOperations: React.FC = () => {
           title={`Rake Details - ${selectedRake.rakeRefNo}`}
           size="xl"
         >
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Rake Information</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Reference No:</span> {selectedRake.rakeRefNo}</p>
-                  <p><span className="font-medium">Source Station:</span> {selectedRake.sourceTerminal}</p>
-                  <p><span className="font-medium">Cargo Type:</span> {selectedRake.cargoType}</p>
-                  <p><span className="font-medium">Total Wagons:</span> {selectedRake.wagonCount}</p>
-                  <p><span className="font-medium">Railway PN Number:</span> {selectedRake.railwayPNNumber}</p>
-                  <p><span className="font-medium">Port Entry Time:</span> {selectedRake.timeIn}</p>
-                  {selectedRake.timeOut !== '—' && (
-                    <p><span className="font-medium">Port Exit Time:</span> {selectedRake.timeOut}</p>
-                  )}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Rake Information Card */}
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
+                <Train className="w-5 h-5 mr-2 text-blue-600" />
+                Rake Information
+              </h4>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Reference No:</span>
+                  <span className="text-gray-900 font-semibold">{selectedRake.rakeRefNo}</span>
                 </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Source Station:</span>
+                  <span className="text-gray-900">{selectedRake.sourceTerminal}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Cargo Type:</span>
+                  <span className="text-gray-900">{selectedRake.cargoType}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Total Wagons:</span>
+                  <span className="text-gray-900">{selectedRake.wagonCount}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Railway PN Number:</span>
+                  <span className="text-gray-900">{selectedRake.railwayPNNumber}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Port Entry Time:</span>
+                  <span className="text-gray-900">{selectedRake.timeIn}</span>
+                </div>
+                {selectedRake.timeOut !== '—' && (
+                  <div className="flex justify-between">
+                    <span className="font-medium text-gray-600">Port Exit Time:</span>
+                    <span className="text-gray-900">{selectedRake.timeOut}</span>
+                  </div>
+                )}
               </div>
               
-              <div>
+              <div className="mt-4">
                 <h4 className="font-medium text-slate-900 mb-2">Wagon Images</h4>
                 <div className="grid grid-cols-2 gap-2">
                   <img 
@@ -306,58 +343,79 @@ const RakeOperations: React.FC = () => {
               </div>
             </div>
             
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-slate-900 mb-2">Wagon Breakdown</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Loaded Wagons:</span> {selectedRake.loadedWagons}</p>
-                  <p><span className="font-medium">Empty Wagons:</span> {selectedRake.emptyWagons}</p>
-                  <p><span className="font-medium">WTR Time:</span> {selectedRake.wtr}</p>
-                  <p><span className="font-medium">Status:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
-                      selectedRake.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
-                    }`}>
-                      {selectedRake.status}
-                    </span>
-                  </p>
-                  <p><span className="font-medium">Alerts:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded text-xs ${
-                      selectedRake.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {selectedRake.alerts}
-                    </span>
-                  </p>
+            {/* Wagon Details Card */}
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
+                <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
+                Wagon Details
+              </h4>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Loaded Wagons:</span>
+                  <span className="text-gray-900">{selectedRake.loadedWagons}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Empty Wagons:</span>
+                  <span className="text-gray-900">{selectedRake.emptyWagons}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">WTR Time:</span>
+                  <span className="text-gray-900 font-semibold text-blue-600">{selectedRake.wtr}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Status:</span>
+                  <span className={`px-2 py-1 rounded text-xs ${
+                    selectedRake.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                  }`}>
+                    {selectedRake.status}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Alerts:</span>
+                  <span className={`px-2 py-1 rounded text-xs ${
+                    selectedRake.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  }`}>
+                    {selectedRake.alerts}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
           
-          {/* Timeline */}
-          <div className="mt-6 pt-6 border-t border-slate-200">
-            <h4 className="font-medium text-slate-900 mb-4">Operation Timeline</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+          {/* Operation Timeline */}
+          <div className="mt-6 bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
+              <Clock className="w-5 h-5 mr-2 text-purple-600" />
+              Operation Timeline
+            </h4>
+            <div className="space-y-3">
               {selectedRake.timeline.map((stage: any, index: number) => (
-                <div key={index} className={`flex items-center space-x-3 p-3 rounded-lg border ${
-                  stage.status === 'completed' ? 'bg-green-50 border-green-200' :
-                  stage.status === 'in-progress' ? 'bg-blue-50 border-blue-200' :
-                  'bg-slate-50 border-slate-200'
+                <div key={index} className={`flex items-center justify-between p-4 bg-white rounded-lg border-l-4 ${
+                  stage.status === 'completed' ? 'border-green-500' :
+                  stage.status === 'in-progress' ? 'border-blue-500' :
+                  'border-slate-300'
                 }`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
-                    stage.status === 'completed' ? 'bg-green-500 text-white' :
-                    stage.status === 'in-progress' ? 'bg-blue-500 text-white' :
-                    'bg-slate-300 text-slate-600'
+                  <div className="flex items-center space-x-3">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
+                      stage.status === 'completed' ? 'bg-green-500 text-white' :
+                      stage.status === 'in-progress' ? 'bg-blue-500 text-white' :
+                      'bg-slate-300 text-slate-600'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-slate-900">{stage.stage}</p>
+                      <p className="text-xs text-slate-600">{stage.time}</p>
+                    </div>
+                  </div>
+                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    stage.status === 'completed' ? 'bg-green-100 text-green-800' :
+                    stage.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+                    'bg-slate-100 text-slate-600'
                   }`}>
-                    {index + 1}
+                    {stage.status === 'completed' ? 'Completed' :
+                     stage.status === 'in-progress' ? 'In Progress' : 'Pending'}
                   </div>
-                  <div className="text-center">
-                    <p className="text-xs font-medium text-slate-900">{stage.stage}</p>
-                    <p className="text-xs text-slate-600">{stage.time}</p>
-                  </div>
-                  {index < selectedRake.timeline.length - 1 && (
-                    <div className={`w-8 h-0.5 ${
-                      stage.status === 'completed' ? 'bg-green-500' : 'bg-slate-300'
-                    }`} />
-                  )}
                 </div>
               ))}
             </div>
