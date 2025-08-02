@@ -178,14 +178,14 @@ const ResourceManagement: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Total Equipment"
-          value={equipmentStats.total.toString()}
+          value="636"
           subtitle="Across all categories"
           icon={Settings}
           color="blue"
         />
         <StatCard
           title="Equipment In Use"
-          value={equipmentStats.inUse.toString()}
+          value="416"
           subtitle="Currently operational"
           icon={Activity}
           trend={{ value: 8, isPositive: true }}
@@ -193,14 +193,14 @@ const ResourceManagement: React.FC = () => {
         />
         <StatCard
           title="Under Maintenance"
-          value={equipmentStats.maintenance.toString()}
+          value="38"
           subtitle="Scheduled & emergency"
           icon={Wrench}
           color="orange"
         />
         <StatCard
           title="High Risk Equipment"
-          value={equipmentStats.highRisk.toString()}
+          value="12"
           subtitle="Requires immediate attention"
           icon={AlertTriangle}
           color="red"
