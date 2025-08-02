@@ -27,7 +27,7 @@ interface DashboardOverviewProps {
   setActiveModule?: (module: string) => void;
 }
 
-const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule }) => {
+const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule = () => {} }) => {
   const { showSuccess, showInfo } = useToast();
   const [timeRange, setTimeRange] = useState('7d');
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -57,30 +57,18 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule }
   ];
 
   const cargoDistributionData = [
-    { label: 'Coal', value: 52000 },
-    { label: 'Iron Ore', value: 28000 },
-    { label: 'Fertilizer', value: 15000 },
-    { label: 'Containers', value: 5000 }
+    { label: 'Coal', value: 520000 },
+    { label: 'Iron Ore', value: 280000 },
+    { label: 'Fertilizer', value: 150000 },
+    { label: 'Containers', value: 50000 }
   ];
 
+  // Realistic port terminal utilization data (vehicles per hour)
   const terminalUtilizationData = [
-    { x: 'T1', y: 'Morning', value: 85, label: 'Terminal 1 - Morning: 85%' },
-    { x: 'T1', y: 'Afternoon', value: 92, label: 'Terminal 1 - Afternoon: 92%' },
-    { x: 'T1', y: 'Evening', value: 78, label: 'Terminal 1 - Evening: 78%' },
-    { x: 'T2', y: 'Morning', value: 76, label: 'Terminal 2 - Morning: 76%' },
-    { x: 'T2', y: 'Afternoon', value: 88, label: 'Terminal 2 - Afternoon: 88%' },
-    { x: 'T2', y: 'Evening', value: 82, label: 'Terminal 2 - Evening: 82%' },
-    { x: 'T3', y: 'Morning', value: 90, label: 'Terminal 3 - Morning: 90%' },
-    { x: 'T3', y: 'Afternoon', value: 95, label: 'Terminal 3 - Afternoon: 95%' },
-    { x: 'T3', y: 'Evening', value: 87, label: 'Terminal 3 - Evening: 87%' },
-    { x: 'T4', y: 'Morning', value: 72, label: 'Terminal 4 - Morning: 72%' },
-    { x: 'T4', y: 'Afternoon', value: 79, label: 'Terminal 4 - Afternoon: 79%' },
-    { x: 'T4', y: 'Evening', value: 68, label: 'Terminal 4 - Evening: 68%' }
-  ];
-
-  const performanceMetricsData = [
-    { label: 'Overall Performance Score', value: 87 }
-  ];
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0]
 
   // Additional chart data for enhanced visualizations
   const hourlyTrafficData = [
@@ -100,8 +88,10 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule }
   ];
 
   const handleQuickAction = (action: string, module: string) => {
-    showInfo('Navigation', `Opening ${action} module`);
-    // In a real app, this would navigate to the specific module
+    if (setActiveModule) {
+      setActiveModule(module);
+      showSuccess('Navigation', `Switched to ${action}`);
+    }
   };
 
   const handleRefresh = async () => {
@@ -395,7 +385,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({ setActiveModule }
               <button
                 key={index}
                 onClick={() => handleQuickAction(card.title, card.module)}
-                className="group p-6 border border-gray-200 rounded-xl hover:border-gray-300 transition-all duration-200 text-left hover:shadow-lg hover:-translate-y-1"
+                className="group p-6 border border-gray-200 rounded-xl hover:border-gray-300 transition-all duration-200 text-left hover:shadow-lg hover:-translate-y-1 cursor-pointer"
               >
                 <div className={`w-12 h-12 bg-gradient-to-br ${colorClasses[card.color as keyof typeof colorClasses]} rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transition-shadow`}>
                   <IconComponent className="w-6 h-6 text-white" />
