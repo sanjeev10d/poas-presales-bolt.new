@@ -4,8 +4,8 @@ import DataTable from './ui/DataTable';
 import Modal from './ui/Modal';
 import { Train, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 
-const RakeOperations: React.FC = () => {
-  const [selectedRake, setSelectedRake] = useState<any>(null);
+const BerthOperations: React.FC = () => {
+  const [selectedVessel, setSelectedVessel] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('regular');
 
   const rakeData = [
@@ -159,7 +159,7 @@ const RakeOperations: React.FC = () => {
       label: 'Actions',
       render: (row: any) => (
         <button
-          onClick={() => setSelectedRake(row)}
+          onClick={() => setSelectedVessel(row)}
           className="flex items-center space-x-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
         >
           <span>View</span>
@@ -280,11 +280,11 @@ const RakeOperations: React.FC = () => {
       </div>
 
       {/* Detail Modal */}
-      {selectedRake && (
+      {selectedVessel && (
         <Modal
-          isOpen={!!selectedRake}
-          onClose={() => setSelectedRake(null)}
-          title={`Rake Details - ${selectedRake.rakeRefNo}`}
+          isOpen={!!selectedVessel}
+          onClose={() => setSelectedVessel(null)}
+          title={`Rake Details - ${selectedVessel.rakeRefNo}`}
           size="xl"
         >
           <div className="space-y-6">
@@ -295,31 +295,31 @@ const RakeOperations: React.FC = () => {
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Reference No:</span>
-                    <span className="text-gray-900">{selectedRake.rakeRefNo}</span>
+                    <span className="text-gray-900">{selectedVessel.rakeRefNo}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Source Station:</span>
-                    <span className="text-gray-900">{selectedRake.sourceTerminal}</span>
+                    <span className="text-gray-900">{selectedVessel.sourceTerminal}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Destination:</span>
-                    <span className="text-gray-900">{selectedRake.destination}</span>
+                    <span className="text-gray-900">{selectedVessel.destination}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Cargo Type:</span>
-                    <span className="text-gray-900">{selectedRake.cargoType}</span>
+                    <span className="text-gray-900">{selectedVessel.cargoType}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Total Wagons:</span>
-                    <span className="text-gray-900">{selectedRake.wagonCount}</span>
+                    <span className="text-gray-900">{selectedVessel.wagonCount}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Total Weight:</span>
-                    <span className="text-gray-900">{selectedRake.totalWeight}</span>
+                    <span className="text-gray-900">{selectedVessel.totalWeight}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Railway PN Number:</span>
-                    <span className="text-gray-900">{selectedRake.railwayPNNumber}</span>
+                    <span className="text-gray-900">{selectedVessel.railwayPNNumber}</span>
                   </div>
                 </div>
               </div>
@@ -329,44 +329,44 @@ const RakeOperations: React.FC = () => {
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Operator:</span>
-                    <span className="text-gray-900">{selectedRake.operatorName}</span>
+                    <span className="text-gray-900">{selectedVessel.operatorName}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Port Entry Time:</span>
-                    <span className="text-gray-900">{selectedRake.timeIn}</span>
+                    <span className="text-gray-900">{selectedVessel.timeIn}</span>
                   </div>
-                  {selectedRake.timeOut !== '—' && (
+                  {selectedVessel.timeOut !== '—' && (
                     <div className="flex justify-between">
                       <span className="font-medium text-gray-600">Port Exit Time:</span>
-                      <span className="text-gray-900">{selectedRake.timeOut}</span>
+                      <span className="text-gray-900">{selectedVessel.timeOut}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Loaded Wagons:</span>
-                    <span className="text-gray-900">{selectedRake.loadedWagons}</span>
+                    <span className="text-gray-900">{selectedVessel.loadedWagons}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Empty Wagons:</span>
-                    <span className="text-gray-900">{selectedRake.emptyWagons}</span>
+                    <span className="text-gray-900">{selectedVessel.emptyWagons}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">WTR Time:</span>
-                    <span className="text-gray-900">{selectedRake.wtr}</span>
+                    <span className="text-gray-900">{selectedVessel.wtr}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Status:</span>
                     <span className={`px-2 py-1 rounded text-xs ${
-                      selectedRake.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                      selectedVessel.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
                     }`}>
-                      {selectedRake.status}
+                      {selectedVessel.status}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-gray-600">Alerts:</span>
                     <span className={`px-2 py-1 rounded text-xs ${
-                      selectedRake.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                      selectedVessel.alerts === 'None' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                     }`}>
-                      {selectedRake.alerts}
+                      {selectedVessel.alerts}
                     </span>
                   </div>
                 </div>
@@ -377,7 +377,7 @@ const RakeOperations: React.FC = () => {
             <div className="bg-gray-50 rounded-xl p-6">
               <h4 className="font-semibold text-gray-900 mb-4">Complete Operation Timeline</h4>
               <div className="space-y-3">
-                {selectedRake.timeline.map((stage: any, index: number) => (
+                {selectedVessel.timeline.map((stage: any, index: number) => (
                   <div key={index} className="flex items-center space-x-4 p-3 bg-white rounded-lg border border-gray-200">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
                       stage.status === 'completed' ? 'bg-green-500' :
@@ -409,4 +409,4 @@ const RakeOperations: React.FC = () => {
   );
 };
 
-export default RakeOperations;
+export default BerthOperations;
