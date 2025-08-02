@@ -202,14 +202,14 @@ const RakeOperations: React.FC = () => {
           <>
             <StatCard
               title="Active Rakes"
-              value="3"
+              value="24"
               subtitle="Currently in progress"
               icon={Train}
               color="blue"
             />
             <StatCard
               title="Completed Rakes"
-              value="12"
+              value="187"
               subtitle="Dispatched today"
               icon={CheckCircle}
               trend={{ value: 15, isPositive: true }}
@@ -217,14 +217,14 @@ const RakeOperations: React.FC = () => {
             />
             <StatCard
               title="Exception Alerts"
-              value="2"
+              value="8"
               subtitle="Requires attention"
               icon={AlertTriangle}
               color="red"
             />
             <StatCard
               title="Avg WTR"
-              value="5h 42m"
+              value="6h 15m"
               subtitle="Wagon turnaround time"
               icon={Clock}
               trend={{ value: 8, isPositive: false }}
@@ -235,14 +235,14 @@ const RakeOperations: React.FC = () => {
           <>
             <StatCard
               title="Active BOBRN Rakes"
-              value="1"
+              value="12"
               subtitle="Currently in progress"
               icon={Train}
               color="blue"
             />
             <StatCard
               title="Completed BOBRN"
-              value="8"
+              value="94"
               subtitle="Dispatched today"
               icon={CheckCircle}
               trend={{ value: 12, isPositive: true }}
@@ -250,14 +250,14 @@ const RakeOperations: React.FC = () => {
             />
             <StatCard
               title="Exception Alerts"
-              value="1"
+              value="4"
               subtitle="Requires attention"
               icon={AlertTriangle}
               color="red"
             />
             <StatCard
               title="Avg WTR"
-              value="6h 15m"
+              value="7h 30m"
               subtitle="Wagon turnaround time"
               icon={Clock}
               trend={{ value: 5, isPositive: false }}

@@ -78,11 +78,11 @@ const ResourceManagement: React.FC = () => {
   ];
 
   const equipmentSummary = [
-    { type: 'Cranes', total: 25, inUse: 12, available: 10, maintenance: 2, faulty: 1 },
-    { type: 'Reach Stackers', total: 10, inUse: 6, available: 3, maintenance: 1, faulty: 0 },
-    { type: 'Container Trailers', total: 40, inUse: 20, available: 15, maintenance: 3, faulty: 2 },
-    { type: 'Forklifts', total: 15, inUse: 8, available: 5, maintenance: 1, faulty: 1 },
-    { type: 'Tug Masters', total: 10, inUse: 4, available: 5, maintenance: 1, faulty: 0 }
+    { type: 'Cranes', total: 147, inUse: 89, available: 42, maintenance: 12, faulty: 4 },
+    { type: 'Reach Stackers', total: 68, inUse: 45, available: 18, maintenance: 4, faulty: 1 },
+    { type: 'Container Trailers', total: 284, inUse: 187, available: 78, maintenance: 15, faulty: 4 },
+    { type: 'Forklifts', total: 95, inUse: 67, available: 22, maintenance: 5, faulty: 1 },
+    { type: 'Tug Masters', total: 42, inUse: 28, available: 12, maintenance: 2, faulty: 0 }
   ];
 
   const predictiveMaintenanceData = [

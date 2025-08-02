@@ -180,7 +180,7 @@ const BerthOperations: React.FC = () => {
         />
         <StatCard
           title="Completed Operations"
-          value="24"
+          value="147"
           subtitle="Vessels departed today"
           icon={CheckCircle}
           trend={{ value: 12, isPositive: true }}
@@ -188,7 +188,7 @@ const BerthOperations: React.FC = () => {
         />
         <StatCard
           title="Berth Utilization"
-          value="85%"
+          value="92%"
           subtitle="Average utilization"
           icon={Anchor}
           trend={{ value: 5, isPositive: true }}
@@ -196,7 +196,7 @@ const BerthOperations: React.FC = () => {
         />
         <StatCard
           title="Avg Turnaround"
-          value="14h 30m"
+          value="18h 45m"
           subtitle="Average vessel time"
           icon={Clock}
           trend={{ value: 8, isPositive: false }}

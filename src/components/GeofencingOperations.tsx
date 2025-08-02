@@ -217,19 +217,19 @@ const GeofencingOperations: React.FC = () => {
   const recentAlerts = [
     {
       type: 'Route Deviation',
-      message: 'Vehicle OR09AB2345 deviated from Route-17 by 300m',
+      message: '47 vehicles currently showing route deviations',
       timestamp: '16:42',
       severity: 'medium'
     },
     {
       type: 'Restricted Zone Violation',
-      message: 'Vehicle OR05JK8870 entered Zone-Red',
+      message: '3 vehicles in restricted zones - immediate action required',
       timestamp: '16:34',
       severity: 'high'
     },
     {
       type: 'Idle Warning',
-      message: 'Vehicle OD11CX5001 stationary for over 15 minutes',
+      message: '124 vehicles idle for over 15 minutes',
       timestamp: '16:28',
       severity: 'low'
     }
@@ -263,7 +263,7 @@ const GeofencingOperations: React.FC = () => {
         />
         <StatCard
           title="Route Compliance"
-          value="95%"
+          value="97.2%"
           subtitle="Overall adherence rate"
           icon={CheckCircle}
           trend={{ value: 2, isPositive: true }}

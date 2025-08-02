@@ -156,7 +156,7 @@ const WeighmentOperations: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Vehicles Weighed"
-          value="75"
+          value="1,847"
           subtitle="Today's completed weighments"
           icon={Scale}
           trend={{ value: 8, isPositive: true }}
@@ -164,7 +164,7 @@ const WeighmentOperations: React.FC = () => {
         />
         <StatCard
           title="Deviation Alerts"
-          value="1"
+          value="23"
           subtitle="Route/timing deviations"
           icon={AlertTriangle}
           trend={{ value: 12, isPositive: false }}
@@ -172,7 +172,7 @@ const WeighmentOperations: React.FC = () => {
         />
         <StatCard
           title="Success Rate"
-          value="95%"
+          value="98.7%"
           subtitle="Successful weighments"
           icon={CheckCircle}
           trend={{ value: 2, isPositive: true }}
@@ -180,7 +180,7 @@ const WeighmentOperations: React.FC = () => {
         />
         <StatCard
           title="Avg Queue Time"
-          value="5m"
+          value="12m"
           subtitle="Average waiting time"
           icon={Clock}
           trend={{ value: 15, isPositive: false }}
@@ -217,6 +217,9 @@ const WeighmentOperations: React.FC = () => {
                       </div>
                     </div>
                   ))}
+                  <div className="text-xs text-slate-500 mt-2 text-center">
+                    +{Math.floor(Math.random() * 15) + 5} more vehicles in queue
+                  </div>
                 </div>
               ) : (
                 <p className="text-xs text-slate-500 italic">No vehicles in queue</p>

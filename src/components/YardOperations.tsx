@@ -79,10 +79,10 @@ const YardOperations: React.FC = () => {
   ];
 
   const cargoDistribution = [
-    { type: 'Coal', percentage: 45, color: 'bg-slate-600' },
-    { type: 'Fertilizer', percentage: 25, color: 'bg-green-500' },
-    { type: 'Iron Ore', percentage: 20, color: 'bg-orange-500' },
-    { type: 'Limestone', percentage: 10, color: 'bg-blue-500' }
+    { type: 'Coal', percentage: 52, color: 'bg-slate-600' },
+    { type: 'Iron Ore', percentage: 28, color: 'bg-orange-500' },
+    { type: 'Fertilizer', percentage: 15, color: 'bg-green-500' },
+    { type: 'Limestone', percentage: 5, color: 'bg-blue-500' }
   ];
 
   const columns = [
@@ -133,21 +133,21 @@ const YardOperations: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Total Yards"
-          value="24"
+          value="147"
           subtitle="Available yard spaces"
           icon={Warehouse}
           color="blue"
         />
         <StatCard
           title="Occupied Yards"
-          value="18"
+          value="128"
           subtitle="Currently in use"
           icon={PieChart}
           color="green"
         />
         <StatCard
           title="Utilization Rate"
-          value="72%"
+          value="87%"
           subtitle="Overall yard utilization"
           icon={PieChart}
           trend={{ value: 5, isPositive: true }}
@@ -155,7 +155,7 @@ const YardOperations: React.FC = () => {
         />
         <StatCard
           title="Avg Dwell Time"
-          value="4h 15m"
+          value="6h 30m"
           subtitle="Average cargo stay duration"
           icon={Clock}
           trend={{ value: 12, isPositive: false }}
