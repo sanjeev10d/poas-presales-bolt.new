@@ -139,34 +139,6 @@ const RakeOperations: React.FC = () => {
         />
       </div>
 
-      {/* MCHP Integration Status */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-        <h3 className="text-lg font-semibold text-slate-900 mb-4">MCHP Integration Status</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="flex items-center space-x-3 p-4 bg-green-50 rounded-lg">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <div>
-              <p className="font-medium text-slate-900">SCADA Feed</p>
-              <p className="text-sm text-green-600">Active</p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-3 p-4 bg-green-50 rounded-lg">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <div>
-              <p className="font-medium text-slate-900">Equipment Status</p>
-              <p className="text-sm text-green-600">Operational</p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-3 p-4 bg-yellow-50 rounded-lg">
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div>
-              <p className="font-medium text-slate-900">API Sync</p>
-              <p className="text-sm text-yellow-600">1 Retry Pending</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Rake Audit Logs */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="p-6 border-b border-slate-200">
